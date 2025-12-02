@@ -7,16 +7,16 @@ async function loadFlights() {
   const todayCard = document.getElementById("today-card");
   const recentGrid = document.getElementById("recent-grid");
 
-  // Detectamos el mercado desde el body (ej. "pmi")
-  const body = document.body;
-  const market = (body && body.dataset.market) ? body.dataset.market : "pmi";
-
-  // URL del JSON en S3 (bucket público)
-  const DATA_URL = `https://escapadasgo-public.s3.eu-west-1.amazonaws.com/${market}/flights_of_the_day.json`;
+  // 🔹 NUEVO: URL base de S3 + market
+  const FLIGHTS_BASE_URL = "https://escapadasgo-public.s3.eu-north-1.amazonaws.com";
+  const MARKET = "pmi";  // en el futuro podrás usar "mad", "bcn", etc.
+  const FLIGHTS_URL = `${FLIGHTS_BASE_URL}/${MARKET}/flights_of_the_day.json`;
 
   try {
-    const res = await fetch(DATA_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error("No se pudo cargar flights_of_the_day.json");
+    const res = await fetch(FLIGHTS_URL, { cache: "no-store" });
+    if (!res.ok) {
+      throw new Error(`No se pudo cargar ${FLIGHTS_URL} (status ${res.status})`);
+    }
 
     const data = await res.json();
     const flights = data.flights || [];
