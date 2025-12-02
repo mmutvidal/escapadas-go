@@ -1,0 +1,78 @@
+{
+  "flight": null,
+  "caption": "✈️ 2 noches en 🇩🇪 Münster Osnabrück por 176€ ida y vuelta.\n\nTe cuento fechas y el plan perfecto de 2 días para una escapada inolvidable.\n\n🗓 Fechas: 21 a 23 de noviembre 2025\n💶 Precio: 175,98€\n✈️ Origen: Palma de Mallorca (PMI)\n🛬 Destino: Münster Osnabrück (FMO)\n\n🇩🇪 Día 1, Centro histórico:\n- Paseo por Prinzipalmarkt\n- Visita al Ayuntamiento antiguo\n- Café en un bistró local\n\n🇩🇪 Día 2, Naturaleza y cultura:\n- Parque Aasee para caminar\n- Museo Pablo Picasso\n- Cena con platos alemanes\n\nMünster combina tradición y modernidad con su ambiente acogedor y su gastronomía única. Ideal para desconectar y empaparte de cultura en cada esquina.\n\n¿Con quién te escaparías aquí? Etiquétal@.\n\n#viajar #vuelosbaratos #escapadas #mallorca #Münster #escapadaperfecta #viajes",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "escapada_perfecta",
+      "category_label": "✨ Escapada Perfecta",
+      "origin": "PMI",
+      "destination": "FMO",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-23",
+      "price": 175.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=FMO&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=FMO",
+      "distance_km": 1429.8970108380595,
+      "price_per_km": 0.12307180074238948,
+      "score": 4.06551031605313
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "WAW",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-23",
+      "price": 344.78,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=WAW&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=WAW",
+      "distance_km": 1984.9247424117373,
+      "price_per_km": 0.17369928069972213,
+      "score": 2.879988314884473
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "NUE",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-23",
+      "price": 181.98000000000002,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=NUE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=NUE",
+      "distance_km": 1284.778763180264,
+      "price_per_km": 0.14164306354935202,
+      "score": 3.5327474535120995
+    },
+    {
+      "category_code": "romantica",
+      "category_label": "❤️ Escapada Romántica",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2025-11-20",
+      "end_date": "2025-11-23",
+      "price": 467.90000000000003,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-20&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-20&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.32092448661346823,
+      "score": 1.5590675133553848
+    },
+    {
+      "category_code": "finde_perfecto",
+      "category_label": "🎉 Finde Perfecto",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-23",
+      "price": 493.84000000000003,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.3387162822594468,
+      "score": 1.4771741647071615
+    }
+  ],
+  "current_index": 0
+}

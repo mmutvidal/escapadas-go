@@ -1,0 +1,78 @@
+{
+  "flight": null,
+  "caption": "🏛 Escapada cultural a Copenhage por 49€ ida y vuelta.\n\nTe cuento fechas y el plan perfecto para 2 noches culturales en la capital danesa.\n\nOrigen: Palma de Mallorca (PMI)\nDestino: Copenhague (CPH)\nFechas: 1 al 3 de agosto 2026\nPrecio: 49€ ida y vuelta\n\n🇩🇰 Día 1, Centro histórico:\n- Paseo por Nyhavn\n- Visita al Palacio de Amalienborg\n- Cena en Tivoli Gardens\n\n🇩🇰 Día 2, Cultura y arte:\n- Museo Nacional de Dinamarca\n- Barrio de Christiania\n- Café en Jægersborggade\n\nCopenhague combina historia y modernidad con su ambiente acogedor y su exquisita gastronomía nórdica. Perfecto para una escapada cultural y emocional.\n\n¿Con quién te escaparías aquí? Etiquétal@.\n\n#viajar #vuelosbaratos #escapadas #mallorca #Copenhague #cultura #escapadacultural #viajes",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "escapada_perfecta",
+      "category_label": "✨ Escapada Perfecta",
+      "origin": "PMI",
+      "destination": "FMO",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-23",
+      "price": 175.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=FMO&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=FMO",
+      "distance_km": 1429.8970108380595,
+      "price_per_km": 0.12307180074238948,
+      "score": 4.06551031605313
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "PRG",
+      "start_date": "2025-11-21T20:20:00.000Z",
+      "end_date": "2025-11-24T19:35:00.000Z",
+      "price": 129.0,
+      "airline": "QS",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a2145c4fbd4fc0773b5c04_0%7C13a2145c4fbd4fc0773b5c04_1&from=PMI&lang=en&passengers=1&to=PRG&booking_token=H4Jj3_UXsVWqjmfnRMO9Y0HQUxaltr0H5GQIhZsnYlDvArprSv2cF1upsiOucCSRMhB1QfW2x5MvhDMqKilOMGiw3um4mpQf8gOkLuT_mxbSHtFIuCn0VTOZdRmHrsIdjfRYtvOT4Vq-IH971iCOdUtxHwFlEzVJTI580k77zjIN2TDG6gmFb2RkmiAQz-JinKdOBQYeo1P1XwcMxKuagnLYH7s1AEKpM3iAISXAcTEqOKYIlGRMyQJBPLEkWHuamQEIhhjs2_8EfF_NcDDafYtUDQTGmbxbneZP19jEMHubfRSb-yt9ltk6J13FSGEP8MbIkuEyH5NTIqKJQOK3wFftjWb4dTd8O-YktjTdLt6uu4RoSzcX4dGQ3ypv1oUJX51k5Xk0ORRuu6xt52_QRmj6cE0GMO-cIQwfiVOZ3BIF3hj4nbAJPRZ2bJg29k3rVQtFU1hJOrxPw__-gELmM02DfuaJe6r7ndlgnPISsH68_RQmAbJpTAcBh9eBM1mr1uQAgqKWNrVlGKMX10yAH7_5a3DWv4EVnFL3TBYQ4jZQDdU1ODhLuuIhbvhWQhZEbFUjXSLyu49GcE0gd_ZWKa-dWKWdYzAZRTQS0YdaWm9YiuDCE0m2wJ6ONJ79L07rhN1b7r8PmiqoBEnMCbQi63_bHz011XLmlZRuaeiWM-1nN-TmH8KTw229j4GZvLY2z-uZk4pFFo-69Pvm61mWcQkGT3w4--0fEROCXNrqSG8dzSki9_cKYBlawqZYA_vuSlXXJJtfYev01NKSVVupJZTUn89FUBDCqw6nVMJan9urXFNmL2-zPSYflK897tkIhC1RUbVvRJiQ57M6_fiVBG7iqOlooMftC2-LkiWOYomdxZhy4qbrCwSoRbH1OyJzWNFxtm7RPNwm6cGvrv2QsaQ==&token_module=Mod0.wwUbtP1qFvlu_wVm4WYtVk3_epT1IfqvQIZYVXIQYWrfUlfdyw7wCsS9hZD8wG1Gfv5eSl8gh8ygxS8zJbpXbfAt6Co2JcTXu--kABvc4I5Pa-j8AHrWlWGll3xoFpuVGQJQnA0DLxQKhl2d4HByoIcCpeiJE8TFuYlbl3Af7TwaArNjz3tX4XJSVSfzYWwjc3mS0huoG_0-GaKWzpCOo9AZJWE4OgG5XfEwms67aDMJYO9SQ4xBzluNnjSRWFDVHL-L0BsXYcc5KnAKW9N5lAEoyKJMA0Er1R7sF6IsawLrENT9FZ7ktXv-hQrnVTVE",
+      "distance_km": 1481.82,
+      "price_per_km": 0.08705510790784306,
+      "score": 5.747364341085271
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "WAW",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-24",
+      "price": 243.47,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-24&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=WAW&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-24&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=WAW",
+      "distance_km": 1984.9247424117373,
+      "price_per_km": 0.12265956224827818,
+      "score": 4.078376683804446
+    },
+    {
+      "category_code": "finde_perfecto",
+      "category_label": "🎉 Finde Perfecto",
+      "origin": "PMI",
+      "destination": "BLQ",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-23",
+      "price": 229.44,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-23&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BLQ&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-23&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BLQ",
+      "distance_km": 903.1980161744008,
+      "price_per_km": 0.25403067310955746,
+      "score": 1.9704454676046044
+    },
+    {
+      "category_code": "romantica",
+      "category_label": "❤️ Escapada Romántica",
+      "origin": "PMI",
+      "destination": "BGY",
+      "start_date": "2025-11-21",
+      "end_date": "2025-11-24",
+      "price": 141.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-11-21&dateIn=2025-11-24&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BGY&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-11-21&tpEndDate=2025-11-24&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BGY",
+      "distance_km": 872.5056280241101,
+      "price_per_km": 0.16272674403433948,
+      "score": 3.0761573039305192
+    }
+  ],
+  "current_index": 0
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Escapadas Mallorca – Vuelo del día</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">✈️</span>
+        <div class="logo-text">
+          <div class="logo-title">Escapadas</div>
+          <div class="logo-subtitle">Mallorca</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/mallorca/">Mallorca</a>
+        <span class="nav-separator">·</span>
+        <span class="nav-disabled">Barcelona (pronto)</span>
+        <span class="nav-separator">·</span>
+        <span class="nav-disabled">Madrid (pronto)</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1>Escapada de hoy desde Mallorca</h1>
+      <p class="hero-subtitle">Cada día, el mejor vuelo desde Palma seleccionado de entre miles de opciones.</p>
+
+      <div id="today-card" class="card card-today loading">
+        <p>Cargando vuelo del día…</p>
+      </div>
+    </section>
+
+    <section class="section-latest">
+      <h2>Últimas escapadas publicadas</h2>
+      <div id="recent-grid" class="grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      © <span id="year"></span> Escapadas Mallorca ·
+      Sígueme en Instagram:
+      <a href="https://www.instagram.com/escapadas_mallorca/" target="_blank">@escapadas_mallorca</a>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

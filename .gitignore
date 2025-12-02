@@ -1,0 +1,49 @@
+# --- ENTORNOS / SECRETOS ---
+.env
+.env.*
+config/*.secret.json
+*.pem
+*.key
+*.token
+
+# --- PYTHON ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# --- JUPYTER NOTEBOOKS ---
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# --- IDEs / EDITORES ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- MEDIOS / FICHEROS GENERADOS ---
+media/out/
+media/videos/
+media/temp/
+media/reels/
+*.mp4
+*.mov
+*.avi
+*.gif
+
+# --- ARCHIVOS DE EJECUCIÓN LOCAL ---
+local_copy.json
+*.log
+*.tmp
+
+# --- AWS / CREDENCIALES ---
+aws/
+*.aws
+*.credential
+
+# --- NGROK ---
+.ngrok2/
+
+# --- WEB ---
+web/test.html

@@ -1,0 +1,153 @@
+Destination,Distance,DestinationFull,DistanceKm
+"Barcelona, Spain",127.57125861816236,,
+"Frankfurt Hahn, Germany",751.0922479893408,,
+"Madrid, Spain",342.11529003354696,,
+"Memmingen, Germany",691.7861464075805,,
+"Birmingham, United Kingdom",917.690359476154,,
+"Nuremberg, Germany",798.3245118385279,,
+"Karlsruhe / Baden-Baden, Germany",710.8168172730069,,
+"Brussels Charleroi, Belgium",757.4585068524889,,
+"Valencia, Spain",161.8438048229718,,
+"Cologne, Germany",812.3836532939807,,
+"Vienna, Austria",905.9438995006468,,
+"Malaga, Spain",432.20618195102696,,
+"Venice Treviso, Italy",644.4438611302508,,
+"Alicante, Spain",188.9850277632115,,
+"Dortmund, Germany",856.8776285434245,,
+"Milan Bergamo, Italy",556.2062808823871,,
+"Seville, Spain",492.0556378557632,,
+"Berlin Brandenburg, Germany",1023.913675015913,,
+"Warsaw Chopin, Poland",1233.375053693764,,
+"London Stansted, United Kingdom",858.4690819068643,,
+"Hamburg, Germany",1025.8983140620717,,
+"Santiago, Spain",625.8421715266531,,
+"Dusseldorf Weeze, Germany",830.1698907822054,,
+"Zaragoza, Spain",234.7541085444908,,
+"Manchester, United Kingdom",988.1318650039956,,
+"Rome Fiumicino, Italy",537.86004053745,,
+"Bordeaux, France",399.7382457891552,,
+"Leeds Bradford, United Kingdom",1008.05907325305,,
+"Marseille, France",293.37374107331,,
+"Milan Malpensa, Italy",520.1314948543294,,
+"Bournemouth, United Kingdom",802.1284896030485,,
+"Klagenfurt, Austria",763.3866503412545,,
+"Bristol, United Kingdom",858.7934945933754,,
+"Billund, Denmark",1154.997981478475,,
+"London Luton, United Kingdom",862.2939738263605,,
+"Copenhagen, Denmark",3903.619224430745,,
+"Bologna, Italy",561.2212281366823,,
+"Jerez, Spain",518.2690292984281,,
+"Göteborg Landvetter, Sweden",1322.753696731299,,
+"East Midlands, United Kingdom",927.099107386949,,
+"Prague, Czech Republic",926.491797717126,,
+"Dublin, Ireland",1040.5963147810355,,
+"Eindhoven, Netherlands",830.9825863731695,,
+"Edinburgh, United Kingdom",1163.097325365888,,
+"Münster, Germany",888.496810401045,,
+"Toulouse, France",285.3716086034912,,
+"Bremen, Germany",977.3893007700271,,
+"Cork, Ireland",1004.351735886013,,
+"Wroclaw, Poland",1057.174149097233,,
+"Liverpool, United Kingdom",992.1798674941076,,
+"Luxembourg, Luxembourg",714.1009306463644,,
+"Bucharest, Romania",1248.291832358742,,
+"Budapest, Hungary",989.2854914917284,,
+"Paris Beauvais, France",683.0367230279154,,
+"Stockholm Arlanda, Sweden",1539.4410344289615,,
+"Glasgow Prestwick, United Kingdom",1149.960048251274,,
+"Vitoria (Basque Country), Spain",357.7459641258228,,
+"Marrakesh, Morocco",814.6918565534736,,
+"Valladolid, Spain",413.5923423806942,,
+"Newcastle, United Kingdom",1082.3496916657798,,
+"Porto, Portugal",603.829628553824,,
+"Teesside, United Kingdom",1049.357088665858,,
+"Cagliari, Italy",346.7405728460517,,
+"Zagreb, Croatia",802.2971321076724,,
+"Brussels, Belgium",783.1094059692385,,
+"Dresden, Germany",957.0597501690464,,
+"Belfast International, United Kingdom",1120.806511746496,,
+"Shannon, Ireland",1067.4519958272838,,
+"Poznan, Poland",1117.802919495187,,
+"Verona, Italy",587.3061696498683,,
+"Aarhus, Denmark",1196.5180504810162,,
+"Oslo Torp, Norway",1396.1761056641485,,
+"Exeter, United Kingdom",826.6818501495595,,
+"Gran Canaria, Spain",1316.4634446148686,,
+"Sofia, Bulgaria",1096.9697497444204,,
+"Naples, Italy",619.334408944078,,
+"Krakow, Poland",1111.788665062909,,
+"Fez, Morocco",570.8907340410613,,
+"Kaunas, Lithuania",1445.0702333496138,,
+"Paderborn, Germany",888.7412495122232,,
+"Pisa, Italy",492.519912780553,,
+"Bratislava, Slovakia",931.5413071569394,,
+"Lubeck, Germany",1701.2664069587647,,
+"Warsaw Modlin, Poland",1987.521228018876,,
+"Knock, Ireland",1806.923034581809,,
+"Friedrichshafen, Germany",1052.6044162632302,,
+,,"Pardubice, Czech Republic",1554.2607972491912
+,,"London Stansted, United Kingdom",1381.5720661523208
+,,"Birmingham, United Kingdom",1476.8794738807917
+,,"Zagreb, Croatia",1291.17207577469
+,,"Berlin Brandenburg, Germany",1647.7968523400168
+,,"Vienna, Austria",1457.9753789979693
+,,"Brussels Charleroi, Belgium",1219.011303252012
+,,"Newcastle, United Kingdom",1741.8729821841728
+,,"Klagenfurt, Austria",1228.551725406796
+,,"Bristol, United Kingdom",1382.0941577628812
+,,"Luxembourg, Luxembourg",1149.2340481301428
+,,"Copenhagen, Denmark",1936.287850294653
+,,"Paderborn, Germany",1430.2903974549995
+,,"Dusseldorf Weeze, Germany",1335.9602572031256
+,,"Hamburg, Germany",1651.023296345911
+,,"Porto, Portugal",971.7429834989376
+,,"Bournemouth, United Kingdom",1288.770184562632
+,,"Leeds Bradford, United Kingdom",1622.3138211853563
+,,"Cologne, Germany",1307.4047581267482
+,,"Frankfurt Hahn, Germany",1262.526258853935
+,,"Liverpool, United Kingdom",1596.7587166724377
+,,"Karlsruhe / Baden-Baden, Germany",1143.94877997741
+,,"Münster, Germany",1429.8970108380595
+,,"East Midlands, United Kingdom",1504.862746314982
+,,"Manchester, United Kingdom",1590.2440881529906
+,,"Rome Fiumicino, Italy",846.4514645080592
+,,"Nuremberg, Germany",1284.778763180264
+,,"Bremen, Germany",1572.9556068584388
+,,"Friedrichshafen, Germany",1052.6044162632302
+,,"Edinburgh, United Kingdom",1871.82370199364
+,,"Memmingen, Germany",1113.2578399754505
+,,"Dublin, Ireland",1674.6774356149708
+,,"Stockholm Arlanda, Sweden",2477.4901921120427
+,,"Cork, Ireland",1616.7692650623565
+,,"Valencia, Spain",260.4623562290208
+,,"Alicante, Spain",304.14192052055785
+,,"Malaga, Spain",695.5684256857936
+,,"Toulouse, France",459.2613248793099
+,,"Seville, Spain",791.8867884493454
+,,"Barcelona, Spain",205.2778362255972
+,,"Bologna, Italy",903.1980161744008
+,,"Milan Bergamo, Italy",872.5056280241101
+,,"Madrid, Spain",550.5760026717456
+,,"Marrakesh, Morocco",1304.4772020519683
+,,"Marseille, France",472.1392699538849
+,,"Milan Malpensa, Italy",837.070500454846
+,,"London Luton, United Kingdom",1387.7276330136103
+,,"Venice Treviso, Italy",1033.8404977629625
+,,"Brussels, Belgium",1260.2924238401583
+,,"Glasgow Prestwick, United Kingdom",1850.6813038928983
+,,"Eindhoven, Netherlands",1337.3368394841425
+,,"Exeter, United Kingdom",1330.418165279195
+,,"Prague, Czech Republic",1490.1221281789644
+,,"Budapest, Hungary",1585.8812334997526
+,,"Sofia, Bulgaria",1765.4016849326845
+,,"Warsaw Modlin, Poland",1987.521228018876
+,,"Krakow, Poland",1789.250417387003
+,,"Naples, Italy",996.7221150276982
+,,"Pisa, Italy",792.6339665139063
+,,"Knock, Ireland",1806.923034581809
+,,"Wroclaw, Poland",1701.3568738047377
+,,"Poznan, Poland",1797.6704164681437
+,,"Kaunas, Lithuania",2325.615109619801
+,,"Göteborg Landvetter, Sweden",2128.765725312336
+,,"Vitoria (Basque Country), Spain",575.7363208901082
+,,"Warsaw Chopin, Poland",1984.9247424117373

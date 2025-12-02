@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Escapadas – Elige tu ciudad de salida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #020617, #020617 55%, #000 100%);
+      color: #f9fafb;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: none; }
+
+    .header {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to right, rgba(15,23,42,0.95), rgba(15,23,42,0.75));
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .logo-mark { font-size: 1.5rem; }
+    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .logo-title {
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .logo-subtitle {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .main {
+      flex: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.75rem 1rem 2rem;
+    }
+    .hero-title {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+    .hero-subtitle {
+      margin-top: 0;
+      margin-bottom: 2rem;
+      color: #9ca3af;
+      font-size: 0.95rem;
+      max-width: 640px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .card-city {
+      border-radius: 1rem;
+      padding: 1rem 1.1rem;
+      background: radial-gradient(circle at top left, #111827, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 160px;
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s;
+    }
+    .card-city:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+      border-color: rgba(56, 189, 248, 0.7);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+    .card-emoji { font-size: 1.4rem; }
+    .card-title {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+    .card-body {
+      font-size: 0.85rem;
+      color: #e5e7eb;
+      margin-top: 0.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+      background: #38bdf8;
+      color: #020617;
+      cursor: pointer;
+    }
+    .pill-secondary {
+      background: rgba(15,23,42,0.6);
+      color: #9ca3af;
+      border-color: rgba(148, 163, 184, 0.6);
+      cursor: default;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 0.9rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+    .footer a { color: #38bdf8; }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-mark">✈️</span>
+      <div class="logo-text">
+        <div class="logo-title">ESCAPADAS</div>
+        <div class="logo-subtitle">Vuelos seleccionados cada día</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <section>
+    <h1 class="hero-title">¿Desde dónde quieres volar?</h1>
+    <p class="hero-subtitle">
+      Elige tu aeropuerto de salida y descubre un chollo de vuelo distinto cada día.
+      De momento empezamos desde Palma de Mallorca, pero pronto podrás ver también salidas desde Barcelona y Madrid.
+    </p>
+
+    <div class="grid">
+
+      <!-- Mallorca (activo) -->
+      <a href="/mallorca/" class="card-city">
+        <div>
+          <div class="card-header">
+            <span class="card-emoji">🌴</span>
+            <div>
+              <div class="card-title">Mallorca</div>
+              <div class="card-subtitle">Salidas desde Palma de Mallorca (PMI)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Un vuelo seleccionado al día desde Palma, optimizado por precio, distancia
+            y horarios para escapadas de fin de semana y chollos puntuales.
+          </div>
+        </div>
+        <div>
+          <span class="pill">Ver escapadas desde Mallorca</span>
+        </div>
+      </a>
+
+      <!-- Barcelona (pronto) -->
+      <div class="card-city">
+        <div>
+          <div class="card-header">
+            <span class="card-emoji">🌆</span>
+            <div>
+              <div class="card-title">Barcelona</div>
+              <div class="card-subtitle">Próximamente</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Estamos preparando los mejores chollos saliendo de Barcelona–El Prat (BCN).
+            Muy pronto podrás ver aquí las escapadas desde tu ciudad.
+          </div>
+        </div>
+        <div>
+          <span class="pill pill-secondary">Disponible pronto</span>
+        </div>
+      </div>
+
+      <!-- Madrid (pronto) -->
+      <div class="card-city">
+        <div>
+          <div class="card-header">
+            <span class="card-emoji">🏙️</span>
+            <div>
+              <div class="card-title">Madrid</div>
+              <div class="card-subtitle">Próximamente</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Madrid–Barajas (MAD) también tendrá chollo del día.
+            Si vives en Madrid o cerca, guarda esta página porque viene fuerte.
+          </div>
+        </div>
+        <div>
+          <span class="pill pill-secondary">Disponible pronto</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  © <span id="year"></span> Escapadas · Sígueme en Instagram:
+  <a href="https://www.instagram.com/escapadas_mallorca/" target="_blank">@escapadas_mallorca</a>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
