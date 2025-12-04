@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Escapadas Go – Elige tu ciudad de salida</title>
+  <title>Escapadas – Elige tu ciudad de salida</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; }
@@ -34,18 +34,13 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
-    .logo-img {
-      height: 32px;
-      width: auto;
-      border-radius: 999px;
-      filter: drop-shadow(0 4px 10px rgba(15,23,42,0.8));
-    }
+    .logo-mark { font-size: 1.5rem; }
     .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
     .logo-title {
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       font-size: 0.85rem;
     }
@@ -155,14 +150,9 @@
 <header class="header">
   <div class="header-inner">
     <div class="logo">
-      <!-- LOGO ESCAPADAS GO -->
-      <img
-        src="EscapGo_circ_logo_transparent.png"
-        alt="Escapadas Go"
-        class="logo-img"
-      />
+      <span class="logo-mark">✈️</span>
       <div class="logo-text">
-        <div class="logo-title">ESCAPADAS GO</div>
+        <div class="logo-title">ESCAPADAS</div>
         <div class="logo-subtitle">Vuelos seleccionados cada día</div>
       </div>
     </div>
@@ -174,7 +164,7 @@
     <h1 class="hero-title">¿Desde dónde quieres volar?</h1>
     <p class="hero-subtitle">
       Elige tu aeropuerto de salida y descubre un chollo de vuelo distinto cada día.
-      De momento empezamos desde Palma de Mallorca, pero pronto tendrás también salidas desde Barcelona y Madrid.
+      De momento empezamos desde Palma de Mallorca, pero pronto podrás ver también salidas desde Barcelona y Madrid.
     </p>
 
     <div class="grid">
@@ -244,10 +234,8 @@
 </main>
 
 <footer class="footer">
-  © <span id="year"></span> Escapadas Go · Sígueme en Instagram:
-  <a href="https://www.instagram.com/escapadasgo_mallorca/" target="_blank">
-    @escapadasgo_mallorca
-  </a>
+  © <span id="year"></span> Escapadas · Sígueme en Instagram:
+  <a href="https://www.instagram.com/escapadas_mallorca/" target="_blank">@escapadas_mallorca</a>
 </footer>
 
 <script>

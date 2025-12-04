@@ -44,10 +44,22 @@ Reglas IMPORTANTES:
   - 2–3 bullets por día, cada bullet ≤ 8 palabras.
 - "extra_block": 1–2 frases que destaquen lo especial del destino
   (ambiente, gastronomía, cultura, vistas, etc.), adaptado a la categoría y al tipo de destino.
-- "cta_block": 1 sola frase con CTA suave del estilo:
-  - "¿Con quién te escaparías aquí? Etiquétal@."
-  - "Guárdalo si te lo quieres pensar."
-  - "Sígueme para el chollo de mañana."
+- DESCUENTO ("discount_pct"):
+  - Si en los datos del vuelo existe el campo "discount_pct" y es mayor que 40,
+    debes mencionarlo explícitamente en algún punto del texto (en "bridge" y/o en "extra_block").
+  - Explica que es aproximadamente un X% más barato que el precio habitual de esa ruta.
+  - Redondea "discount_pct" al número entero más cercano y muéstralo con el símbolo %, por ejemplo:
+    "aprox. un 42% más barato que lo habitual" o "casi un 40% por debajo del precio medio".
+  - No inventes porcentajes ni digas que es récord histórico: usa SOLO el valor de "discount_pct" proporcionado.
+  - Si "discount_pct" es menor a 40 o no existe, NO hables de descuento ni de comparativas con el precio medio.
+- "cta_block": 1 sola frase con CTA suave. 
+  Reglas para el CTA:
+  - Debe ser diferente en cada generación.
+  - Inspírate en ejemplos como:
+    * ¿Con quién te escaparías aquí? Etiquétal@.
+    * Guárdalo si te lo quieres pensar.
+    * Sígueme para el chollo de mañana.
+  - NO repitas literalmente siempre el mismo CTA. Varía el verbo, la estructura o el foco (guardar, etiquetar, seguir, comentar).
 - "hashtags": 6–10 hashtags relacionados, separados por espacios, sin emojis.
 - No incluyas comillas dobles dentro de los valores del JSON.
 - No añadas texto fuera del JSON.

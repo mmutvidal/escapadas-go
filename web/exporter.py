@@ -141,8 +141,8 @@ def update_flights_json(
 
     new_id = new_entry["id"]
 
-    # 3) Eliminar cualquier entrada previa con ese mismo id
-    flights = [f for f in flights if f.get("id") != new_id]
+    # # 3) Eliminar cualquier entrada previa con ese mismo id
+    # flights = [f for f in flights if f.get("id") != new_id]
 
     # 4) Insertar el nuevo vuelo al principio (vuelo del día)
     flights.insert(0, new_entry)

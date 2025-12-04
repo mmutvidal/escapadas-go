@@ -13,7 +13,8 @@ from config.settings import (
     TRAVELPAYOUTS_KIWI_PROMO_ID,
     TRAVELPAYOUTS_KIWI_BASE,
     SKYSCANNER_ASSOCIATE_ID,
-    SKYSCANNER_BASE,
+    SKYSCANNER_DEEPLINK_BASE,
+    SKYSCANNER_IMPACT_BASE,
     SKYSCANNER_MARKET,
     SKYSCANNER_LOCALE,
     SKYSCANNER_CURRENCY,
@@ -34,22 +35,23 @@ def _extract_ymd(date_str: str) -> Optional[str]:
     return s.split(" ")[0]
 
 
-def build_skyscanner_affiliate_link(
+def _build_skyscanner_deeplink_url(
     flight: Flight,
-    market: str = "ES",
-    locale: str = "es-ES",
-    currency: str = "EUR",
+    market: str = SKYSCANNER_MARKET,
+    locale: str = SKYSCANNER_LOCALE,
+    currency: str = SKYSCANNER_CURRENCY,
     adultsv2: int = 1,
     cabinclass: str = "economy",
 ) -> str:
     """
-    Devuelve un deep-link de Skyscanner con parámetros de origen/destino/fechas.
+    Construye el deep-link 'puro' de Skyscanner (sin Impact),
+    usando la ruta oficial de referrals.
     """
     origin = flight.origin
     dest = flight.destination
 
-    outbound = _extract_ymd(flight.start_date)
-    inbound = _extract_ymd(flight.end_date)
+    outbound = _extract_ymd(str(flight.start_date))
+    inbound = _extract_ymd(str(flight.end_date))
 
     params = {
         "origin": origin,
@@ -61,24 +63,38 @@ def build_skyscanner_affiliate_link(
         "market": market,
         "locale": locale,
         "currency": currency,
-        "mediaPartnerId": SKYSCANNER_ASSOCIATE_ID,
+        "associateid": SKYSCANNER_ASSOCIATE_ID,
     }
 
-    return f"{SKYSCANNER_BASE}?{urlencode(params)}"
+    return f"{SKYSCANNER_DEEPLINK_BASE}?{urlencode(params)}"
 
-# def build_kiwi_deep_link(origin_iata, dest_iata, start_date, end_date):
-#     # fechas en 'YYYY-MM-DD'
-#     base = "https://www.kiwi.com/deep"
-#     params = {
-#         "from": origin_iata,
-#         "to": dest_iata,
-#         "departure": start_date,
-#     }
-#     if end_date:
-#         params["return"] = end_date
 
-#     from urllib.parse import urlencode
-#     return f"{base}?{urlencode(params)}"
+def build_skyscanner_affiliate_link(
+    flight: Flight,
+    market: str = SKYSCANNER_MARKET,
+    locale: str = SKYSCANNER_LOCALE,
+    currency: str = SKYSCANNER_CURRENCY,
+    adultsv2: int = 1,
+    cabinclass: str = "economy",
+) -> str:
+    """
+    Devuelve el enlace de afiliado de Skyscanner pasando por Impact.
+    Estructura:
+    SKYSCANNER_IMPACT_BASE?u=<deep_link_puro_encodeado>
+    """
+    deeplink = _build_skyscanner_deeplink_url(
+        flight=flight,
+        market=market,
+        locale=locale,
+        currency=currency,
+        adultsv2=adultsv2,
+        cabinclass=cabinclass,
+    )
+
+    encoded = urllib.parse.quote(deeplink, safe="")
+
+    return f"{SKYSCANNER_IMPACT_BASE}?u={encoded}"
+
 
 def build_kiwi_deep_link(origin_iata, dest_iata, start_date, end_date):
     base = "https://www.kiwi.com/deep"
@@ -118,24 +134,6 @@ def build_kiwi_affiliate_link(origin_iata, dest_iata, start_date, end_date):
     }
     return f"{TRAVELPAYOUTS_KIWI_BASE}?{urllib.parse.urlencode(params)}"
     
-
-
-# def build_kiwi_affiliate_link_direct(flight: Flight) -> str:
-#     """
-#     Si prefieres usar directamente Kiwi sin Travelpayouts,
-#     usa este helper en vez del de Travelpayouts.
-#     """
-#     origin = flight.origin
-#     dest = flight.destination
-#     outbound = _extract_ymd(flight.start_date)
-#     inbound = _extract_ymd(flight.end_date)
-
-#     return build_kiwi_deep_link(
-#         origin_iata=origin,
-#         dest_iata=dest,
-#         start_date=outbound,
-#         end_date=inbound,
-#     )
 
 
 def build_affiliate_url_for_flight(f: Flight) -> Optional[str]:

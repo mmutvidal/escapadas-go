@@ -208,7 +208,8 @@ def _build_reel_for_candidate(candidate: Dict[str, Any]) -> tuple[str, Path]:
     out_dir = Path("media/videos")
     out_dir.mkdir(parents=True, exist_ok=True)
     dest = candidate.get("destination", "XXX")
-    out_path = out_dir / f"reel_review_{dest}.mp4"
+    # out_path = out_dir / f"reel_review_{dest}.mp4"
+    out_path = out_dir / f"reel.mp4"
 
     logo_path = (
         r"C:\Users\Macia\Desktop\Jupyter Notebooks\EscapadasMallorca"

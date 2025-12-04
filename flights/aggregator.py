@@ -12,6 +12,9 @@ from datetime import datetime
 import random
 from typing import Dict, Any
 
+from collections import defaultdict
+import statistics
+
 # import flights.flights_settings
 
 # import json
@@ -142,11 +145,41 @@ DESTINATION_CATEGORY_LABELS = {
 }
 
 
+def annotate_route_price_stats(flights: List[Flight]) -> None:
+    """
+    Para cada ruta (origin, destination) calcula un precio 'habitual'
+    (mediana de todos los precios de esa ruta en la búsqueda actual)
+    y anota en cada Flight:
+      - route_typical_price
+      - discount_pct  (positivo = más barato que lo habitual)
+    """
+    # Agrupar precios por ruta
+    prices_by_route = defaultdict(list)
+    for f in flights:
+        if f.price is not None:
+            key = (f.origin, f.destination)
+            prices_by_route[key].append(f.price)
 
+    # Calcular mediana por ruta
+    typical_by_route = {}
+    for key, price_list in prices_by_route.items():
+        if not price_list:
+            continue
+        typical_by_route[key] = statistics.median(price_list)
 
-# from flights.api_vueling import VuelingAPI
-# from flights.api_myapi import MyCustomFlightAPI
+    # Anotar en cada vuelo
+    for f in flights:
+        key = (f.origin, f.destination)
+        typical = typical_by_route.get(key)
+        if typical is None or typical <= 0:
+            f.route_typical_price = None
+            f.discount_pct = None
+            continue
 
+        f.route_typical_price = typical
+        # % de descuento: (habitual - actual) / habitual * 100
+        discount = (typical - f.price) / typical * 100.0
+        f.discount_pct = round(discount, 1)
 
 
 def generate_weekend_date_pairs(start_date: date, end_date: date) -> List[Tuple[date, date]]:
@@ -190,50 +223,6 @@ def generate_weekend_date_pairs(start_date: date, end_date: date) -> List[Tuple[
         current += timedelta(days=1)
 
     return pairs
-
-
-
-# def _load_history() -> Dict[str, dict]:
-#     if not HISTORY_FILE.exists():
-#         return {}
-#     with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-#         return json.load(f)
-
-
-# def _save_history(history: Dict[str, dict]) -> None:
-#     HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
-#     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-#         json.dump(history, f, ensure_ascii=False, indent=2)
-
-
-# def make_flight_key(f: Flight) -> str:
-#     # solo fecha, sin hora
-#     start = f.start_date[:10]
-#     end = f.end_date[:10]
-#     return f"{f.origin}-{f.destination}-{start}-{end}"
-
-
-# def is_recently_published(f: Flight, cooldown_days: int = 14) -> bool:
-#     history = _load_history()
-#     key = make_flight_key(f)
-#     data = history.get(key)
-#     if not data:
-#         return False
-
-#     pub_date = date.fromisoformat(data["published_at"])
-#     return (date.today() - pub_date).days < cooldown_days
-
-
-# def register_publication(f: Flight, category_code: str) -> None:
-#     history = _load_history()
-#     key = make_flight_key(f)
-#     history[key] = {
-#         "published_at": date.today().isoformat(),
-#         "category": category_code,
-#     }
-#     _save_history(history)
-
-
 
 
 def get_available_flights(start_date: date, end_date: date) -> List[Flight]:
@@ -336,16 +325,34 @@ def score_flight(f: Flight) -> float:
 
     return score
 
-def score_flight_basic(f):
+def score_flight_basic(f: Flight) -> float:
+    """
+    Score simple combinado:
+    - precio absoluto (más barato = mejor)
+    - precio por km
+    - % de descuento vs precio habitual de la ruta (si existe)
+
+    Todos los términos se combinan en algo sencillo pero efectivo.
+    """
     if f.price is None or f.price_per_km is None:
         return -999999  # descartamos vuelos mal formados
 
-    # normalizamos (inversión: cuanto menor el valor, mayor el score)
+    # 1) Componentes inversos para precio y €/km
     price_component = 1 / max(f.price, 1)
     ppkm_component = 1 / max(f.price_per_km, 0.001)
 
-    # pesos 50% / 50%
-    return 0.5 * price_component + 0.5 * ppkm_component
+    # 2) Descuento normalizado: 0 a 1 (cap a 90% para no disparar)
+    discount_pct = getattr(f, "discount_pct", None) or 0.0
+    discount_pct = max(discount_pct, 0.0)               # si es más caro que la media → 0
+    discount_cap = 90.0
+    discount_norm = min(discount_pct, discount_cap) / discount_cap
+
+    # Pesos: 40% precio, 40% €/km, 20% descuento
+    return (
+        0.4 * price_component +
+        0.3 * ppkm_component +
+        0.3 * (1 + discount_norm)  # sumamos 1 para que siempre aporte algo
+    )
 
 
 
@@ -387,6 +394,8 @@ def get_flights_in_period(start_date: date, end_date: date) -> List[Flight]:
     if not flights:
         print("⚠️ No se encontraron vuelos en ninguna API.")
         return []
+
+    annotate_route_price_stats(flights)
 
     print(f"✅ Encontrados {len(flights)} vuelos en total.")
     return flights
@@ -448,12 +457,20 @@ def classify_flight(f: Flight) -> dict:
 
 
 
-def get_best_by_category_cheapest(flights: List[Flight], cooldown_days: int = 14) -> List[dict]:
+def get_best_by_category_cheapest(
+    flights: List[Flight],
+    cooldown_days: int = 14,
+    min_discount_pct: float = 40.0,
+) -> List[dict]:
     best_per_cat: Dict[str, dict] = {}
 
     for f in flights:
-        if is_recently_published(f, cooldown_days=cooldown_days):
-            continue  # descartamos si se publicó hace poco
+        if ph.is_recently_published(f, cooldown_days=cooldown_days):
+            continue
+
+        discount_pct = getattr(f, "discount_pct", None)
+        if discount_pct is None or discount_pct < min_discount_pct:
+            continue
 
         category = classify_flight(f)
         code = category["code"]
@@ -471,18 +488,27 @@ def get_best_by_category_cheapest(flights: List[Flight], cooldown_days: int = 14
 
     return list(best_per_cat.values())
 
+    
 
 def get_best_by_category_scored(
-    flights: List[Flight], cooldown_days: int = 14
+    flights: List[Flight],
+    cooldown_days: int = 14,
+    min_discount_pct: float = 40.0,  # ← aquí defines el mínimo (30–40%)
 ) -> List[dict]:
 
     best_per_cat: Dict[str, dict] = {}
 
     for f in flights:
-        # descartamos vuelos publicados hace poco
+        # 0) descartamos vuelos publicados hace poco
         if ph.is_recently_published(f, cooldown_days=cooldown_days):
             continue
 
+        # 1) descartamos vuelos sin descuento suficiente
+        discount_pct = getattr(f, "discount_pct", None)
+        if discount_pct is None or discount_pct < min_discount_pct:
+            continue
+
+        # 2) clasificamos y puntuamos sólo los que pasan el filtro
         category = classify_flight(f)
         code = category["code"]
 

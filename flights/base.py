@@ -15,6 +15,12 @@ class Flight:
     distance_km: Optional[float] = None
     price_per_km: Optional[float] = None
 
+    # --- NUEVOS CAMPOS ---
+    # Precio "habitual" de esta ruta (mediana dentro de la búsqueda actual)
+    route_typical_price: Optional[float] = None
+    # Descuento vs. precio habitual, en porcentaje (ej. 35.2 = 35,2% más barato)
+    discount_pct: Optional[float] = None
+
 class FlightAPI(ABC):
     @abstractmethod
     def search(self, depart_date, return_date) -> List[Flight]:

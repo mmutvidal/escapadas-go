@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body data-market="pmi">
   <header class="header">
     <div class="header-inner">
       <div class="logo">
@@ -18,10 +18,6 @@
       </div>
       <nav class="nav">
         <a href="/mallorca/">Mallorca</a>
-        <span class="nav-separator">·</span>
-        <span class="nav-disabled">Barcelona (pronto)</span>
-        <span class="nav-separator">·</span>
-        <span class="nav-disabled">Madrid (pronto)</span>
       </nav>
     </div>
   </header>
