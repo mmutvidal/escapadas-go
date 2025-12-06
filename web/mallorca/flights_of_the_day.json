@@ -1,8 +1,30 @@
 {
   "market": "PMI",
-  "updated_at": "2025-12-06T12:12:16Z",
-  "today_id": "2025-12-06_pmi_mxp",
+  "updated_at": "2025-12-06T20:58:00Z",
+  "today_id": "2025-12-06_pmi_zaz",
   "flights": [
+    {
+      "id": "2025-12-06_pmi_zaz",
+      "date_featured": "2025-12-06",
+      "market": "PMI",
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin_iata": "PMI",
+      "origin_city": "Mallorca",
+      "destination_iata": "ZAZ",
+      "destination_city": "Zaragoza",
+      "start_date": "2025-12-18T15:05:00.000Z",
+      "end_date": "2025-12-21T08:40:00.000Z",
+      "price_eur": 111.0,
+      "price_per_km": 0.27975905436398923,
+      "distance_km": 396.77,
+      "score": 1.5119549549549547,
+      "airline": "VY",
+      "booking_url": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a2102c4fd80000d3e3e0cd_0%7C102c13a24fdb0000aefcfdda_0&from=PMI&lang=en&passengers=1&to=ZAZ&booking_token=HVvWPOAARRY9MAwrdJyc9nVr14k6y2x2ita03gHXDWaecVAkcIxvO7b8BKrqaPVaz9m2PC-lHcPcffRQ6d8JhmTzXFLLHtx72i0fKkUt3qbo3WidBeWkRaR07KcMGn9YPr_A2JQjkQ8A9AYL1WttAOvLJ5C_pntM28fvFh_iSsE52WqaUCPLvt4PyMZMNXYlV2-mcZ8PzLDkWn1cWQ4Of5dCY6IGlmrPe9n_yC1m7HwernhEn78hHkFHJYWLERkNDiTVNLPmOrUwCyTGj2SGRtkHoTLLf_zebKGCPZiFicZ5bI4AYHPjUqWTnoTWWZ20BsZBBtoD1p5QLAoKT3TIo1nJ8uZ9b353V5uPtL3QHqXjIbsKxjE8q-vUHzh_kX10LG-C2fr1ifiIt9ov03oeflfSb_54K0qDLewnJqRKxB3ZTfX-q3BDXtOtTsTQaCOmGYSkUW3y05B2BLgnDOnQGbPFjEGe6iIug6UvVPKiKPgfQNhGJQiuEy3m9ESD8qiu5aUBSD-wqB8S_AAZBrk8F4IwbC9h57sgq6F5KVWBJ2OUdRBJqEOEFeHPEWae0JreL7UfjhSQAhd-rcuMvPGPSmI9O0rtB8KIHVOB1DDS6zteEeXGeASInWJGEDo5awqcfvOFK-lxVyfDEVqH10N7v0ISjKhF2oCl0SqxmCZrrBIK1P-DREOAPiKkEzRXyBKlYt_KNhWXNJvyCQhudOdK_0Ptq4PAFe7MBxAqPmg5VpsjiUMwRgF4DCtsGLWdI0CGrFPPkJKyguQ24mQKy1TMSpNipsddzL_XjD8Rasjwts2cKSYzaokCMVlrCE0zXiVMeRLU_c_oOUGjTLp5UDavYoChe5Wir8Hv4a9F93ntAMJVwAkON_pdnXnaB-jrcOzmmNajC1ZCxvhsCqnw6aIdJ_A==&token_module=Mod0.jDTJ2TeYVRBCba7IrWT8frtDHQg1YmHp8Xu1WkV_Fbv5L5t7bBs-qi9_ohbi0FU5finzfxDffbigz_ucy0X0plnTiDBucXyQ38pOfMNBSNx3DeZNp8HgSW9NZsobdpYBwLtbAcivZzeGrDgEgcWAZYjCGrAluQzRYa88qpIuyvZIBvlGZ1bKPzFzjnHhODp2ePDSmxPW7sb_8c2w9H-MsB4nV7WafIw5y7afk2zltS-d3UgiHFoiemL0xJimYlGhm16VeCfCSrsQAFlPyB6XUPHmgo_wDOeFbi8cVJMfjp8x7dw7nP3GemCWHRh3pCZH0bsTWcDLdCE5twd6LzVLzA==",
+      "affiliate_url": "https://c111.travelpayouts.com/click?shmarker=519984&promo_id=3791&source_type=customlink&type=click&custom_url=https%253A%252F%252Fwww.kiwi.com%252Fdeep%253Ffrom%253DPMI%2526to%253DZAZ%2526departure%253D2025-12-18%2526return%253D2025-12-21",
+      "reel_url": "https://karie-apocatastatic-maddox.ngrok-free.dev/media/videos/reel.mp4?cache_bust=1",
+      "created_at": "2025-12-06T20:58:00Z"
+    },
     {
       "id": "2025-12-06_pmi_mxp",
       "date_featured": "2025-12-06",
@@ -90,28 +112,6 @@
       "affiliate_url": "https://skyscanner.pxf.io/c/6693174/3403253/13416?u=https%3A%2F%2Fwww.skyscanner.net%2Fg%2Freferrals%2Fv1%2Fflights%2Fday-view%3Forigin%3DPMI%26destination%3DVIE%26outboundDate%3D2025-12-12%26inboundDate%3D2025-12-14%26adultsv2%3D1%26cabinclass%3Deconomy%26market%3DES%26locale%3Des-ES%26currency%3DEUR%26associateid%3DAFF_TRA_19354_00001",
       "reel_url": "https://karie-apocatastatic-maddox.ngrok-free.dev/media/videos/reel.mp4",
       "created_at": "2025-12-04T13:20:11Z"
-    },
-    {
-      "id": "2025-12-04_pmi_fkb",
-      "date_featured": "2025-12-04",
-      "market": "PMI",
-      "category_code": "escapada_perfecta",
-      "category_label": "✨ Escapada Perfecta",
-      "origin_iata": "PMI",
-      "origin_city": "Palma de Mallorca",
-      "destination_iata": "FKB",
-      "destination_city": "Karlsruhe",
-      "start_date": "2025-12-11",
-      "end_date": "2025-12-15",
-      "price_eur": 81.08,
-      "price_per_km": 0.0708772992455144,
-      "distance_km": 1143.94877997741,
-      "score": 7.060611618015601,
-      "airline": "Ryanair",
-      "booking_url": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-11&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=FKB&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-11&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=FKB",
-      "affiliate_url": "https://skyscanner.pxf.io/c/6693174/3403253/13416?u=https%3A%2F%2Fwww.skyscanner.net%2Fg%2Freferrals%2Fv1%2Fflights%2Fday-view%3Forigin%3DPMI%26destination%3DFKB%26outboundDate%3D2025-12-11%26inboundDate%3D2025-12-15%26adultsv2%3D1%26cabinclass%3Deconomy%26market%3DES%26locale%3Des-ES%26currency%3DEUR%26associateid%3DAFF_TRA_19354_00001",
-      "reel_url": "https://karie-apocatastatic-maddox.ngrok-free.dev/media/videos/reel.mp4",
-      "created_at": "2025-12-04T12:21:10Z"
     }
   ]
 }

@@ -37,6 +37,47 @@ async function loadFlights() {
   }
 }
 
+function formatDateFriendly(raw) {
+  if (!raw) return "";
+  // Si viene en ISO largo, acortamos a la parte de fecha
+  const onlyDate = raw.split("T")[0] || raw;
+  const d = new Date(onlyDate);
+
+  if (isNaN(d.getTime())) {
+    // Si no se puede parsear, devolvemos al menos YYYY-MM-DD
+    return onlyDate;
+  }
+
+  return d.toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
+function formatDateRange(startRaw, endRaw) {
+  const start = formatDateFriendly(startRaw);
+  const end = formatDateFriendly(endRaw);
+  return `${start} – ${end}`;
+}
+
+function getDiscountPct(flight) {
+  if (flight.discount_pct != null) {
+    return flight.discount_pct;
+  }
+
+  if (flight.route_typical_price != null && flight.price_eur != null) {
+    const habitual = Number(flight.route_typical_price);
+    const price = Number(flight.price_eur);
+    if (habitual > 0 && price > 0) {
+      const disc = (1 - price / habitual) * 100;
+      return Math.max(0, disc);
+    }
+  }
+
+  return null;
+}
+
 function renderToday(container, flight) {
   container.classList.remove("loading");
   container.innerHTML = "";
@@ -45,6 +86,7 @@ function renderToday(container, flight) {
   const ppk =
     flight.price_per_km != null ? flight.price_per_km.toFixed(2) : null;
 
+  const discount = getDiscountPct(flight);
   let rawScore = flight.score != null ? flight.score : null;
 
   // Pequeño bonus visual para "finde_perfecto"
@@ -71,7 +113,7 @@ function renderToday(container, flight) {
     starsText = `${starFull}${starEmpty}`;
   }
 
-  const dates = `${flight.start_date} – ${flight.end_date}`;
+  const dates = formatDateRange(flight.start_date, flight.end_date);
   const title = `${flight.origin_iata} → ${flight.destination_iata}`;
   const subtitle = `${flight.origin_city} → ${flight.destination_city}`;
   const tag = flight.category_label || "Escapada";
@@ -92,20 +134,24 @@ function renderToday(container, flight) {
       <p class="card-line">
         <strong>Precio:</strong> ${price} € ida y vuelta
       </p>
-        ${flight.route_typical_price ? 
-      `<p class="card-line" style="color:#94a3b8;font-size:0.85rem;">
-         Precio habitual: ${flight.route_typical_price.toFixed(0)} €
-       </p>` 
-        : ""}
+      ${
+        flight.route_typical_price != null
+          ? `<p class="card-line" style="color:#94a3b8;font-size:0.85rem;">
+               Precio habitual: ${flight.route_typical_price.toFixed(0)} €
+             </p>`
+          : ""
+      }
       <div class="card-metrics">
         ${ppk ? `<span>💶 ${ppk} €/km</span>` : ""}
         ${rating10 ? `<span>⭐ ${rating10}/10</span>` : ""}
-          ${flight.discount_pct != null ? 
-            `<span class="${flight.discount_pct >= 50 ? "metric-strong" : ""}">
-               ⬇️ ${flight.discount_pct.toFixed(0)}% dto
-             </span>` 
-          : ""}
-          </div>
+        ${
+          discount != null
+            ? `<span class="${discount >= 50 ? "metric-strong" : ""}">
+                 ⬇️ ${discount.toFixed(0)}% dto
+               </span>`
+            : ""
+        }
+      </div>
       <div class="card-actions">
         ${
           flight.affiliate_url
@@ -138,7 +184,7 @@ function renderRecent(container, flights) {
   flights.forEach((flight) => {
     const price =
       flight.price_eur != null ? flight.price_eur.toFixed(2) : "N/D";
-    const dates = `${flight.start_date} – ${flight.end_date}`;
+    const dates = formatDateRange(flight.start_date, flight.end_date);
     const title = `${flight.origin_iata} → ${flight.destination_iata}`;
     const subtitle = `${flight.origin_city} → ${flight.destination_city}`;
     const tag = flight.category_label || "Escapada";
