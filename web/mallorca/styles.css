@@ -171,6 +171,11 @@ a:hover {
   opacity: 0.9;
 }
 
+.metric-strong {
+  color: #4ade80 !important; /* verde pastel, elegante */
+  font-weight: 600;
+}
+
 /* Botones */
 
 .card-actions {

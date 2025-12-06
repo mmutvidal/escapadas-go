@@ -92,10 +92,20 @@ function renderToday(container, flight) {
       <p class="card-line">
         <strong>Precio:</strong> ${price} € ida y vuelta
       </p>
+        ${flight.route_typical_price ? 
+      `<p class="card-line" style="color:#94a3b8;font-size:0.85rem;">
+         Precio habitual: ${flight.route_typical_price.toFixed(0)} €
+       </p>` 
+        : ""}
       <div class="card-metrics">
         ${ppk ? `<span>💶 ${ppk} €/km</span>` : ""}
         ${rating10 ? `<span>⭐ ${rating10}/10</span>` : ""}
-      </div>
+          ${flight.discount_pct != null ? 
+            `<span class="${flight.discount_pct >= 50 ? "metric-strong" : ""}">
+               ⬇️ ${flight.discount_pct.toFixed(0)}% dto
+             </span>` 
+          : ""}
+          </div>
       <div class="card-actions">
         ${
           flight.affiliate_url

@@ -41,7 +41,7 @@ Reglas IMPORTANTES:
   Ejemplo: "📅 Viernes 28: salida 19:45\n📅 Domingo 30: regreso 21:30\n💸 79€ ida y vuelta desde Palma de Mallorca".
 - "itinerary_block": estructura SIEMPRE según el número de días proporcionado en 'stay_nights':
   - Cabecera por día: "🇮🇹 Día 1, Centro histórico:"
-  - 2–3 bullets por día, cada bullet ≤ 8 palabras.
+  - 2–3 bullets por día, cada bullet ≤ 10 palabras.
 - "extra_block": 1–2 frases que destaquen lo especial del destino
   (ambiente, gastronomía, cultura, vistas, etc.), adaptado a la categoría y al tipo de destino.
 - DESCUENTO ("discount_pct"):
@@ -223,7 +223,8 @@ def build_caption_for_flight(
     price_eur   = _get_field(flight, "price_eur") or _get_field(flight, "price")
     start_raw   = _get_field(flight, "start_date")
     end_raw     = _get_field(flight, "end_date")
-
+    discount_pct = _get_field(flight, "discount_pct")
+    
     start_date = _to_date_str(start_raw)
     end_date   = _to_date_str(end_raw)
     start_time = _to_time_str(start_raw)
@@ -260,6 +261,7 @@ def build_caption_for_flight(
         "stay_nights": stay_nights,
         "tone": tone,
         "hashtags_base": hashtags_base,
+        "discount_pct": discount_pct,
     }
 
     cj = build_caption_json(payload)

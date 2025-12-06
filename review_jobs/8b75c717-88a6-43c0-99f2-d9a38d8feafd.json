@@ -1,0 +1,36 @@
+{
+  "flight": null,
+  "caption": "¡Milán te espera con un súper precio!\n\nTe cuento fechas y el plan perfecto para 4 días culturales. Además, es aprox. un 41% más barato que lo habitual.\n\n📅 Jueves 11: salida 09:20\n📅 Lunes 15: regreso 13:30\n💸 74,23€ ida y vuelta desde Mallorca\n\n🇮🇹 Día 1, Centro histórico:\n- Visita al Duomo\n- Paseo por la Galleria Vittorio Emanuele\n- Descubre la Piazza del Duomo\n🇮🇹 Día 2, Arte y cultura:\n- Explora el Castillo Sforzesco\n- Museo de Arte Antiguo\n- Relájate en Parco Sempione\n🇮🇹 Día 3, Moda y diseño:\n- Tour por Quadrilatero della Moda\n- Café en Brera\n- Visita a la Pinacoteca\n🇮🇹 Día 4, Últimos detalles:\n- Mercado de Navidad\n- Disfruta un espresso en Navigli\n- Paseo final por el centro\n\nMilán es una mezcla perfecta de historia, arte y moda que te enamorará. Aprovecha este descuento para descubrir su ambiente único y su exquisita gastronomía.\n\n¿Quién se apunta a esta aventura cultural? Etiquétal@ para planear juntos.\n\n#viajar #vuelosbaratos #escapadas #mallorca #Milán #viajecultural #ofertasdevuelo #descubremilán",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2025-12-11",
+      "end_date": "2025-12-15",
+      "price": 39.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-11&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-11&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.027421587892298475,
+      "score": 11.3929571543953
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "MXP",
+      "start_date": "2025-12-11",
+      "end_date": "2025-12-15",
+      "price": 74.23,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-11&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=MXP&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-11&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=MXP",
+      "distance_km": 837.070500454846,
+      "price_per_km": 0.0886783131882739,
+      "score": 3.8264029386562544
+    }
+  ],
+  "current_index": 0
+}

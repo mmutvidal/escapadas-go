@@ -7,7 +7,7 @@ from typing import Dict, Any, Optional
 
 # ---- Base curada de destinos (los que tú has definido a mano) ----
 DESTINATIONS: Dict[str, Dict[str, Any]] = {
-    "PMI": {"city": "Palma de Mallorca", "country": "España"},
+    "PMI": {"city": "Mallorca", "country": "España"},
     "AGP": {"city": "Málaga", "country": "España"},
     "ALC": {"city": "Alicante", "country": "España"},
     "AMS": {"city": "Ámsterdam", "country": "Países Bajos"},
@@ -79,7 +79,7 @@ DESTINATIONS: Dict[str, Dict[str, Any]] = {
     "POZ": {"city": "Poznań", "country": "Polonia"},
     "PRG": {"city": "Praga", "country": "República Checa"},
     "RAK": {"city": "Marrakech", "country": "Marruecos"},
-    "SCQ": {"city": "Santiago de Compostela", "country": "España"},
+    "SCQ": {"city": "Santiago", "country": "España"},
     "SDR": {"city": "Santander", "country": "España"},
     "SOF": {"city": "Sofía", "country": "Bulgaria"},
     "STN": {"city": "Londres", "country": "Reino Unido"},

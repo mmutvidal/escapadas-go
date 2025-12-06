@@ -20,6 +20,8 @@ class Flight:
     route_typical_price: Optional[float] = None
     # Descuento vs. precio habitual, en porcentaje (ej. 35.2 = 35,2% más barato)
     discount_pct: Optional[float] = None
+    category_code: Optional[float] = None
+    category_label: Optional[float] = None
 
 class FlightAPI(ABC):
     @abstractmethod

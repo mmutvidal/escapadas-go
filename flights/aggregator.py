@@ -512,6 +512,11 @@ def get_best_by_category_scored(
         category = classify_flight(f)
         code = category["code"]
 
+        # 👇 AÑADIR ESTO
+        # Guardamos la categoría directamente en el Flight
+        f.category_code = category.get("code")
+        f.category_label = category.get("label")
+
         score = score_flight_basic(f)
 
         current = best_per_cat.get(code)
