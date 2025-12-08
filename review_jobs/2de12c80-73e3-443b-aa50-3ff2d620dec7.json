@@ -1,0 +1,64 @@
+{
+  "flight": null,
+  "caption": "¡Vuela a Bremen desde Mallorca por solo 94€!\n\nEscapada perfecta de 2 noches con aprox. un 41% más barato que lo habitual. Te cuento fechas y el plan ideal para disfrutar al máximo.\n\n📅 23 de enero: salida 12:05 desde PMI\n📅 25 de enero: regreso 16:50 desde BRE\n💸 93,97€ ida y vuelta desde Mallorca\n\n🇩🇪 Día 1, Centro histórico:\n- Paseo por el Schnoor Viertel\n- Visita al Ayuntamiento\n- Cena en restaurante local\n\n🇩🇪 Día 2, Cultura y naturaleza:\n- Museo Kunsthalle Bremen\n- Jardín Botánico\n- Paseo por el río Weser\n\nBremen destaca por su ambiente acogedor, su rica historia y su gastronomía tradicional alemana que enamora en cada bocado.\n\nComenta con quién compartirías esta aventura invernal.\n\n#viajar #vuelosbaratos #escapadas #mallorca #Bremen #viajesincreibles #ofertasdevuelo #escapadaperfecta",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "STN",
+      "start_date": "2026-01-15",
+      "end_date": "2026-01-19",
+      "price": 36.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-15&dateIn=2026-01-19&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=STN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-15&tpEndDate=2026-01-19&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=STN",
+      "distance_km": 1381.5720661523208,
+      "price_per_km": 0.026766609506653768,
+      "score": 11.663144037651783
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "VLC",
+      "start_date": "2026-01-29T13:35:00.000Z",
+      "end_date": "2026-02-02T09:15:00.000Z",
+      "price": 22.0,
+      "airline": "VY",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a21527500200000f107854_0%7C152713a250060000a33d54a6_0&from=PMI&lang=en&passengers=1&to=VLC&booking_token=HqJLJwwya08WDW2XTypbDRL5YfOQMwZ3HYaqhDLnyRZENnukh7HxBcQCmaspCLqMoxw07L94qUjrmaHlwGAVknfgaI875wQ1cDtD0kXVAcGsqxXj5M0t6kzPWg6QDZGuTEHRRL9ezRHaHtHRKGRw7kRabzxmtnoGevfYIbD4VRSD-nHGlzPO7GTmxul4zdhp-DltYt3DbNZmlaOvs5rxbitsxnJfuuOLKzFidNxZiGwxPcLNPm9nuMS6d2w-3bTcPVJUDl5R44gEqs67ejneewhLIU2BNwDkZpBRBYpm-Kk2fl_evsyUdZYsPdK6raqM3tE-zW4D-FnCzO4l5npGStuU2QifpK1l389WOqIGcr1xc83XCG8t3Tp6kM_J3XXpjvxQEaXIbqjGxkNPLjFK1jG9uSYOCbqcHps-LBNmPVlvqSCBbGbty3Tr-76M625egtt3nOuPHZeT-nmRKodiIz41UaDSxkqmi7sbH0aPZ4JgHAR14C2YDy6-cGioP0jziHrCwSG5-7mqPFp2m0UiadpmGV9s7PbP35On4pK1xgymrzylZw8lT8KZdre-hw0aI7BTZG8Rd58xrXN_Fb0lwSQkjstkfcysI7vltAI5OZfRz6Mez6TQHCWoAIXBIUrS_prh2kl2n1gAHBbQcoZzEN8XDuxBS_M9yqQslmVe7s3K-FZi1b6B1Td-JaDWYbxcUM8HGFT8QQTH09JW23ImIGi7N_3SBQdZVZlr6ifWiuxpXLsZ_QuFnipIFxGSX17KqwZshgCsqGKadupT40K8jDECO0VpTp9zXRFEcIIkw_gC3-ttrXygaARy0ZvdP905d&token_module=Mod0.BIm6hmAtp0kUQKlVisia3FkfsG73ZMDnG57iXJ6ZvTbmEZhB6wq8iMEIoduwpgsKqFOL5nf3nIcZZi8UDVPk9nJyQghB4i4w9x2qfKAtXeA11jaISQm-LiIUDE08nbvxbLGzKMdfpCOo9J68ICD4RmN294FP3r-V4I5u_SFT7KIpCm8rf5Xv8aIpVboAKPVCAED3vJT6xl9YVwG7v1j5MPkdP0R-IPEPLsTazhNJ4ZBeROaytVKNKpISjP7yQ9wnhuVcmHMzgkjpE2-Fx9QKcmGsxhrEnBn44qWrcWnZrNs=",
+      "distance_km": 276.63,
+      "price_per_km": 0.07952861222571667,
+      "score": 4.233742424242424
+    },
+    {
+      "category_code": "escapada_perfecta",
+      "category_label": "✨ Escapada Perfecta",
+      "origin": "PMI",
+      "destination": "BRE",
+      "start_date": "2026-01-23",
+      "end_date": "2026-01-25",
+      "price": 93.97,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-23&dateIn=2026-01-25&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BRE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-23&tpEndDate=2026-01-25&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BRE",
+      "distance_km": 1572.9556068584388,
+      "price_per_km": 0.05974103756664825,
+      "score": 5.462263758549165
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "ZAZ",
+      "start_date": "2026-01-23T19:30:00.000Z",
+      "end_date": "2026-01-25T08:40:00.000Z",
+      "price": 44.0,
+      "airline": "VY",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a2102c4ffc0000e83c3882_0%7C102c13a24ffe00002495a10c_0&from=PMI&lang=en&passengers=1&to=ZAZ&booking_token=Hr-p9pIGezi7T0leMd6Qt_zhPRdG_Bwe2qgxgX4Y4Eez1bQovzW8B3Egt4VcWdz2ZvA-w416iphSo4SCDoDNK2Ee5if_ScUnWcPzH9fy36MGBEyL28_9hx2E1qkurhde_AN5tuvDpNLeJ3u_JmulPOvb8dISVybWRUsTTs17f7s_q1JFU9aLJpWDLhd8SqMqgz88h5MgSATbk4e63f6FA9az5J8I-29CS6zkcUOXwfi22q9LJDux9Wqn8uepswMKXTXYPLO2Vu3vcv5AYkEAmSeHcgKCYlVTG2T_5mB7AlDvIHNabB7Ozb4zoFqVHgLSaG-cWjfsI7aU7JW32MTz2OGx6FFvIeNn_yVVLqaHa28HiMDd7S21D-G2szYDvVQPPzYSG9YWgxVvQAtXR5heSFh8tztJdbOo3tqHLm6LYEHNn8Bd45xwIY9JMP-ZHRAwvfWX4y2YX5meC_exWcYDi0UFxs6gHXRaB0P9FLoLk1vxvrMj4eKGamW7MfvmuYxwyqk4ehfZcYVLun0VH1cOKHH1FhH4gWVFZ5VftnDpH7ABBTn3HEbkd3LyYcCISIxDjzzngetAWjfBcWe-5caLVyjUkAsLhMHW1yjRNIF7Depm1SJYHQF-DBepDvr48xguY9JsHOqnSIdbqMAgT9PlHUf5LtWZ6uhDZOjP4w9IrSIdlEmArqxOoj5PbbVCJ0ag9jIBxXGq2Vh1VO2GZJ5-bS4vjv1edctZvNjm1nwK7q-czie9sJq58xFZf16a4ANbSKUUR-EjJLWWuO-ijVFPaSRFbRxG3rsqmNdpZ2eTkdJ0rpci1kFgopqqcLGy4VAypRjP7EStVwHZyy0bzZoNF8hmMmmqXmXtfuukGwRj4GbSwLU9D6MJJpkljXKoJWJYcC5EyCiY7aXJ__BU53KrWtA==&token_module=Mod0.44iO-TB8liNmXrdpYrpeakXh8KAuZzaZc_APiL5XwPwqEodkX8vHM6dPy-ExL5HBZOxIgnTDI54h_6A_5v39FRcirWVge3QNz7FGSgm7I9elvZU4NBQA_Ve0PYt4IeHlwLaEuWkTy69jpTtfBS-M1kLaMmNX-pbDaXODT7wB0HddTy2KaxkDtYKwJtyVZccuSQVlEjaL0_UQNALWCLQRGRNyPtjnFxdqPf98SnrkPvevXafVRKGdniD6ZTyLSXGI6xXYy13Q4A63LvP6RpaUXiTCGgtz4bN3GOMRsiIbfFaC21ghm7ZhIU8RxzX1Byn4kaWBq4pgZ7YQcuKvBFFvng==",
+      "distance_km": 396.77,
+      "price_per_km": 0.11089548100914888,
+      "score": 3.2166742424242427
+    }
+  ],
+  "current_index": 0
+}

@@ -1,0 +1,78 @@
+{
+  "flight": null,
+  "caption": "Vuela a Viena y aprovecha un finde perfecto.\n\nTe cuento fechas y el plan ideal para un fin de semana único con salida viernes y regreso domingo por la noche.\n\n📅 Viernes 16: salida desde Mallorca (PMI)\n📅 Domingo 18: regreso desde Viena (VIE)\n💸 49,98€ ida y vuelta desde Palma de Mallorca\n\n🇦🇹 Día 1, Llegada y paseo por el casco antiguo:\n- Visita la Catedral de San Esteban\n- Disfruta un café vienés tradicional\n- Recorre la calle Graben\n\n🇦🇹 Día 2, Cultura y relax:\n- Museo de Historia del Arte\n- Jardines de Schönbrunn\n- Cena con música en vivo\n\nViena te sorprenderá por su combinación de historia, música clásica y su ambiente acogedor para un fin de semana inolvidable.\n\n¿A quién invitarías a esta escapada? Etiquétal@ y planeen juntos.\n\n#viajar #vuelosbaratos #escapadas #mallorca #findeperfecto #Viena #finDeSemana #escapada #viajes",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "STN",
+      "start_date": "2026-01-15",
+      "end_date": "2026-01-19",
+      "price": 36.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-15&dateIn=2026-01-19&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=STN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-15&tpEndDate=2026-01-19&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=STN",
+      "distance_km": 1381.5720661523208,
+      "price_per_km": 0.026766609506653768,
+      "score": 9.86249711208077
+    },
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "HHN",
+      "start_date": "2025-12-11",
+      "end_date": "2025-12-15",
+      "price": 31.630000000000003,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-11&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=HHN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-11&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=HHN",
+      "distance_km": 1262.526258853935,
+      "price_per_km": 0.0250529442680363,
+      "score": 10.539427380550649
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "WAW",
+      "start_date": "2025-12-12",
+      "end_date": "2025-12-15",
+      "price": 49.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-12&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=WAW&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-12&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=WAW",
+      "distance_km": 1984.9247424117373,
+      "price_per_km": 0.025179795955020918,
+      "score": 10.403265418225978
+    },
+    {
+      "category_code": "romantica",
+      "category_label": "❤️ Escapada Romántica",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2025-12-12",
+      "end_date": "2025-12-15",
+      "price": 50.07,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-12&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-12&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.03434214371604264,
+      "score": 7.74400608646879
+    },
+    {
+      "category_code": "finde_perfecto",
+      "category_label": "🎉 Finde Perfecto",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2026-01-16",
+      "end_date": "2026-01-18",
+      "price": 49.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-16&dateIn=2026-01-18&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-16&tpEndDate=2026-01-18&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.03428041427856623,
+      "score": 7.757464280702128
+    }
+  ],
+  "current_index": 4
+}

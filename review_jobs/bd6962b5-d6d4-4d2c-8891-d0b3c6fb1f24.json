@@ -1,0 +1,64 @@
+{
+  "flight": null,
+  "caption": "¿Quieres saborear Zaragoza sin gastar mucho?\n\nTe cuento fechas y plan gastronómico para disfrutar al máximo.\n\n📅 23 de enero: salida desde Mallorca (PMI) a Zaragoza (ZAZ) por 44€\n📅 25 de enero: regreso desde Zaragoza a Mallorca (PMI) por 44€\n\n🍽 Día 1, Tapas en El Tubo:\n- Prueba el ternasco asado\n- Disfruta de la cerveza artesanal\n- Pasea por la Plaza del Pilar\n🍷 Día 2, Ruta de vinos:\n- Visita bodegas locales\n- Degustaciones con vistas\n- Desayuno en cafetería tradicional\n\nZaragoza sorprende con su rica gastronomía aragonesa, ambiente acogedor y monumentos históricos que enamoran.\n\nComenta con quién te gustaría compartir esta escapada foodie.\n\n#viajar #vuelosbaratos #escapadas #mallorca #gastronomia #Zaragoza #viajes #foodie #turismo",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "STN",
+      "start_date": "2026-01-15",
+      "end_date": "2026-01-19",
+      "price": 36.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-15&dateIn=2026-01-19&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=STN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-15&tpEndDate=2026-01-19&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=STN",
+      "distance_km": 1381.5720661523208,
+      "price_per_km": 0.026766609506653768,
+      "score": 11.663144037651783
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "VLC",
+      "start_date": "2026-01-29T13:35:00.000Z",
+      "end_date": "2026-02-02T09:15:00.000Z",
+      "price": 22.0,
+      "airline": "VY",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a21527500200000f107854_0%7C152713a250060000a33d54a6_0&from=PMI&lang=en&passengers=1&to=VLC&booking_token=HvJk-ITGg5ilMpY7KhS9dkxDUIPQAPDdSxv1KlLuRNHtBk_C6bRJQE_7oz3ZXQqCYUd6_JqjH4Wq7RAhYOxK-IWp5m-Urqe1YdQlWEOFOqIUrZTlGcBN6JJHlUdjXXOSrgYXBnNLsti20VWAsAxiXmiTnU27wVDc90MXVBsxUwaXDUo373PZgzcma56Q_KYVdm_XbeH-ZGRJg1pQ1cmdURyPlWbJIUtlU1M5TL7jxhih_nEeTrYIJr2iGGKeRiIJAVy9BSIzAZQNr1FtLh_kocuTPywGNK1OI77ih_lXYZXe_ekYxTovuATw45H_RxZcW1Lp2p83JQkzItrbW4n0OGto1zb0lVCBXM3q0iU-uiAyOmF3Jnxc1UrXTujgVz6ky7QwmWPmUgeU7ppL4cU5IotoiBxIOBiRMW4fShZ3cd_Ep6Q7Mjhbm8Si7qSKiU-nGpM05oZcAjpMKgai_Dae1nJsA33nGvbGqdcCNHyyJeCjWzkC4XBHY6UDC57CYQK9jJzxft3ouqhqHooH3nmPXdRULRCmb4p27eykZ2F1P-zBEl0e_8FG9O4oF0QpLrywjK1_DCszJV6LJJtQSoAAox8dH2CYWmejx4BDLzRGn7jSypX3rfyhp-opYgVF20DVLjB_DloglFcKPh-Z8G89xMRZ4D30wbaTsDeDsP834EAelliqT3kuEcgLeEAyoLnWQFs9JVmA8brfwg7YQKtwWtAHO-URE__tn2YH2ejT6uJsn9NJOLZlosNj5fDlOMDxcBLOwcMxjxDgz8U1Fw0KWd0P4nV7HZQjUuqYNjTXxmLtXlfk-wf4kup93kIXXiXul&token_module=Mod0.BIm6hmAtp0kUQKlVisia3FkfsG73ZMDnG57iXJ6ZvTbmEZhB6wq8iMEIoduwpgsKQwfI0sLQgOoxpAlGq5ekTl4q3Ms2mWJLeI0E0TbwMGCP4PmcpJcDLkBqSXiAlTordGzAZAPoXnpHVVeaXhkYjuDAiZp48pklosW0-78yWb8ODt9A6jCkBXgGuFwCiwxNhO6LiJhqx5dg3O29W8Ak8rLYdZB8eS-ZC7UjJl4irnhRMuRr0s0AenSMpopEjwSiPZDe4HHHBB39CnCIs7kUYdFlm8ptQWg8Gbk1-7z5qhY=",
+      "distance_km": 276.63,
+      "price_per_km": 0.07952861222571667,
+      "score": 4.240409090909091
+    },
+    {
+      "category_code": "escapada_perfecta",
+      "category_label": "✨ Escapada Perfecta",
+      "origin": "PMI",
+      "destination": "BRE",
+      "start_date": "2026-01-23",
+      "end_date": "2026-01-25",
+      "price": 93.97,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-23&dateIn=2026-01-25&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BRE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-23&tpEndDate=2026-01-25&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BRE",
+      "distance_km": 1572.9556068584388,
+      "price_per_km": 0.05974103756664825,
+      "score": 5.462263758549165
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "ZAZ",
+      "start_date": "2026-01-23T19:30:00.000Z",
+      "end_date": "2026-01-25T08:40:00.000Z",
+      "price": 44.0,
+      "airline": "VY",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a2102c4ffc0000e83c3882_0%7C102c13a24ffe00002495a10c_0&from=PMI&lang=en&passengers=1&to=ZAZ&booking_token=HqVmJBxspMF8gqAgyFwZaL0Q-EBgatb_N0EOKspuUbanhQP1iR_9UInkcy7mH-AL3P1Yf5qvnJRG_scARivkq53QlZleUIlDY_67RNQJY51dJgGuaiOeqE_3qQFk2C8MGF0gzCPg4M4TF14LviWPJ-lW36Lqx8rWZMASiim3UJSIOL2kxmKm2I6VfbyDILsbCMWQ39WI1BWpdBGUzyZSiJYA8tmo8Xd2nJ3VrEAD-Alo5y4FT9BSw6ZI5RRbPzTa3gZ_bxPubAj3J9s1Gv_ftTJ8JvVOmMG4uJxPvmtsPQHQcowibyA15mJlHlRhJzkB1zFu1ItP486u0Uu_RumDKv1QnGWpH29hmt2aCfbJSElMBgfRajVxDCJrdbXMudr5Z2GEticfhYXr8LO2HP4w0857ikykSlmz3wPcP3bU9uStwaVResyCjyFGAagu__CKRMrV_WCWGkxk7M3UXIF0A0J47Xak-6afMZeyIWj6vZEt9RYc52GSCWtcm5hTvEi7syquwuQxAqzp_mUXX3AmQYZyJpqewtEOuLhCcBbWHgX6uyAsvm9Er0YfqbpgXSWQPWsMb-znngaiKfgdSgmycZyP21i1nj7Zulouhwst1d8GD7WBumQzn7TUzctB8DXg_5zgIBhRPckyq-4ePxtFTxK3DGHjaAd6wKditEZ0Il1-4nN5cCJrWDEzImTPpaujW4lCWkCpDQt95pOYiV2EIteXb3JvPD6br9Y6dRitHIaRHIWKn9q-PLwMwHkVKRurXApR6f-WKHjDwOrsgu--Oc8BxF79FIyqoPLhYmBI-NPGg7d2-cUpWIChMTtFuaQQ7KMEAP2Z7aYkyHkURUBQj-HM75P5mmXqxKDU3mns45gmo7AWF2Oo6MBOTgtHFlip3&token_module=Mod0.-m5zeX4XHJHbdlc92yaBV5RFhj5lXV8fCsIjD4W5Ds9rzdcBYzNnC7udosP1osAAOlJkQM2KjUe4IYXtkK7XCNPXys2dg-RwKJJ51CrtX7QlwqfqXolGbpPy_hLUW4005acISO9-MWAIJ0cGTOgBX3G1wdXLrhXb1occTCyfXcuc499qe3PHjh-iUOL2fzi-E5BcwR4Bk-Q_c2S1FGJxn9j-FDiGnSGDTgHhT89Zbvlo9uxndg-0me2E4SFhyhNgM_9GLheweVObh7qj6lxkUeXIYtbR6mFq_OfbCCb_8heNg6rHmRgehJhRdqUe3OY5Q4cIwDLWvKp53bDVjMtGHw==",
+      "distance_km": 396.77,
+      "price_per_km": 0.11089548100914888,
+      "score": 3.2156742424242424
+    }
+  ],
+  "current_index": 3
+}

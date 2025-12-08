@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import asdict
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 from urllib.parse import urlencode, quote_plus
 import urllib.parse
 
@@ -20,6 +20,10 @@ from config.settings import (
     SKYSCANNER_CURRENCY,
 )
 
+def _fget(f, field, default=None):
+    if isinstance(f, dict):
+        return f.get(field, default)
+    return getattr(f, field, default)
 
 def _extract_ymd(date_str: str) -> Optional[str]:
     """
@@ -136,15 +140,26 @@ def build_kiwi_affiliate_link(origin_iata, dest_iata, start_date, end_date):
     
 
 
-def build_affiliate_url_for_flight(f: Flight) -> Optional[str]:
-    origin = f.origin
-    dest = f.destination
+def build_affiliate_url_for_flight(f: Any) -> Optional[str]:
+    """
+    Acepta tanto Flight como dict (como los candidates del review).
+    - Si es Ryanair y f es un Flight real -> Skyscanner (Impact).
+    - En cualquier otro caso -> Kiwi + Travelpayouts.
+    """
+    origin = _fget(f, "origin")
+    dest = _fget(f, "destination")
+    start = str(_fget(f, "start_date", ""))[:10]
+    end = str(_fget(f, "end_date", ""))[:10]
 
-    # normalizar fechas a YYYY-MM-DD
-    start = str(f.start_date)[:10]
-    end   = str(f.end_date)[:10]
+    airline = (_fget(f, "airline", "") or "").lower()
 
-    if (f.airline or "").lower() == "ryanair":
+    # Caso preferente: Ryanair con Flight real
+    if airline == "ryanair" and isinstance(f, Flight):
         return build_skyscanner_affiliate_link(f)
-    else:
+
+    # Fallback genérico: Kiwi (esto funciona bien con dicts también)
+    if origin and dest and start:
         return build_kiwi_affiliate_link(origin, dest, start, end)
+
+    # Si falta info, devolvemos None
+    return None

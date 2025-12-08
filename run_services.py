@@ -30,12 +30,12 @@ def main():
         # 1) Bot de Telegram
         procs.append(start_process([sys.executable, "-m", "review.telegram_review"]))
 
-        # 2) Servidor HTTP para los vídeos (puerto 8000)
-        procs.append(start_process([sys.executable, "-m", "http.server", "8000"]))
+        # # 2) Servidor HTTP para los vídeos (puerto 8000)
+        # procs.append(start_process([sys.executable, "-m", "http.server", "8000"]))
 
-        # 3) Ngrok
-        # (asegúrate de que 'ngrok' está en el PATH o pon la ruta completa)
-        procs.append(start_process(["ngrok", "http", "8000"]))
+        # # 3) Ngrok
+        # # (asegúrate de que 'ngrok' está en el PATH o pon la ruta completa)
+        # procs.append(start_process(["ngrok", "http", "8000"]))
 
         print("\n✅ Servicios lanzados.")
         print("Pulsa Ctrl+C en esta ventana para pararlos.\n")

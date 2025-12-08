@@ -8,6 +8,13 @@ from typing import Dict, Any, List, Optional
 from content.destinations import get_city
 
 
+def _fget(obj: Any, attr: str, default=None):
+    """Devuelve obj.attr o obj[attr] indistintamente (Flight o dict)."""
+    if isinstance(obj, dict):
+        return obj.get(attr, default)
+    return getattr(obj, attr, default)
+    
+
 def _ensure_iso_date(d) -> str:
     """Convierte varias formas de fecha a 'YYYY-MM-DD'."""
     if d is None:
@@ -33,28 +40,26 @@ def _build_flight_entry(
     reel_url: Optional[str] = None,
     affiliate_url: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """
-    Convierte un item de best_by_cat en una entrada JSON para la web.
-    item: {"flight": Flight(...), "category": {...}, "score": ...}
-    """
     f = item["flight"]
     cat = item["category"]
     score = item.get("score")
 
-    origin_iata = f.origin
-    dest_iata = f.destination
+    # Soportar Flight o dict
+    origin_iata = _fget(f, "origin")
+    dest_iata   = _fget(f, "destination")
 
     origin_city = get_city(origin_iata, include_flag=False)
-    dest_city = get_city(dest_iata, include_flag=False)
+    dest_city   = get_city(dest_iata, include_flag=False)
 
-    start_date = _ensure_iso_date(getattr(f, "start_date", None))
-    end_date = _ensure_iso_date(getattr(f, "end_date", None))
+    start_date = _ensure_iso_date(_fget(f, "start_date", None))
+    end_date   = _ensure_iso_date(_fget(f, "end_date", None))
 
-    price_eur = _float_or_none(getattr(f, "price", None))
-    price_per_km = _float_or_none(getattr(f, "price_per_km", None))
-    distance_km = _float_or_none(getattr(f, "distance_km", None))
+    price_eur     = _float_or_none(_fget(f, "price", None))
+    price_per_km  = _float_or_none(_fget(f, "price_per_km", None))
+    distance_km   = _float_or_none(_fget(f, "distance_km", None))
+    route_typical = _float_or_none(_fget(f, "route_typical_price", None))
+    discount_pct  = _float_or_none(_fget(f, "discount_pct", None))
 
-    # ID simple: YYYY-MM-DD_origen_destino
     featured_today = date.today().strftime("%Y-%m-%d")
     entry_id = f"{featured_today}_{origin_iata.lower()}_{dest_iata.lower()}"
 
@@ -62,8 +67,8 @@ def _build_flight_entry(
 
     return {
         "id": entry_id,
-        "date_featured": featured_today,  # día en que lo muestras como "vuelo del día"
-        "market": market,                 # por ejemplo "PMI"
+        "date_featured": featured_today,
+        "market": market,
 
         "category_code": cat.get("code"),
         "category_label": cat.get("label"),
@@ -78,19 +83,19 @@ def _build_flight_entry(
 
         "price_eur": price_eur,
         "price_per_km": price_per_km,
+        "route_typical_price": route_typical,
+        "discount_pct": discount_pct,
         "distance_km": distance_km,
         "score": _float_or_none(score),
 
-        "airline": getattr(f, "airline", None),
+        "airline": _fget(f, "airline", None),
 
-        # URLs
-        "booking_url": getattr(f, "link", None),   # deeplink original (Ryanair/Kiwi)
-        "affiliate_url": affiliate_url,            # aquí meterás Skyscanner / Tequila etc.
-        "reel_url": reel_url,                      # URL pública del Reel, si la tienes
+        "booking_url": _fget(f, "link", None),
+        "affiliate_url": affiliate_url,
+        "reel_url": reel_url,
 
         "created_at": now_iso,
     }
-
 
 def update_flights_json(
     main_item: Dict[str, Any],

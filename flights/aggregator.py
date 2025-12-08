@@ -10,10 +10,12 @@ from flights.api_kiwi import KiwiAPI
 from datetime import datetime
 # from flights.base import Flight
 import random
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 from collections import defaultdict
 import statistics
+from math import floor, ceil
+
 
 # import flights.flights_settings
 
@@ -145,39 +147,77 @@ DESTINATION_CATEGORY_LABELS = {
 }
 
 
-def annotate_route_price_stats(flights: List[Flight]) -> None:
+def _percentile(values, q: float) -> float:
+    """
+    Percentil simple con interpolación lineal.
+    q en [0,1]. Ej: 0.6 = percentil 60.
+    """
+    if not values:
+        raise ValueError("Empty list")
+
+    vals = sorted(values)
+    n = len(vals)
+    if n == 1:
+        return vals[0]
+
+    pos = (n - 1) * q
+    lo = floor(pos)
+    hi = ceil(pos)
+
+    if lo == hi:
+        return vals[lo]
+
+    frac = pos - lo
+    return vals[lo] + (vals[hi] - vals[lo]) * frac
+
+
+
+def annotate_route_price_stats(
+    flights: List["Flight"],
+    use_percentile: float = 0.7,
+    min_samples_for_percentile: int = 5,
+) -> None:
     """
     Para cada ruta (origin, destination) calcula un precio 'habitual'
-    (mediana de todos los precios de esa ruta en la búsqueda actual)
     y anota en cada Flight:
       - route_typical_price
       - discount_pct  (positivo = más barato que lo habitual)
+
+    Estrategia:
+      - si hay suficientes datos en la ruta, usar percentil (por defecto 60)
+      - si no, usar mediana (más robusta)
     """
-    # Agrupar precios por ruta
     prices_by_route = defaultdict(list)
     for f in flights:
         if f.price is not None:
             key = (f.origin, f.destination)
             prices_by_route[key].append(f.price)
 
-    # Calcular mediana por ruta
     typical_by_route = {}
     for key, price_list in prices_by_route.items():
         if not price_list:
             continue
-        typical_by_route[key] = statistics.median(price_list)
 
-    # Anotar en cada vuelo
+        # if len(price_list) >= min_samples_for_percentile and use_percentile is not None:
+        #     # percentil 70 por defecto
+        #     typical = _percentile(price_list, use_percentile)
+        # else:
+        #     # fallback conservador
+        #     typical = statistics.median(price_list)
+
+        typical = max(_percentile(price_list, use_percentile),statistics.mean(price_list))
+        
+        typical_by_route[key] = typical
+
     for f in flights:
         key = (f.origin, f.destination)
         typical = typical_by_route.get(key)
-        if typical is None or typical <= 0:
+        if typical is None or typical <= 0 or f.price is None:
             f.route_typical_price = None
             f.discount_pct = None
             continue
 
-        f.route_typical_price = typical
-        # % de descuento: (habitual - actual) / habitual * 100
+        f.route_typical_price = round(typical, 2)
         discount = (typical - f.price) / typical * 100.0
         f.discount_pct = round(discount, 1)
 
@@ -349,8 +389,8 @@ def score_flight_basic(f: Flight) -> float:
 
     # Pesos: 40% precio, 40% €/km, 20% descuento
     return (
-        0.4 * price_component +
-        0.3 * ppkm_component +
+        0.45 * price_component +
+        0.25 * ppkm_component +
         0.3 * (1 + discount_norm)  # sumamos 1 para que siempre aporte algo
     )
 
@@ -434,25 +474,27 @@ def classify_flight(f: Flight) -> dict:
             1 <= duration_days <= 3
         ):
             return {"code": "finde_perfecto", "label": "🎉 Finde Perfecto"}
-
-    # 2) 🔥 ULTRA CHOLLO
-    if ppkm is not None and price is not None:
-        if ppkm < 0.07 and price < 90:
-            return {"code": "ultra_chollo", "label": "🔥 Ultra Chollo"}
-
-    # 3) CATEGORÍA POR DESTINO (romántica / cultural / gastronómica)
+    # 2) CATEGORÍA POR DESTINO (romántica / cultural / gastronómica)
     dest_cat = pick_destination_category(f)
     if dest_cat is not None:
         return dest_cat
 
-    # 4) ✨ ESCAPADA PERFECTA (DEFAULT)
-    # Si no entra en ninguna anterior, lo etiquetamos así.
-    # Puedes añadir alguna condición suave (duración mínima, etc.) si quieres.
-    if duration_days is not None and 1 <= duration_days <= 7:
-        return {"code": "escapada_perfecta", "label": "✨ Escapada Perfecta"}
+    return {"code": "ultra_chollo", "label": "🔥 Ultra Chollo"}
+    
+    # # 3) 🔥 ULTRA CHOLLO
+    # if ppkm is not None and price is not None:
+    #     if ppkm < 0.07 and price < 90:
+    #         return {"code": "ultra_chollo", "label": "🔥 Ultra Chollo"}
 
-    # fallback rarísimo (fechas rotas, etc.)
-    return {"code": "oferta", "label": "✈️ Oferta"}
+
+    # # 4) ✨ ESCAPADA PERFECTA (DEFAULT)
+    # # Si no entra en ninguna anterior, lo etiquetamos así.
+    # # Puedes añadir alguna condición suave (duración mínima, etc.) si quieres.
+    # if duration_days is not None and 1 <= duration_days <= 7:
+    #     return {"code": "escapada_perfecta", "label": "✨ Escapada Perfecta"}
+
+    # # fallback rarísimo (fechas rotas, etc.)
+    # return {"code": "oferta", "label": "✈️ Oferta"}
 
 
 
@@ -597,9 +639,9 @@ def choose_main_candidate_prob(
 
     # Pesos base
     base_weights = {
-        "finde": 0.30,
-        "chollo": 0.25,
-        "other": 0.45,
+        "finde": 0.40,
+        "chollo": 0.20,
+        "other": 0.40,
     }
 
     # Filtrar solo grupos que tienen candidatos

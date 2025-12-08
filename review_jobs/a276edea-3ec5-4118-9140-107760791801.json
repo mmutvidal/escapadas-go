@@ -1,0 +1,92 @@
+{
+  "flight": null,
+  "caption": "¡Milán te espera con sabores inolvidables!\n\nDescubre fechas y un plan gastronómico perfecto para 4 días.\n\n📅 1 enero: salida desde Mallorca (PMI)\n📅 5 enero: regreso desde Milán (MXP)\n💸 76,98€ ida y vuelta\n\n🇮🇹 Día 1, Centro histórico:\n- Piazza del Duomo y Galleria Vittorio\n- Cena con risotto milanés\n🇮🇹 Día 2, Barrio de Navigli:\n- Paseo por canales y mercadillos\n- Degustación de aperitivos típicos\n🇮🇹 Día 3, Brera y arte:\n- Visita a Pinacoteca y cafés\n- Cena con especialidades lombardas\n🇮🇹 Día 4, Mercado y compras:\n- Mercado de alimentos frescos\n- Último gelato en la ciudad\n\nMilán combina a la perfección cultura y una gastronomía destacada, con platos que cuentan historias y vistas que enamoran en cada rincón.\n\nGuárdalo para planear tu próxima aventura culinaria.\n\n#viajar #vuelosbaratos #escapadas #mallorca #gastronomia #milán #comida #viajesgastronomicos",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "HHN",
+      "start_date": "2025-12-11",
+      "end_date": "2025-12-15",
+      "price": 31.630000000000003,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-11&dateIn=2025-12-15&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=HHN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-11&tpEndDate=2025-12-15&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=HHN",
+      "distance_km": 1262.526258853935,
+      "price_per_km": 0.0250529442680363,
+      "score": 12.533620012314692
+    },
+    {
+      "category_code": "escapada_perfecta",
+      "category_label": "✨ Escapada Perfecta",
+      "origin": "PMI",
+      "destination": "BRE",
+      "start_date": "2025-12-19",
+      "end_date": "2025-12-22",
+      "price": 95.3,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-19&dateIn=2025-12-22&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BRE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-19&tpEndDate=2025-12-22&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BRE",
+      "distance_km": 1572.9556068584388,
+      "price_per_km": 0.060586579547744795,
+      "score": 5.432455565486516
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "MXP",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-05",
+      "price": 76.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-01&dateIn=2026-01-05&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=MXP&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-01&tpEndDate=2026-01-05&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=MXP",
+      "distance_km": 837.070500454846,
+      "price_per_km": 0.09196358007858448,
+      "score": 3.707023774181005
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "BER",
+      "start_date": "2026-01-15",
+      "end_date": "2026-01-19",
+      "price": 90.50999999999999,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-15&dateIn=2026-01-19&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BER&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-15&tpEndDate=2026-01-19&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BER",
+      "distance_km": 1647.7968523400168,
+      "price_per_km": 0.0549278874222073,
+      "score": 5.915125905446968
+    },
+    {
+      "category_code": "romantica",
+      "category_label": "❤️ Escapada Romántica",
+      "origin": "PMI",
+      "destination": "BGY",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-05",
+      "price": 62.980000000000004,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-01&dateIn=2026-01-05&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BGY&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-01&tpEndDate=2026-01-05&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BGY",
+      "distance_km": 872.5056280241101,
+      "price_per_km": 0.07218291547600156,
+      "score": 4.6191259935519176
+    },
+    {
+      "category_code": "finde_perfecto",
+      "category_label": "🎉 Finde Perfecto",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2026-01-16",
+      "end_date": "2026-01-18",
+      "price": 49.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-16&dateIn=2026-01-18&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-16&tpEndDate=2026-01-18&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.03428041427856623,
+      "score": 9.21502268306104
+    }
+  ],
+  "current_index": 2
+}

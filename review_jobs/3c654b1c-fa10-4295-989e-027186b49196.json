@@ -1,0 +1,50 @@
+{
+  "flight": null,
+  "caption": "¡Una escapada increíble que no puedes dejar pasar!\n\nTe traigo un vuelo ultra chollo para disfrutar 3 noches en Alemania. Prepárate para descubrir Karlsruhe con un precio que te sorprenderá.\n\n📅 18 de diciembre: salida desde Mallorca (PMI)\n📅 21 de diciembre: regreso desde Karlsruhe (FKB)\n💸 Solo 59€ ida y vuelta\n\n🇩🇪 Día 1, Llegada y paseo por el centro:\n- Visita el Palacio de Karlsruhe\n- Disfruta de los parques urbanos\n\n🇩🇪 Día 2, Cultura y gastronomía:\n- Museo de Arte Estatal\n- Degusta platos alemanes típicos\n\n🇩🇪 Día 3, Últimos rincones:\n- Mercado local\n- Relax en el bosque cercano\n\nKarlsruhe destaca por su ambiente relajado y belleza arquitectónica única, perfecta para una escapada cultural y llena de encanto.\n\nGuárdalo para planificar tu próxima aventura.\n\n#viajar #vuelosbaratos #escapadas #mallorca #Karlsruhe #viajes #ofertadevuelo",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "FKB",
+      "start_date": "2025-12-18",
+      "end_date": "2025-12-21",
+      "price": 58.980000000000004,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-18&dateIn=2025-12-21&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=FKB&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-18&tpEndDate=2025-12-21&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=FKB",
+      "distance_km": 1143.94877997741,
+      "price_per_km": 0.05155825246053823,
+      "score": 5.351513987696719
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "MXP",
+      "start_date": "2025-12-18",
+      "end_date": "2025-12-21",
+      "price": 35.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-18&dateIn=2025-12-21&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=MXP&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-18&tpEndDate=2025-12-21&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=MXP",
+      "distance_km": 837.070500454846,
+      "price_per_km": 0.04298323735031786,
+      "score": 6.3273944352523115
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "MAD",
+      "start_date": "2025-12-18",
+      "end_date": "2025-12-21",
+      "price": 40.4,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-18&dateIn=2025-12-21&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=MAD&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-18&tpEndDate=2025-12-21&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=MAD",
+      "distance_km": 550.5760026717456,
+      "price_per_km": 0.07337769863552616,
+      "score": 3.8741683333647625
+    }
+  ],
+  "current_index": 0
+}

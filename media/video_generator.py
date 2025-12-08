@@ -13,6 +13,14 @@ from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 
 from content.destinations import get_city  # para convertir IATA → ciudad
 
+import uuid
+
+try:
+    import boto3
+except ImportError:
+    boto3 = None  # por si este módulo se importa en un entorno sin boto3
+
+
 
 # --- Parche compatibilidad Pillow 10+ ---
 # MoviePy todavía usa Image.ANTIALIAS; en Pillow 10 se renombró a LANCZOS.
@@ -837,6 +845,40 @@ def _compose_frame(
     return frame
 
 
+def upload_reel_to_s3(
+    local_path: str,
+    bucket: str,
+    prefix: str = "reels/",
+    public: bool = True,
+) -> str:
+    """
+    Sube el MP4 a S3 y devuelve la URL pública (o la URL normal del bucket).
+    Requiere que boto3 esté configurado con credenciales válidas.
+    """
+    if boto3 is None:
+        raise RuntimeError("boto3 no está instalado en este entorno.")
+
+    s3 = boto3.client("s3")
+
+    lp = Path(local_path)
+    ext = lp.suffix or ".mp4"
+    # nombre único para evitar colisiones
+    key = f"{prefix}{uuid.uuid4().hex}{ext}"
+
+    extra_args = {"ContentType": "video/mp4"}
+    if public:
+        extra_args["ACL"] = "public-read"
+
+    s3.upload_file(
+        Filename=str(lp),
+        Bucket=bucket,
+        Key=key,
+        ExtraArgs=extra_args,
+    )
+
+    # URL pública estilo estándar; si usas CloudFront, aquí se cambia
+    url = f"https://{bucket}.s3.amazonaws.com/{key}"
+    return url
     
 
 # ---------------------------------------------------------------------------
@@ -939,7 +981,15 @@ def create_reel_for_flight(
     logo_path: Optional[str],
     brand_line: str = "@escapadasgo_mallorca",
     duration: float = 4.0,
+    s3_bucket: Optional[str] = None,
+    s3_prefix: str = "reels/",
+    s3_public: bool = True,
 ) -> str:
+    """
+    Genera el reel para un vuelo:
+      - Si s3_bucket es None → devuelve la ruta local (out_mp4_path).
+      - Si s3_bucket tiene valor → sube el vídeo a S3 y devuelve la URL pública.
+    """
     origin = _get_field(flight, "origin", "PMI")
     destination = _get_field(flight, "destination", "VIE")
     start_date = str(_get_field(flight, "start_date", ""))[:10]
@@ -962,7 +1012,7 @@ def create_reel_for_flight(
     origin_city = get_city(origin, include_flag=False)
     dest_city   = get_city(destination, include_flag=False)
 
-    route_main  = f"{origin_city} – {dest_city}"           # Mallorca – Milán
+    route_main  = f"{origin_city} – {dest_city}"              # Mallorca – Milán
     route_codes = f"{origin.upper()} ✈ {destination.upper()}"  # PMI ✈ BGY
 
     dates = format_dates_dd_mmm(start_date, end_date)
@@ -974,6 +1024,7 @@ def create_reel_for_flight(
             "No se ha encontrado ninguna imagen para el destino ni DEFAULT en media/images"
         )
 
+    # 1) Generar el vídeo local
     create_reel_v4(
         bg_image_path=str(bg_path),
         out_mp4_path=out_mp4_path,
@@ -988,5 +1039,15 @@ def create_reel_for_flight(
         category_label=category_label,
     )
 
+    # 2) Si hay bucket de S3, subirlo y devolver la URL
+    if s3_bucket:
+        return upload_reel_to_s3(
+            local_path=out_mp4_path,
+            bucket=s3_bucket,
+            prefix=s3_prefix,
+            public=s3_public,
+        )
+
+    # 3) Si no, devolver la ruta local como antes
     return out_mp4_path
 

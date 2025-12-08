@@ -1,0 +1,64 @@
+{
+  "flight": null,
+  "caption": "¡Vuela a Málaga por solo 24€!\n\nTe cuento todo para aprovechar este ultra chollo, casi un 55% más barato que lo habitual.\n\n📅 Viernes 8 de mayo: salida desde Mallorca (PMI)\n📅 Martes 12 de mayo: regreso desde Málaga (AGP)\n💸 24€ solo ida, un precio que no verás dos veces\n\n🇪🇸 Día 1, Málaga centro:\n- Paseo por la Alcazaba\n- Tapas en el casco antiguo\n\n🇪🇸 Día 2, Cultura y playa:\n- Visita al Museo Picasso\n- Relax en Playa de la Malagueta\n\n🇪🇸 Día 3, Naturaleza y vistas:\n- Sendero al monte Gibralfaro\n- Atardecer en el mirador\n\nMálaga combina historia, gastronomía y playas increíbles en un ambiente vibrante. Aprovecha este descuento único para descubrirlo.\n\n¿Quién es tu compañero ideal de viaje? Etiquétal@ aquí.\n\n#viajar #vuelosbaratos #escapadas #mallorca #malaga #chollosdevuelo #viajesbaratos #descubriendoespaña",
+  "video_path": "media\\videos\\reel.mp4",
+  "candidates": [
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "FCO",
+      "start_date": "2026-05-07",
+      "end_date": "2026-05-11",
+      "price": 74.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-05-07&dateIn=2026-05-11&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=FCO&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-05-07&tpEndDate=2026-05-11&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=FCO",
+      "distance_km": 846.4514645080592,
+      "price_per_km": 0.0885815704076747,
+      "score": 3.904377069695266
+    },
+    {
+      "category_code": "escapada_perfecta",
+      "category_label": "✨ Escapada Perfecta",
+      "origin": "PMI",
+      "destination": "BCN",
+      "start_date": "2026-05-14T06:05:00.000Z",
+      "end_date": "2026-05-18T20:35:00.000Z",
+      "price": 34.0,
+      "airline": "VY",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a201af506b0000c382e277_0%7C01af13a2506f000043fbbf84_0&from=PMI&lang=en&passengers=1&to=BCN&booking_token=HvBN_yPbMWL4YQdzunwzWWYAnVzhasQ-Ijaf18RKYKaf_zjYBEGIgTTHfU2HyP7AnDFS31dF6qpxvMchSKqNikY8PmEcdGvtt_8mlRdaaJqY2hPIbfpPzVMM6s-V55_Gxt-UQLIKWvdRf-htyPZZPmwFAIG1kMJvKnaa9c2KBktHkIBt3ky_CNRzNgfCUhuBr048Mx3wB77xmraxWWulFxVMB4nrrTWr__FMNsqZeYZg7Pfa9i1Fx8_6JbRqJjYTcwFHFJOzY86YQkVsbb4RIquUzWFaDvD4V3gVkcpOo96XwLEOfzoXUEc5f8ch-ubUbT_U7HSnZg-4tKd0RUhvejCpZPe8eAWB50AHt3C73lXIfANsu5LeT_09nuj8cLmeMnb9E_VhOg62AXln-ql4h4bi5DHwrfJXxQs_D8giKn8q628dhscGVC2588emaIh_O_VAM66DkdKvVMiXpmfNLoa1SEFE119-CB2hiqIQUrHbY8jlsDp7-t2A8zXTFt5GgU3HqkAmU4STdlSAg6A1qpd6OlhmTBOoJhPSf8Gtm07QNJDc8jZRMmTM3nYHtNFYQLfzZGTvppwpcqkfndv3_FfvxccD0UmxWXhfq6nJG-1npIrgfNskVzPNiJmmmZ_PfqPQ7xwlqGabgGjKWXgjZZm897h-qBuf6rzh1IMB9Y6nAa6cd33KrhbW86GgjW40A_uVPA8euLsLhrjmu9EtFh9ugRRRw4Tf9shVHZ4KUdfI3SgIJxhKn-KKxcilS8blv4EHJo6aIQE9X37xdfk_EViRzFFnyj3s1-joGV978ACtS9krUgu2eZOVesuh8BWxrV8g9qhqWgaj3pQSf7WGaxJa46hVeSELBpG6QEJ2Blh5s8oNCqySU-bJBA81UkQ8p&token_module=Mod0.02SdzNpt1qfXypOhQcfJTc_ZXnvhTyCnPpU6ZrTVqSBOJxjH4Y4iuAat6mBH-d_G0dvkRlu7DhpCZ4JNzxQctkOmUxoZD7iyosOYqy7zL01tfrfCNHVVQ0exSSUQVYyulxiPffIGucGlWjqebGxuazJrsjqs7C7CbSMVdxOz3nE5MCrh9Sa_SvdHusqBoemOHGcX5Yj2jTl_snC83nY2tKXHkyk_T3uNe6pPlg_WkubWWgP-PAhReE7QJDv8JC4aQFU2GuclPwF4cCmIzXVqlrsI0BetrQEWW5oMmm-iKEvAUgXShp4G8IDND00gWwxrV8IQocEOV0nuEfEfP-xvPw==",
+      "distance_km": 202.18,
+      "price_per_km": 0.16816697991888416,
+      "score": 2.250705882352941
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "SVQ",
+      "start_date": "2026-05-14",
+      "end_date": "2026-05-18",
+      "price": 56.5,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-05-14&dateIn=2026-05-18&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=SVQ&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-05-14&tpEndDate=2026-05-18&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=SVQ",
+      "distance_km": 791.8867884493454,
+      "price_per_km": 0.07134858268141714,
+      "score": 4.708121590586495
+    },
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "AGP",
+      "start_date": "2026-05-08T21:05:00.000Z",
+      "end_date": "2026-05-12T17:35:00.000Z",
+      "price": 24.0,
+      "airline": "VY",
+      "link": "https://www.kiwi.com/deep?affilid=travelpayoutsapi&currency=EUR&flightsId=13a21414506500002b444f54_0%7C141413a250690000c1c4f727_0&from=PMI&lang=en&passengers=1&to=AGP&booking_token=HoWWwp6we40ZuFFVyoDuG7oanh6eaGofMdrX7V2hZuMY4gKWnHQbtPejTQW2g5BrfU4vIdXKg8iJbpgi4MEKa3GH35jeFbl1TsE1lg1BRRQwYxS3u4IZB9qUtCd5Wivyq3XnXyIopDV1W96JNEqnl7pRebLxm_aejSrK19wOvfKuBPR4LnMNwzDi5NF5ENKBCDu2HJLPHjWIWsgVGlGw7n_4wk9VHxo3en74mjKwDjHpmiaLk-wGthqlmXGe4JdPYUX7O4hq0iQGyvdPyZnZbHM_hOnV_Mx5iu6Z1gALdspuDKWMcHHWLGmYykNSAnekBWx-04XNZUmYhgC0ZIlwe0o6mng3_SFvIDr01Y-5cNhsv-YRd3EmfWuOI5Rs608ijvu1X-UiRv_GDbUh7orUZm5JlTtIP3pFbcw7LKG0IsyYLIuXqNNxaRpDKbs4-6b8rUxTZWdkmfhIQKuw-ZCizrQ_qDg0S4Nys4tEHepPehfLYZPNBgCL1juDzmbRIGACjOm2ZNNAhVt9D0n9lr_mYLTjU-5UJfWRCZwMruFZMZyO_4CSlUT8A4bSOgLIkAPLLHEmXw-N7w-xSkUI4vovr4z-vjlXDKoNpl8kymDt8Q18zWAh6ioKFTUvETtedPoBuxZ7LL0ctHzeC9IVi9VsnPLEtSLxQA-SXAmnPqTbl8mU8R0YVTT1kTkMw7xyF-pYdzBzgvGeuz3ckgWD98qwnr80JXuF6l9EFiSb8XFqkmJFZBprRO5jihcRkujsOuQQXxC-_gcgbOv5utKKeQbuTSpDUoM6IaT2NHfoiWmLI34amOBHDyM2xOeToVRDOSkuX&token_module=Mod0.owp1oNOoy4XLVvM89MH_vjLy6z6eJMeppPyQwpqDb6xJBTrRjxG5CJxl2NAWBXCu5UL6dUYKP0XZ3O0RBM7jbnXhARbTDp8CCd4zjejMcOfMLvpSgKCouW9CPccVhKjsRnOuZPkN_9T66Crp8xFsUzwEEgJ77iiqTm1VAB_tQMxuuvCJPdUdfBv6LeJQAhz387nqBafEoTFn6BHDNqHxpJxrgWXN7E2omNGd6cBVN66OtGzwGucXorKvv7Eep_Qo-fkD8KDDhXECSOZUASS5SP7yY5ha9KnhSqgxbgYWWzc=",
+      "distance_km": 709.92,
+      "price_per_km": 0.03380662609871535,
+      "score": 9.372666666666667
+    }
+  ],
+  "current_index": 0
+}

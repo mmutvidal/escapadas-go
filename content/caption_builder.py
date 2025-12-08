@@ -35,7 +35,7 @@ Reglas IMPORTANTES:
 - "hook": 1 sola frase muy corta, clara y potente (no empieces con un emoji).
 - "bridge": 1–2 frases que inviten a seguir leyendo (ej: "Te cuento fechas y el plan perfecto de 3 días").
 - Cuando "category_code" sea "finde_perfecto", menciona en "bridge" que los horarios permiten aprovechar al máximo el fin de semana (por ejemplo, salida viernes por la tarde y regreso domingo por la noche).
-- "dates_block": debe contener fechas con día y mes, precio y origen/destino en formato fácil de escanear, con saltos de línea.
+- "dates_block": debe contener fechas con día y mes, precio de ida/vuelta y origen/destino en formato fácil de escanear, con saltos de línea.
 - Si el campo "category_code" es "finde_perfecto" y se proporcionan "start_time" y "end_time",
   el "dates_block" debe resaltar claramente los horarios de salida y regreso para aprovechar el fin de semana.
   Ejemplo: "📅 Viernes 28: salida 19:45\n📅 Domingo 30: regreso 21:30\n💸 79€ ida y vuelta desde Palma de Mallorca".
@@ -45,13 +45,13 @@ Reglas IMPORTANTES:
 - "extra_block": 1–2 frases que destaquen lo especial del destino
   (ambiente, gastronomía, cultura, vistas, etc.), adaptado a la categoría y al tipo de destino.
 - DESCUENTO ("discount_pct"):
-  - Si en los datos del vuelo existe el campo "discount_pct" y es mayor que 40,
-    debes mencionarlo explícitamente en algún punto del texto (en "bridge" y/o en "extra_block").
-  - Explica que es aproximadamente un X% más barato que el precio habitual de esa ruta.
-  - Redondea "discount_pct" al número entero más cercano y muéstralo con el símbolo %, por ejemplo:
-    "aprox. un 42% más barato que lo habitual" o "casi un 40% por debajo del precio medio".
-  - No inventes porcentajes ni digas que es récord histórico: usa SOLO el valor de "discount_pct" proporcionado.
-  - Si "discount_pct" es menor a 40 o no existe, NO hables de descuento ni de comparativas con el precio medio.
+  - Si existe "discount_pct" y es mayor que 40:
+      · Menciona el descuento UNA sola vez.
+      · Inclúyelo EXCLUSIVAMENTE en el "bridge".
+      · NO vuelvas a mencionarlo en "extra_block".
+  - Usa una de estas frases: "un X% más barato que el precio habitual" o "un X% por debajo del precio medio"
+  - Redondea siempre al número entero más cercano.
+  - Si "discount_pct" es menor a 40 o no existe, NO hables de descuento.
 - "cta_block": 1 sola frase con CTA suave. 
   Reglas para el CTA:
   - Debe ser diferente en cada generación.
