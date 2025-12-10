@@ -30,7 +30,7 @@ Debes devolver ÚNICAMENTE un JSON con la siguiente estructura EXACTA:
 Reglas IMPORTANTES:
 
 - Escribe SIEMPRE en español neutro, cercano pero no infantil.
-- El texto total (sumando todos los campos menos "hashtags") debe estar entre 140 y 220 palabras.
+- El texto total (sumando todos los campos menos "hashtags") debe estar entre 150 y 230 palabras.
 - El objetivo es que la persona tarde al menos 8–12 segundos en leerlo todo.
 - "hook": 1 sola frase muy corta, clara y potente (no empieces con un emoji).
 - "bridge": 1–2 frases que inviten a seguir leyendo (ej: "Te cuento fechas y el plan perfecto de 3 días").
@@ -42,8 +42,15 @@ Reglas IMPORTANTES:
 - "itinerary_block": estructura SIEMPRE según el número de días proporcionado en 'stay_nights':
   - Cabecera por día: "🇮🇹 Día 1, Centro histórico:"
   - 2–3 bullets por día, cada bullet ≤ 10 palabras.
-- "extra_block": 1–2 frases que destaquen lo especial del destino
+- "extra_block": 2–3 frases que destaquen lo especial del destino
   (ambiente, gastronomía, cultura, vistas, etc.), adaptado a la categoría y al tipo de destino.
+- Al final de "extra_block" añade SIEMPRE una frase suave que recomiende reservar pronto
+  para evitar subidas de precios de las aerolíneas. Varía la redacción en cada generación,
+  no repitas literalmente siempre la misma frase. Inspírate en ideas como:
+  · "Si te encaja, mejor reservar pronto: cuando se llenan los vuelos los precios suelen subir."
+  · "Si lo ves claro, no lo dejes para más adelante: estos precios no suelen durar mucho."
+  · "Las aerolíneas ajustan tarifas al alza cuando baja la disponibilidad, así que compensa reservar con antelación."
+  Puedes usar sinónimos, cambiar el orden o crear frases similares, pero mantén siempre la idea de que es mejor reservar pronto.
 - DESCUENTO ("discount_pct"):
   - Si existe "discount_pct" y es mayor que 40:
       · Menciona el descuento UNA sola vez.

@@ -1,3 +1,6 @@
+https://developers.facebook.com/tools/explorer
+
+
 Para lanzar los 3 de abajo
 
 cd "C:\Users\Macia\Desktop\Jupyter Notebooks\EscapadasMallorca"
