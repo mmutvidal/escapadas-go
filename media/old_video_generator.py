@@ -206,173 +206,6 @@ def _font(size: int, kind: str = "default") -> ImageFont.FreeTypeFont:
 
     return ImageFont.truetype(path, size)
 
-
-def _ease_in_out(x: float) -> float:
-    # clamp 0..1
-    if x <= 0: return 0.0
-    if x >= 1: return 1.0
-    return x * x * (3 - 2 * x)
-
-def _alpha_window(t: float, start: float, end: float, fade: float = 0.18) -> int:
-    """
-    Devuelve alpha 0..255.
-    - Entra con fade (segundos) desde start
-    - Se mantiene hasta end
-    - Si end es None, se mantiene hasta el final
-    """
-    if end is not None and t >= end:
-        return 0
-
-    if t < start:
-        return 0
-
-    # fade-in
-    if fade > 0:
-        x = (t - start) / fade
-        a = int(255 * _ease_in_out(x))
-        return max(0, min(255, a))
-
-    return 255
-
-def _with_alpha(color, a: int):
-    """
-    Acepta (R,G,B) o (R,G,B,A) y devuelve (R,G,B,a)
-    """
-    if color is None:
-        return None
-    if len(color) == 4:
-        r, g, b, _ = color
-    else:
-        r, g, b = color
-    return (r, g, b, a)
-
-
-
-def _text_bbox(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont):
-    # bbox (x0,y0,x1,y1)
-    return draw.textbbox((0, 0), text, font=font)
-
-def _text_size(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.FreeTypeFont):
-    x0, y0, x1, y1 = _text_bbox(draw, text, font)
-    return (x1 - x0), (y1 - y0)
-
-def _wrap_text_max_lines(draw, text, font, max_width, max_lines=3):
-    words = (text or "").split()
-    if not words:
-        return [""]
-
-    lines = []
-    cur = ""
-
-    for w in words:
-        test = (cur + " " + w).strip()
-        tw, _ = _text_size(draw, test, font)
-
-        if tw <= max_width:
-            cur = test
-        else:
-            # si ya vamos a crear la última línea, metemos el resto aquí
-            if len(lines) == max_lines - 1:
-                # mete palabra actual y lo que falta
-                rest = " ".join([w] + words[words.index(w)+1:])
-                cur = (cur + " " + rest).strip() if cur else rest
-                break
-
-            if cur:
-                lines.append(cur)
-            cur = w
-
-    if cur and len(lines) < max_lines:
-        lines.append(cur)
-
-    return lines[:max_lines]
-    
-
-def _ellipsize_to_width(draw, text, font, max_width):
-    if not text:
-        return text
-    ell = "…"
-    if _text_size(draw, text, font)[0] <= max_width:
-        return text
-    # recorta hasta que quepa con elipsis
-    s = text
-    while s and _text_size(draw, s + ell, font)[0] > max_width:
-        s = s[:-1]
-    return (s + ell) if s else ell
-
-def _fit_text_in_box(draw, text, font_kind="default",
-                     max_w=800, max_h=260,
-                     start_size=90, min_size=44,
-                     max_lines=2, line_spacing=1.06):
-    """
-    Devuelve (lines, font) ajustados para caber en una caja max_w x max_h.
-    - Baja tamaño hasta que quepa.
-    - Wrap hasta max_lines.
-    - Si aun así no cabe, elipsiza última línea.
-    """
-    text = (text or "").strip()
-    if not text:
-        return ([""], _font(min_size, kind=font_kind))
-
-    size = start_size
-    while size >= min_size:
-        font = _font(size, kind=font_kind)
-        lines = _wrap_text_max_lines(draw, text, font, max_w, max_lines=max_lines)
-
-        # Medimos alto total
-        line_heights = []
-        max_line_w = 0
-        for ln in lines:
-            w, h = _text_size(draw, ln, font)
-            max_line_w = max(max_line_w, w)
-            line_heights.append(h)
-
-        total_h = 0
-        for i, h in enumerate(line_heights):
-            total_h += h
-            if i < len(line_heights) - 1:
-                total_h += int(h * (line_spacing - 1.0))
-
-        # Cabe?
-        if max_line_w <= max_w and total_h <= max_h:
-            return (lines, font)
-
-        size -= 2
-
-    # Último recurso: usa min_size y elipsiza
-    font = _font(min_size, kind=font_kind)
-    lines = _wrap_text_max_lines(draw, text, font, max_w, max_lines=max_lines)
-    if lines:
-        lines[-1] = _ellipsize_to_width(draw, lines[-1], font, max_w)
-    return (lines, font)
-
-def _draw_multiline_centered(draw, lines, font, center_x, center_y, fill,
-                            line_spacing=1.25, min_gap=10):
-    # Medimos cada línea
-    widths, heights = [], []
-    for ln in lines:
-        w, h = _text_size(draw, ln, font)
-        widths.append(w)
-        heights.append(h)
-
-    # Un line_height único (el máximo) + spacing
-    base_h = max(heights) if heights else 0
-    line_h = max(int(base_h * line_spacing), base_h + min_gap)
-
-    total_h = line_h * len(lines)
-    y = int(center_y - total_h / 2)
-
-    for i, ln in enumerate(lines):
-        x = int(center_x - widths[i] / 2)
-        # centramos cada línea dentro de su “slot”
-        y_line = y + int((line_h - heights[i]) / 2)
-        draw.text((x, y_line), ln, font=font, fill=fill)
-        y += line_h
-
-
-
-
-
 # ---------------------------------------------------------------------------
 # Helpers de dibujo
 # ---------------------------------------------------------------------------
@@ -718,16 +551,12 @@ def zoom_factor(t):
 
 def _compose_frame(
     bg: Image.Image,
-    route_main: str,
-    route_codes: str,
+    route_main: str,              # Mallorca – Milán
+    route_codes: str,             # PMI ✈ BGY
     price: str,
     dates: str,
     logo_path: Optional[str],
     brand_line: Optional[str],
-    t: float = 0.0,
-    reveal: Optional[dict] = None,
-    hook_text: Optional[str] = None,
-    hook_mode: str = "band",   # "band" o "pill"
     discount_pct: Optional[float] = None,
     category_label: Optional[str] = None,
 ) -> Image.Image:
@@ -745,31 +574,6 @@ def _compose_frame(
     - píldora de categoría con sombra, solapando la tarjeta
     - @escapadasgo_mallorca abajo
     """
-    # ------------------------------------------------------------
-    # REVEAL TIMINGS (por defecto)
-    # ------------------------------------------------------------
-    if reveal is None:
-        reveal = {
-            "hook":  (0.00, 0.90),   # hook visible desde el inicio
-            "pill":  (0.90, None),
-            "main":  (1.10, None),
-            "codes": (1.35, None),
-            "line":  (1.35, None),
-            "dates": (2.00, None),
-            "price": (3.30, None),
-            "disc":  (3.30, None),
-        }
-
-    a_hook  = _alpha_window(t, *reveal["hook"],  fade=0.12)
-    a_pill  = _alpha_window(t, *reveal["pill"],  fade=0.18)
-    a_main  = _alpha_window(t, *reveal["main"],  fade=0.18)
-    a_codes = _alpha_window(t, *reveal["codes"], fade=0.18)
-    a_line  = _alpha_window(t, *reveal["line"],  fade=0.18)
-    a_dates = _alpha_window(t, *reveal["dates"], fade=0.18)
-    a_price = _alpha_window(t, *reveal["price"], fade=0.18)
-    a_disc  = _alpha_window(t, *reveal["disc"],  fade=0.18)
-    
-    
     # --- Fondo ---
     bg = bg.convert("RGB")
     bg = bg.resize((WIDTH, HEIGHT), Image.LANCZOS)
@@ -835,78 +639,16 @@ def _compose_frame(
         width=2,
     )
 
-
     # ============================================================
-    # HOOK GRANDE EN LA BANDA (visible en t=0 para preview)
+    # PÍLDORA DE CATEGORÍA (con sombra, solapando la tarjeta)
     # ============================================================
-    hook = hook_text
-    
-    hook_box_w = int(card_w * 0.84)   # un pelín más estrecha para respirar
-    hook_box_h = int(card_h * 0.68)   # más alta para permitir 3 líneas
-    
-    lines, hfont = _fit_text_in_box(
-        draw=draw,
-        text=hook,
-        font_kind="default",
-        max_w=hook_box_w,
-        max_h=hook_box_h,
-        start_size=86,
-        min_size=40,
-        max_lines=3,
-        line_spacing=1.18,
-    )
-    
-    # alpha: visible en frame 0
-    hook_start, hook_end = reveal.get("hook", (0.0, 0.9))
-    if t <= (1.0 / FPS):
-        a_hook = 255
-    else:
-        a_hook = _alpha_window(t, hook_start, hook_end, fade=0.12)
-    
-    if a_hook > 0:
-        _draw_multiline_centered(
-            draw,
-            lines,
-            hfont,
-            center_x,
-            (card_y0 + card_y1) // 2,
-            fill=_with_alpha(COLORS["white"], a_hook),
-            line_spacing=1.28,
-        )
-
-    
-# ============================================================
-    # PÍLDORA (HOOK primero, luego categoría)
-    # ============================================================
-    pill_font = _font(28)
-    pill_center_x = center_x
-    pill_center_y = card_y0 - 14
-
-    hook_start, hook_end = reveal.get("hook", (0.0, 0.9))
-    
-    # IMPORTANTE: que en el primer frame ya sea visible para el preview
-    if t <= (1.0 / FPS):
-        a_hook = 255
-    else:
-        a_hook = _alpha_window(t, hook_start, hook_end, fade=0.12)
-
-    # Si estamos en fase hook, mostramos hook_text (o fallback)
-    # if a_hook > 0:
-    #     ht = (hook_text or "SAL DE MALLORCA POR <40€").upper()
-    #     _draw_pill_with_shadow(
-    #         base_img=frame,
-    #         text=ht,
-    #         font=pill_font,
-    #         center_x=pill_center_x,
-    #         center_y=pill_center_y,
-    #         padding_x=30,
-    #         padding_y=18,
-    #         bg_color=_with_alpha(COLORS.get("pill_bg", (30, 65, 120)), a_hook),
-    #         text_color=_with_alpha((255, 255, 255), a_hook),
-    #         border_color=COLORS.get("pill_border_soft", (255, 255, 255, 60)),
-    #     )
-    if category_label and a_pill > 0:
+    if category_label:
         cat_text = category_label.upper()
+        pill_font = _font(28)
+
+        pill_center_x = center_x
+        pill_center_y = card_y0 - 14   # solapa ligeramente la tarjeta
+
         _draw_pill_with_shadow(
             base_img=frame,
             text=cat_text,
@@ -1010,16 +752,7 @@ def _compose_frame(
     gap_line_dates       = w_line_dates * unit
     gap_dates_price      = w_dates_price * unit
     gap_price_discount   = w_price_discount * unit  # 0 si no hay descuento
-
-    a_main  = _alpha_window(t, *reveal["main"],  fade=0.18)
-    a_codes = _alpha_window(t, *reveal["codes"], fade=0.18)
-    a_line  = _alpha_window(t, *reveal["line"],  fade=0.18)
-    a_dates = _alpha_window(t, *reveal["dates"], fade=0.18)
-    a_price = _alpha_window(t, *reveal["price"], fade=0.18)
-    a_disc  = _alpha_window(t, *reveal["disc"],  fade=0.18)
-
-    in_hook_phase = (t < reveal["hook"][1])
-
+    
     # ------------------------------------------------------------------
     # Ahora dibujamos usando esos gaps: el bottom queda implícito y
     # automáticamente simétrico gracias al reparto de pesos.
@@ -1027,59 +760,78 @@ def _compose_frame(
     y = card_y0 + int(round(top_gap))
 
     # 1) Ciudades
-    if a_main > 0:
-        h_used = _draw_centered_text(draw, route_main_text, route_main_font, center_x, int(y), _with_alpha(COLORS["white"], a_main))
-    else:
-        h_used = h_route_main
-        
-    # 2) Códigos IATA
+    h_used = _draw_centered_text(
+        draw,
+        route_main_text,
+        route_main_font,
+        center_x,
+        int(y),
+        COLORS["white"],
+    )
     y += h_used + gap_route_main_codes
-    if a_codes > 0:
-        h_used = _draw_centered_text(draw, route_codes_text, route_codes_font, center_x, int(y), _with_alpha(COLORS["dates"], a_codes))
-    else:
-        h_used = h_route_codes
-        
+
+    # 2) Códigos IATA
+    h_used = _draw_centered_text(
+        draw,
+        route_codes_text,
+        route_codes_font,
+        center_x,
+        int(y),
+        COLORS["dates"],
+    )
+    y += h_used + gap_codes_line
+
     
     # 3) Línea separadora con degradado suave
     line_margin_x = 140
-    y += h_used + gap_codes_line
     line_y = y
-    
-    if a_line > 0:
-        _draw_horizontal_fade_line(
-            base_img=frame,
-            x0=card_x0 + line_margin_x,
-            x1=card_x1 - line_margin_x,
-            y=line_y,
-            color=(255, 255, 255, a_line),
-            max_alpha=int(90 * (a_line / 255.0)),
-            width=3,
-        )
+
+    _draw_horizontal_fade_line(
+        base_img=frame,
+        x0=card_x0 + line_margin_x,
+        x1=card_x1 - line_margin_x,
+        y=line_y,
+        color=(255, 255, 255),
+        max_alpha=90,
+        width=3,
+    )
 
     y = line_y + gap_line_dates
     
 
     # 4) Fechas
-    if a_dates > 0:
-        h_used = _draw_centered_text(draw, dates_text, dates_font, center_x, int(y), _with_alpha(COLORS["dates"], a_dates))
-    else:
-        h_used = h_dates
-        
+    h_used = _draw_centered_text(
+        draw,
+        dates_text,
+        dates_font,
+        center_x,
+        int(y),
+        COLORS["dates"],
+    )
     y += h_used + gap_dates_price
 
     # 5) Precio
-    if a_price > 0:
-        h_used = _draw_centered_text(draw, price_text, price_font, center_x, int(y), _with_alpha(COLORS["price"], a_price))
-    else:
-        h_used = h_price
-        
+    h_used = _draw_centered_text(
+        draw,
+        price_text,
+        price_font,
+        center_x,
+        int(y),
+        COLORS["price"],
+    )
     y += h_used
 
     # 6) Descuento (si procede)
-    if show_discount and discount_font and a_disc > 0:
+    if show_discount and discount_font:
         y += gap_price_discount
-        _draw_centered_text(draw, discount_text, discount_font, center_x, int(y), _with_alpha(COLORS["red"], a_disc))
-        
+        _draw_centered_text(
+            draw,
+            discount_text,
+            discount_font,
+            center_x,
+            int(y),
+            COLORS["red"],
+        )
 
     # ============================================================
     # BRAND LINE ABAJO
@@ -1146,8 +898,6 @@ def create_reel_v4(
     brand_line: Optional[str] = None,
     discount_pct: Optional[float] = None,
     category_label: Optional[str] = None,
-    hook_text: Optional[str] = None,   # 👈 PASAS EL HOOK AL GENERADOR
-    hook_mode: str = "",
 ):
     """
     Genera un reel 1080x1920 con:
@@ -1168,44 +918,6 @@ def create_reel_v4(
     zoom_amp = 0.06        # amplitud (sube y baja +-)
     # Con esto: zoom(t) = 1.05 + 0.06 * sin(2π t / duration)
 
-    reveal = {
-        "hook":  (0.00, 1.50),   # antes 0.90
-        "pill":  (1.20, None),   # solape suave
-        "main":  (1.60, None),
-        "codes": (1.85, None),
-        "line":  (1.85, None),
-        "dates": (2.30, None),
-        "price": (3.45, None),
-        "disc":  (3.45, None),
-    }
-
-    # reveal = {
-    #     "hook":  (0.00, 1.80),   # antes 0.90
-    #     "pill":  (1.50, None),   # solape suave
-    #     "main":  (1.90, None),
-    #     "codes": (2.45, None),
-    #     "line":  (2.45, None),
-    #     "dates": (2.80, None),
-    #     "price": (3.75, None),
-    #     "disc":  (3.75, None),
-    # }
-
-
-    # reveal = {
-    #         "hook":  (0.00, 0.90),   # hook visible desde el inicio
-    #         "pill":  (0.90, None),
-    #         "main":  (1.10, None),
-    #         "codes": (1.35, None),
-    #         "line":  (1.35, None),
-    #         "dates": (2.00, None),
-    #         "price": (3.30, None),
-    #         "disc":  (3.30, None),
-    # }
-    
-    
-    # hook_text = "MALLORCA → EUROPA POR <40€"
-    # hook_mode = "band"
-    
     for i in range(total_frames):
         t = i / fps
 
@@ -1225,7 +937,7 @@ def create_reel_v4(
         right = left + WIDTH
         bottom = top + HEIGHT
         zoomed_cropped = zoomed.crop((left, top, right, bottom))
-        
+
         # 4) Aplicamos overlay completo para este frame
         frame_pil = _compose_frame(
             zoomed_cropped,
@@ -1235,10 +947,6 @@ def create_reel_v4(
             dates=dates,
             logo_path=logo_path,
             brand_line=brand_line,
-            t=t,
-            reveal=reveal,
-            hook_text=hook_text,
-            hook_mode=hook_mode,
             discount_pct=discount_pct,
             category_label=category_label,
         )
@@ -1272,12 +980,10 @@ def create_reel_for_flight(
     out_mp4_path: str,
     logo_path: Optional[str],
     brand_line: str = "@escapadasgo_mallorca",
-    duration: float = 6.0,
+    duration: float = 4.0,
     s3_bucket: Optional[str] = None,
     s3_prefix: str = "reels/",
     s3_public: bool = True,
-    hook_text: Optional[str] = None,   # 👈 PASAS EL HOOK AL GENERADOR
-    hook_mode: str = "band",
 ) -> str:
     """
     Genera el reel para un vuelo:
@@ -1331,8 +1037,6 @@ def create_reel_for_flight(
         brand_line=brand_line,
         discount_pct=discount_pct,
         category_label=category_label,
-        hook_text= hook_text,   # 👈 PASAS EL HOOK AL GENERADOR
-        hook_mode= hook_mode,
     )
 
     # 2) Si hay bucket de S3, subirlo y devolver la URL

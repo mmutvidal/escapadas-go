@@ -24,6 +24,25 @@ def _save_history(history: Dict[str, dict]) -> None:
 
 # ----------------- helpers para Flight o dict ----------------- #
 
+def _parse_pub_date(published_at) -> date | None:
+    if not published_at:
+        return None
+    try:
+        return date.fromisoformat(str(published_at))
+    except ValueError:
+        try:
+            return datetime.fromisoformat(str(published_at)).date()
+        except ValueError:
+            return None
+
+
+def _dest_from_key(key: str) -> str:
+    # key: ORIGIN-DEST-YYYY-MM-DD-YYYY-MM-DD
+    parts = key.split("-")
+    # ORIGIN, DEST, YYYY, MM, DD, YYYY, MM, DD  -> DEST es parts[1]
+    return parts[1] if len(parts) >= 2 else ""
+
+
 def _fget(f: Any, attr: str, default=None):
     """Devuelve f.attr o f[attr] indistintamente."""
     if isinstance(f, dict):
@@ -49,31 +68,43 @@ def make_flight_key(f: Any) -> str:
     return f"{origin}-{destination}-{start}-{end}"
 
 
-def is_recently_published(f: Any, cooldown_days: int = 14) -> bool:
+def is_recently_published(
+    f: Any,
+    cooldown_days: int = 14,
+    destination_cooldown_days: int = 0,   # <-- nuevo: 0 = desactivado
+) -> bool:
     """
-    Devuelve True si este vuelo (misma ruta + mismas fechas) se ha
-    publicado en los últimos `cooldown_days` días.
+    True si:
+      - (misma ruta + mismas fechas) se publicó en los últimos cooldown_days, o
+      - (mismo destination, cualquier fecha/ruta) se publicó en los últimos destination_cooldown_days
     """
     history = _load_history()
+
+    # 1) cooldown exacto (ruta+fechas)
     key = make_flight_key(f)
     data = history.get(key)
-    if not data:
-        return False
+    if data:
+        pub_date = _parse_pub_date(data.get("published_at"))
+        if pub_date and (date.today() - pub_date).days < cooldown_days:
+            return True
 
-    published_at = data.get("published_at")
-    if not published_at:
-        return False
+    # 2) cooldown por destino (independiente de fechas)
+    if destination_cooldown_days and destination_cooldown_days > 0:
+        dest = _fget(f, "destination", "") or _fget(f, "destination_iata", "")
+        dest = (dest or "").upper()
+        if dest:
+            newest: date | None = None
+            for k, v in history.items():
+                if _dest_from_key(k).upper() != dest:
+                    continue
+                d = _parse_pub_date(v.get("published_at"))
+                if d and (newest is None or d > newest):
+                    newest = d
 
-    try:
-        pub_date = date.fromisoformat(str(published_at))
-    except ValueError:
-        try:
-            pub_date = datetime.fromisoformat(str(published_at)).date()
-        except ValueError:
-            return False
+            if newest and (date.today() - newest).days < destination_cooldown_days:
+                return True
 
-    return (date.today() - pub_date).days < cooldown_days
-
+    return False
 
 def register_publication(f: Any, category_code: str) -> None:
     """

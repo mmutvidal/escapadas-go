@@ -92,9 +92,9 @@ DESTINATION_TAGS = {
     "BSL": ["cultural", "gastronomica"],                   # Basilea
 
     # ✈️ Aeropuertos “low cost” que sirven a ciudades potentes
-    "LTN": ["cultural", "gastronomica"],                   # Londres (Luton)
-    "STN": ["cultural", "gastronomica"],                   # Londres (Stansted)
-    "LGW": ["cultural", "gastronomica"],                   # Londres (Gatwick)
+    "LTN": ["cultural"],                   # Londres (Luton)
+    "STN": ["cultural"],                   # Londres (Stansted)
+    "LGW": ["cultural"],                   # Londres (Gatwick)
 
     # RAK – Marruecos
     "RAK": ["romantica", "cultural", "gastronomica"],      # Marrakech
@@ -502,12 +502,13 @@ def classify_flight(f: Flight) -> dict:
 def get_best_by_category_cheapest(
     flights: List[Flight],
     cooldown_days: int = 14,
+    destination_cooldown_days: int = 5,
     min_discount_pct: float = 40.0,
 ) -> List[dict]:
     best_per_cat: Dict[str, dict] = {}
 
     for f in flights:
-        if ph.is_recently_published(f, cooldown_days=cooldown_days):
+        if ph.is_recently_published(f, cooldown_days=cooldown_days, destination_cooldown_days=destination_cooldown_days):
             continue
 
         discount_pct = getattr(f, "discount_pct", None)
@@ -535,6 +536,7 @@ def get_best_by_category_cheapest(
 def get_best_by_category_scored(
     flights: List[Flight],
     cooldown_days: int = 14,
+    destination_cooldown_days: int = 5,
     min_discount_pct: float = 40.0,  # ← aquí defines el mínimo (30–40%)
 ) -> List[dict]:
 
@@ -542,7 +544,7 @@ def get_best_by_category_scored(
 
     for f in flights:
         # 0) descartamos vuelos publicados hace poco
-        if ph.is_recently_published(f, cooldown_days=cooldown_days):
+        if ph.is_recently_published(f, cooldown_days=cooldown_days, destination_cooldown_days=destination_cooldown_days):
             continue
 
         # 1) descartamos vuelos sin descuento suficiente

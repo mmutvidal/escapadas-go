@@ -143,3 +143,14 @@ def get_city(iata: str, default: str | None = None, include_flag=True) -> str:
     flag = COUNTRY_FLAGS.get(country, "")
     
     return f"{flag} {city}" if include_flag else city
+
+
+def get_country(iata: str, default: str | None = None) -> str | None:
+    """
+    Devuelve el país asociado a un IATA o default si no existe.
+    """
+    iata = (iata or "").upper()
+    data = DESTINATIONS.get(iata)
+    if not data:
+        return default
+    return data.get("country", default)

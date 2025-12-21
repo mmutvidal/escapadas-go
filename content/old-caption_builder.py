@@ -15,49 +15,19 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 def _weekday_es(date_str: str) -> str:
     """
     Acepta 'YYYY-MM-DD' o ISO 'YYYY-MM-DDTHH:MM:SS(.sss)Z'
-    Devuelve el día con mayúscula inicial (formato editorial).
     """
     if not date_str:
         return ""
 
     s = str(date_str)
+
+    # Nos quedamos solo con la parte de fecha
     if "T" in s:
         s = s.split("T")[0]
 
     d = datetime.strptime(s, "%Y-%m-%d").date()
-    names = ["lunes", "martes", "miércoles", "jueves",
-             "viernes", "sábado", "domingo"]
-    return names[d.weekday()].capitalize()
-
-def _get_field(f: FlightLike, name: str, default=None):
-    if isinstance(f, dict):
-        return f.get(name, default)
-    return getattr(f, name, default)
-
-
-
-def build_dates_block(flight) -> str:
-    start = str(_get_field(flight, "start_date", "")).split("T")[0][:10]
-    end = str(_get_field(flight, "end_date", "")).split("T")[0][:10]
-
-    start_day = _weekday_es(start)
-    end_day = _weekday_es(end)
-
-    start_dt = datetime.strptime(start, "%Y-%m-%d")
-    end_dt = datetime.strptime(end, "%Y-%m-%d")
-
-    # ciudades a partir de IATA
-    origin_iata = _get_field(flight, "origin") or _get_field(flight, "origin_airport")
-    dest_iata   = _get_field(flight, "destination") or _get_field(flight, "destination_airport")
-    
-    origin_city = get_city(origin_iata or "")
-    dest_city = get_city(dest_iata or "")
-    
-    return (
-        f"📅 {start_day} {start_dt.day} → {end_day} {end_dt.day}\n"
-        f"✈️ {origin_city} → {dest_city}\n"
-        f"💸 {int(_get_field(flight, 'price'))} € ida y vuelta"
-    )
+    names = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+    return names[d.weekday()]
 
 
 def build_caption_json(flight: dict) -> dict:
@@ -79,20 +49,21 @@ Debes devolver ÚNICAMENTE un JSON con la siguiente estructura EXACTA:
 Reglas IMPORTANTES:
 
 - Escribe SIEMPRE en español neutro, cercano pero no infantil.
-- El texto total (sumando todos los campos menos "hashtags") debe estar entre 90 y 140 palabras.
+- El texto total (sumando todos los campos menos "hashtags") debe estar entre 150 y 230 palabras.
 - El objetivo es que la persona tarde al menos 8–12 segundos en leerlo todo.
-- "hook": 1 sola frase muy corta, clara y potente (máx. 12 palabras), sin emojis, sin fechas ni precios, pensada para detener el scroll.
+- "hook": 1 sola frase muy corta, clara y potente (no empieces con un emoji).
 - "bridge": 1–2 frases que inviten a seguir leyendo (ej: "Te cuento fechas y el plan perfecto de 3 días").
 - Cuando "category_code" sea "finde_perfecto", menciona en "bridge" que los horarios permiten aprovechar al máximo el fin de semana (por ejemplo, salida viernes por la tarde y regreso domingo por la noche).
-- El bloque "dates_block" debe copiarse exactamente tal como se proporciona. No reformules, no traduzcas ni alteres su formato. No añadas ni elimines emojis ni saltos de línea.
+- "dates_block": debe contener fechas con día y mes, precio de ida/vuelta y origen/destino en formato fácil de escanear, con saltos de línea. Para el “dates_block”, usa SIEMPRE start_weekday y end_weekday proporcionados. No calcules el día de la semana.
 - Si el campo "category_code" es "finde_perfecto" y se proporcionan "start_time" y "end_time",
-  solamente en este caso debes añadir los horarios de salida y regreso en la primera línea del dates_block siguiendo este ejemplo: "📅 Viernes 28 (19:45) → Domingo 30 (21:30)".
+  el "dates_block" debe resaltar claramente los horarios de salida y regreso para aprovechar el fin de semana.
+  Ejemplo: "📅 Viernes 28: salida 19:45\n📅 Domingo 30: regreso 21:30\n💸 79€ ida y vuelta desde Palma de Mallorca".
 - "itinerary_block": estructura SIEMPRE según el número de días proporcionado en 'stay_nights':
   - Cabecera por día: "🇮🇹 Día 1, Centro histórico:"
   - 2–3 bullets por día, cada bullet ≤ 10 palabras.
 - "extra_block": 1–2 frases que destaquen lo especial del destino
   (ambiente, gastronomía, cultura, vistas, etc.), adaptado a la categoría y al tipo de destino.
-- Al final de "extra_block" incluye dos saltos de línea y añade SIEMPRE una frase que recomiende reservar pronto
+- Al final de "extra_block" añade SIEMPRE una frase suave que recomiende reservar pronto
   para evitar subidas de precios de las aerolíneas. Varía la redacción en cada generación,
   no repitas literalmente siempre la misma frase. Inspírate en ideas como:
   · "Si te encaja, mejor reservar pronto: cuando se llenan los vuelos los precios suelen subir."
@@ -104,7 +75,7 @@ Reglas IMPORTANTES:
       · Menciona el descuento UNA sola vez.
       · Inclúyelo EXCLUSIVAMENTE en el "bridge".
       · NO vuelvas a mencionarlo en "extra_block".
-  - Inspirate en una de estas frases y hazlo lo más natural posible: "un X% más barato que el precio habitual" o "un X% por debajo del precio medio"
+  - Usa una de estas frases: "un X% más barato que el precio habitual" o "un X% por debajo del precio medio"
   - Redondea siempre al número entero más cercano.
   - Si "discount_pct" es menor a 40 o no existe, NO hables de descuento.
 - "cta_block": 1 sola frase con CTA suave. 
@@ -218,6 +189,11 @@ def build_caption_text(cj: dict, hook_override: str | None = None) -> str:
 #     return "\n".join(p for p in parts if p is not None and str(p).strip())
 
 
+def _get_field(f: FlightLike, name: str, default=None):
+    if isinstance(f, dict):
+        return f.get(name, default)
+    return getattr(f, name, default)
+
 
 def _to_date_str(d) -> str:
     """
@@ -303,9 +279,6 @@ def build_caption_for_flight(
     except Exception:
         pass
 
-    dates_block = build_dates_block(flight)
-
-    
     payload = {
         "brand_handle": brand_handle,
         "category_code": category_code,          # p.ej. "cultural", "romantica"
@@ -324,7 +297,6 @@ def build_caption_for_flight(
         "tone": tone,
         "hashtags_base": hashtags_base,
         "discount_pct": discount_pct,
-        "dates_block": dates_block,
     }
 
     cj = build_caption_json(payload)

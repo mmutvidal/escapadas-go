@@ -1,0 +1,73 @@
+{
+  "flight": null,
+  "caption": "Escápate un finde ideal a Viena desde Mallorca\n\nTe cuento fechas y el plan perfecto de 2 días con un 46% por debajo del precio medio.\n\n📅 Viernes 19 → Domingo 21\n✈️ 🇪🇸 Mallorca → 🇦🇹 Viena\n💸 89 € ida y vuelta\n\n🇦🇹 Día 1, Centro histórico:\n- Pasea por la Ringstrasse\n- Visita la Ópera Estatal\n- Toma un café vienés\n\n🇦🇹 Día 2, Cultura y relax:\n- Explora el Palacio Schönbrunn\n- Descubre museos y galerías\n- Disfruta en un Heuriger tradicional\n\nViena combina elegancia, música clásica y gastronomía exquisita para un fin de semana inolvidable.\n\nReserva cuanto antes para evitar que los precios suban con la demanda.\n\n¿Con quién te escaparías? Reserva cuando quieras en el enlace de la bio.\n\n#viajar #vuelosbaratos #escapadas #mallorca #viena #findeperfecto #chollosdevuelo",
+  "video_path": "media\\videos\\reel.mp4",
+  "video_hook": "No es lo típico. Por eso funciona",
+  "candidates": [
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "FMO",
+      "start_date": "2025-12-19",
+      "end_date": "2025-12-21",
+      "price": 96.81,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-19&dateIn=2025-12-21&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=FMO&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-19&tpEndDate=2025-12-21&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=FMO",
+      "distance_km": 1429.8970108380595,
+      "price_per_km": 0.06770417678071784,
+      "score": 4.1405159870831,
+      "discount_pct": 43.0,
+      "route_typical_price": 169.71
+    },
+    {
+      "category_code": "finde_perfecto",
+      "category_label": "🎉 Finde Perfecto",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2025-12-19",
+      "end_date": "2025-12-21",
+      "price": 89.97999999999999,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-19&dateIn=2025-12-21&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-19&tpEndDate=2025-12-21&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.06171571982363724,
+      "score": 4.507499571195366,
+      "discount_pct": 45.5,
+      "route_typical_price": 165.07
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "CGN",
+      "start_date": "2025-12-19",
+      "end_date": "2025-12-21",
+      "price": 149.63,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-19&dateIn=2025-12-21&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=CGN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-19&tpEndDate=2025-12-21&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=CGN",
+      "distance_km": 1307.4047581267482,
+      "price_per_km": 0.11444810726740058,
+      "score": 2.6327368589076636,
+      "discount_pct": 43.6,
+      "route_typical_price": 265.35
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "HAM",
+      "start_date": "2025-12-19",
+      "end_date": "2025-12-22",
+      "price": 168.98000000000002,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2025-12-19&dateIn=2025-12-22&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=HAM&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2025-12-19&tpEndDate=2025-12-22&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=HAM",
+      "distance_km": 1651.023296345911,
+      "price_per_km": 0.10234864666900285,
+      "score": 2.883960926854131,
+      "discount_pct": 41.6,
+      "route_typical_price": 289.18
+    }
+  ],
+  "current_index": 1
+}

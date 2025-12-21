@@ -23,6 +23,10 @@ import web.exporter as ex
 import web.uploader as up
 from flights.published_history import register_publication
 
+from content.destinations import get_country
+import content.video_hook_curiosity as vh
+import media.reel_ab as rab
+
 from config.settings import BOT_TOKEN,REVIEW_CHAT_ID 
 
 S3_BUCKET_REELS = "escapadasgo-reels"
@@ -46,14 +50,11 @@ def _job_path(job_id: str) -> Path:
 
 
 def _serialize_job(job: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Convertimos objetos no serializables (Path, etc.) a strings.
-    Ahora SÍ guardamos candidates y current_index.
-    """
     return {
-        "flight": None,  # si quieres, luego lo serializamos mejor
+        "flight": None,
         "caption": job["caption"],
         "video_path": str(job["video_path"]),
+        "video_hook": job.get("video_hook"),   # ✅ NUEVO
         "candidates": job.get("candidates", []),
         "current_index": job.get("current_index", 0),
     }
@@ -61,9 +62,10 @@ def _serialize_job(job: Dict[str, Any]) -> Dict[str, Any]:
 
 def _deserialize_job(data: Dict[str, Any]) -> Dict[str, Any]:
     return {
-        "flight": None,  # opcional
+        "flight": None,
         "caption": data["caption"],
         "video_path": Path(data["video_path"]),
+        "video_hook": data.get("video_hook"),  # ✅ NUEVO
         "candidates": data.get("candidates", []),
         "current_index": data.get("current_index", 0),
     }
@@ -127,7 +129,7 @@ def to_review_candidates(best_by_cat):
     return candidates
 
 
-def register_job(job_id: str, flight, caption: str, video_path: Path, candidates=None):
+def register_job(job_id: str, flight, caption: str, video_path: Path, candidates=None, video_hook: str | None = None):
     """
     Registrar un job de revisión. Se guarda en memoria (para este proceso)
     y en disco (para compartir con el bot de Telegram).
@@ -140,8 +142,9 @@ def register_job(job_id: str, flight, caption: str, video_path: Path, candidates
         "flight": flight,
         "caption": caption,
         "video_path": Path(video_path),
-        "candidates": candidates or [],  # lista de dicts
-        "current_index": 0,              # índice dentro de candidates
+        "video_hook": video_hook,   # ✅ NUEVO
+        "candidates": candidates or [],
+        "current_index": 0,
     }
 
     PENDING_JOBS[job_id] = job
@@ -211,33 +214,55 @@ def _get_current_candidate(job: Dict[str, Any]) -> Dict[str, Any] | None:
     return candidates[idx]
 
 
-def _build_reel_for_candidate(candidate: Dict[str, Any]) -> tuple[str, Path]:
-    """
-    Regenera caption + vídeo para un candidato concreto (dict),
-    usando la función genérica de video_generator.
-    """
+def _build_reel_for_candidate(candidate: Dict[str, Any]) -> tuple[str, Path, str]:
     # 1) Caption
     caption = cb.build_caption_for_flight(
         candidate,
         category_code=candidate.get("category_code"),
         tone="emocional",
-    ).replace("\n\n\n", "\n\n")  # por si acaso
+    ).replace("\n\n\n", "\n\n")
 
-    # 2) Vídeo
-    out_dir = Path("media/videos")
-    out_dir.mkdir(parents=True, exist_ok=True)
-    dest = candidate.get("destination", "XXX")
-    # Podemos sobreescribir siempre reel.mp4 para simplificar
-    out_path = out_dir / "reel.mp4"
-
-    vg.create_reel_for_flight(
-        flight=candidate,          # dict compatible con el helper
-        out_mp4_path=str(out_path),
-        logo_path=LOGO_PATH,
-        duration=4.0,
+    # 2) Hook (curiosidad, premium)
+    category_label = candidate.get("category_label") or candidate.get("category_code") or ""
+    video_hook = vh.build_video_hook_curiosity(
+        category_label=str(category_label),
+        country=get_country(candidate.get("destination")),
+        discount_pct=candidate.get("discount_pct"),
+        price=candidate.get("price"),
+        start_date=str(candidate.get("start_date", ""))[:10],
+        end_date=str(candidate.get("end_date", ""))[:10],
+        max_len=44,
     )
 
-    return caption, out_path
+    # 3) Vídeo
+    out_dir = Path("media/videos")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "reel.mp4"
+
+    # vg.create_reel_for_flight(
+    #     flight=candidate,               # dict compatible
+    #     out_mp4_path=str(out_path),
+    #     logo_path=LOGO_PATH,
+    #     duration=6.0,
+    #     hook_text=video_hook,           # ✅ AQUÍ
+    #     hook_mode="band",               # ✅ AQUÍ
+    # )
+
+    video_path_or_url, variant_used = rab.create_reel_for_flight_ab(
+        candidate,
+        out_mp4_path=str(out_path),
+        logo_path=LOGO_PATH,
+        duration=6.0,
+        s3_bucket=None,
+        hook_text=video_hook,     # solo se usa si sale "new"
+        hook_mode="band",         # solo se usa si sale "new"
+        variant="auto",           # auto / new / old
+        ratio_new=0.5,            # 50/50
+        key_mode="route_dates",   # estable por vuelo
+    )
+    print("AB variant:", variant_used)
+    
+    return caption, out_path, video_hook
 
 
 
@@ -384,11 +409,14 @@ def handle_button(update, context):
 
         print(f"Siguiente candidato: {next_cand.get('destination')} idx={job.get('current_index')}")
 
-        new_caption, new_video_path = _build_reel_for_candidate(next_cand)
+        new_caption, new_video_path, new_hook = _build_reel_for_candidate(next_cand)
+        job["video_hook"] = new_hook
         print(f"Nuevo video generado en: {new_video_path}")
 
         job["caption"] = new_caption
         job["video_path"] = new_video_path
+        job["video_hook"] = new_hook
+
         PENDING_JOBS[job_id] = job
         save_job(job_id, job)
 
@@ -518,16 +546,17 @@ def handle_text_query(update, context):
     main_candidate = review_candidates[0]
 
     # 5) Generar reel + caption para ese main_candidate
-    new_caption, new_video_path = _build_reel_for_candidate(main_candidate)
+    new_caption, new_video_path, new_hook = _build_reel_for_candidate(main_candidate)
 
     # 6) Registrar job y enviarlo a revisión
     job_id = str(uuid.uuid4())
     register_job(
         job_id=job_id,
-        flight=None,                 # no lo usamos ahora mismo
+        flight=None,
         caption=new_caption,
         video_path=new_video_path,
         candidates=review_candidates,
+        video_hook=new_hook,   # ✅ NUEVO
     )
     send_review_candidate(job_id)
 

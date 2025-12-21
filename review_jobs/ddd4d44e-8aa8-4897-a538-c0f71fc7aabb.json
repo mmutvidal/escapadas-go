@@ -1,0 +1,73 @@
+{
+  "flight": null,
+  "caption": "Descubre Viena este fin de semana por menos de 90€\n\nTe cuento fechas y el plan perfecto de 2 días con un 50% por debajo del precio medio. Los horarios permiten aprovechar al máximo el fin de semana.\n\n📅 Viernes 9 (19:25) → Domingo 11 (18:20)\n✈️ 🇪🇸 Mallorca → 🇦🇹 Viena\n💸 81 € ida y vuelta\n\n🇦🇹 Día 1, Centro histórico:\n- Paseo por Ringstrasse\n- Visita al Palacio de Hofburg\n- Cena tradicional austriaca\n\n🇦🇹 Día 2, Arte y cultura:\n- Museo Belvedere\n- Café vienés en Demel\n- Recorrido por la Ópera Estatal\n\nViena deslumbra con su elegancia imperial, su rica gastronomía y su ambiente único que mezcla historia y modernidad.\n\nSi te encaja, mejor reservar pronto: cuando se llenan los vuelos los precios suelen subir.\n\n¿Con quién te escaparías aquí? Etiquétal@ y reserva cuando quieras, el enlace está en la bio.\n\n#viajar #vuelosbaratos #escapadas #mallorca #Viena #finDeSemana",
+  "video_path": "media\\videos\\reel.mp4",
+  "video_hook": null,
+  "candidates": [
+    {
+      "category_code": "finde_perfecto",
+      "category_label": "🎉 Finde Perfecto",
+      "origin": "PMI",
+      "destination": "VIE",
+      "start_date": "2026-01-09",
+      "end_date": "2026-01-11",
+      "price": 81.31,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-09&dateIn=2026-01-11&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=VIE&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-09&tpEndDate=2026-01-11&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=VIE",
+      "distance_km": 1457.9753789979693,
+      "price_per_km": 0.055769117346743106,
+      "score": 4.955968778946733,
+      "discount_pct": 50.3,
+      "route_typical_price": 163.62
+    },
+    {
+      "category_code": "ultra_chollo",
+      "category_label": "🔥 Ultra Chollo",
+      "origin": "PMI",
+      "destination": "EIN",
+      "start_date": "2026-01-09",
+      "end_date": "2026-01-11",
+      "price": 53.98,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-09&dateIn=2026-01-11&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=EIN&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-09&tpEndDate=2026-01-11&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=EIN",
+      "distance_km": 1337.3368394841425,
+      "price_per_km": 0.04036380245146164,
+      "score": 6.752004628955829,
+      "discount_pct": 75.0,
+      "route_typical_price": 216.14
+    },
+    {
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin": "PMI",
+      "destination": "SVQ",
+      "start_date": "2026-01-09",
+      "end_date": "2026-01-12",
+      "price": 37.25,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-09&dateIn=2026-01-12&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=SVQ&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-09&tpEndDate=2026-01-12&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=SVQ",
+      "distance_km": 791.8867884493454,
+      "price_per_km": 0.04703955229881041,
+      "score": 5.893756969458694,
+      "discount_pct": 80.1,
+      "route_typical_price": 187.31
+    },
+    {
+      "category_code": "cultural",
+      "category_label": "🏛 Escapada Cultural",
+      "origin": "PMI",
+      "destination": "BER",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-05",
+      "price": 66.39,
+      "airline": "Ryanair",
+      "link": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-01&dateIn=2026-01-05&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=PMI&destinationIata=BER&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-01&tpEndDate=2026-01-05&tpDiscount=0&tpPromoCode=&tpOriginIata=PMI&tpDestinationIata=BER",
+      "distance_km": 1647.7968523400168,
+      "price_per_km": 0.04029016071108544,
+      "score": 6.730433696113936,
+      "discount_pct": 65.6,
+      "route_typical_price": 192.98
+    }
+  ],
+  "current_index": 0
+}
