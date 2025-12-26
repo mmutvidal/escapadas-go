@@ -1,24 +1,35 @@
 async function loadFlights() {
   const yearSpan = document.getElementById("year");
-  if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-  }
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
   const todayCard = document.getElementById("today-card");
   const recentGrid = document.getElementById("recent-grid");
 
-  // 🔹 NUEVO: URL base de S3 + market
+  // ✅ 1) Preferimos cargar JSON relativo a la carpeta actual (/barcelona/, /madrid/, ...)
+  const localFlightsUrl = "./flights_of_the_day.json";
+
+  // ✅ 2) Fallback a S3 por si el JSON local no está (útil si aún no publicas los JSON en la web)
   const FLIGHTS_BASE_URL = "https://escapadasgo-public.s3.eu-north-1.amazonaws.com";
-  const MARKET = "bcn";  // en el futuro podrás usar "mad", "bcn", etc.
-  const FLIGHTS_URL = `${FLIGHTS_BASE_URL}/${MARKET}/flights_of_the_day.json`;
+  const marketFromPath = (location.pathname.split("/").filter(Boolean)[0] || "").toLowerCase();
+  const s3FlightsUrl = `${FLIGHTS_BASE_URL}/${marketFromPath}/flights_of_the_day.json`;
+
+  const tryFetchJson = async (url) => {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`No se pudo cargar ${url} (status ${res.status})`);
+    return res.json();
+  };
 
   try {
-    const res = await fetch(FLIGHTS_URL, { cache: "no-store" });
-    if (!res.ok) {
-      throw new Error(`No se pudo cargar ${FLIGHTS_URL} (status ${res.status})`);
+    let data = null;
+
+    // Intento 1: local
+    try {
+      data = await tryFetchJson(localFlightsUrl);
+    } catch (_e) {
+      // Intento 2: S3 fallback
+      data = await tryFetchJson(s3FlightsUrl);
     }
 
-    const data = await res.json();
     const flights = data.flights || [];
 
     if (!flights.length) {
@@ -39,14 +50,9 @@ async function loadFlights() {
 
 function formatDateFriendly(raw) {
   if (!raw) return "";
-  // Si viene en ISO largo, acortamos a la parte de fecha
   const onlyDate = raw.split("T")[0] || raw;
   const d = new Date(onlyDate);
-
-  if (isNaN(d.getTime())) {
-    // Si no se puede parsear, devolvemos al menos YYYY-MM-DD
-    return onlyDate;
-  }
+  if (isNaN(d.getTime())) return onlyDate;
 
   return d.toLocaleDateString("es-ES", {
     day: "2-digit",
@@ -62,9 +68,7 @@ function formatDateRange(startRaw, endRaw) {
 }
 
 function getDiscountPct(flight) {
-  if (flight.discount_pct != null) {
-    return flight.discount_pct;
-  }
+  if (flight.discount_pct != null) return flight.discount_pct;
 
   if (flight.route_typical_price != null && flight.price_eur != null) {
     const habitual = Number(flight.route_typical_price);
@@ -74,7 +78,6 @@ function getDiscountPct(flight) {
       return Math.max(0, disc);
     }
   }
-
   return null;
 }
 
@@ -83,34 +86,19 @@ function renderToday(container, flight) {
   container.innerHTML = "";
 
   const price = flight.price_eur != null ? flight.price_eur.toFixed(2) : "N/D";
-  const ppk =
-    flight.price_per_km != null ? flight.price_per_km.toFixed(2) : null;
+  const ppk = flight.price_per_km != null ? flight.price_per_km.toFixed(2) : null;
 
   const discount = getDiscountPct(flight);
   let rawScore = flight.score != null ? flight.score : null;
 
-  // Pequeño bonus visual para "finde_perfecto"
-  if (rawScore != null && flight.category_code === "finde_perfecto") {
-    rawScore += 3.5;
-  }
+  if (rawScore != null && flight.category_code === "finde_perfecto") rawScore += 3.5;
 
-  // Mapeamos tu score a una escala "optimista" 7–10
   let rating10 = null;
-  let starsText = null;
   if (rawScore != null) {
-    const min = 5;
-    const max = 15;
-
+    const min = 5, max = 15;
     let t = (rawScore - min) / (max - min);
     t = Math.max(0, Math.min(1, t));
-
-    const scaled = 7 + t * 3;
-    rating10 = scaled.toFixed(1);
-
-    const stars = Math.max(4, Math.round(scaled / 2));
-    const starFull = "★".repeat(stars);
-    const starEmpty = "☆".repeat(5 - stars);
-    starsText = `${starFull}${starEmpty}`;
+    rating10 = (7 + t * 3).toFixed(1);
   }
 
   const dates = formatDateRange(flight.start_date, flight.end_date);
@@ -131,13 +119,11 @@ function renderToday(container, flight) {
     </div>
     <div class="card-body">
       <p class="card-line"><strong>Fechas:</strong> ${dates}</p>
-      <p class="card-line">
-        <strong>Precio:</strong> ${price} € ida y vuelta
-      </p>
+      <p class="card-line"><strong>Precio:</strong> ${price} € ida y vuelta</p>
       ${
         flight.route_typical_price != null
           ? `<p class="card-line" style="color:#94a3b8;font-size:0.85rem;">
-               Precio habitual: ${flight.route_typical_price.toFixed(0)} €
+               Precio habitual: ${Number(flight.route_typical_price).toFixed(0)} €
              </p>`
           : ""
       }
@@ -182,8 +168,7 @@ function renderRecent(container, flights) {
   }
 
   flights.forEach((flight) => {
-    const price =
-      flight.price_eur != null ? flight.price_eur.toFixed(2) : "N/D";
+    const price = flight.price_eur != null ? flight.price_eur.toFixed(2) : "N/D";
     const dates = formatDateRange(flight.start_date, flight.end_date);
     const title = `${flight.origin_iata} → ${flight.destination_iata}`;
     const subtitle = `${flight.origin_city} → ${flight.destination_city}`;

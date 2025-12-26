@@ -21,10 +21,10 @@
   "web_json_path": "",
   "logo_path": "media/images/EscapGo_circ_logo_transparent.png",
   "ab_ratio_new": 0.5,
-  "caption": "Escápate un finde perfecto sin gastar de más\n\nCon un 70% de descuento, aprovecha al máximo el fin de semana gracias a los horarios ideales de salida y regreso.\n\n📅 Viernes 16 (17:00) → Domingo 18 (20:35)\n✈️ 🇪🇸 Madrid → OTP\n💸 90 € ida y vuelta\n\n🇷🇴 Día 1, Centro histórico:\n- Paseo por Lipscani\n- Visita al Palacio del Parlamento\n- Cena en restaurante tradicional\n🇷🇴 Día 2, Cultura y relax:\n- Museo Nacional de Arte\n- Parque Herăstrău\n- Café en el casco antiguo\n\nBucarest combina historia, cultura y vida vibrante en un destino perfecto para desconectar el fin de semana.\n\nNo dejes pasar esta oportunidad, reserva pronto para asegurar este precio y evitar subidas.\n\nReserva ya tu vuelo en el enlace de la bio y organiza tu escapada ideal.\n\n#viajar #vuelosbaratos #escapadas #escapadadefinde #viajes #Bucarest #ofertasdeviaje",
+  "caption": "Un vuelo increíble por solo 39 euros.\n\nAprovecha este ultra chollo con un 82% de descuento. No dejes pasar esta oportunidad única para desconectar.\n\n📅 Viernes 9 → Lunes 12\n✈️ 🇪🇸 Madrid → SUF\n💸 39 € ida y vuelta\n\n🇮🇹 Día 1, Llegada y paseo:\n- Explora el casco antiguo\n- Prueba comida local\n🇮🇹 Día 2, Naturaleza y cultura:\n- Visita parques naturales\n- Museos y galerías\n🇮🇹 Día 3, Relax y despedida:\n- Cafés y plazas\n- Compras de última hora\n\nEsta escapada es perfecta para desconectar y descubrir un destino lleno de encanto y cultura.\n\nReserva cuanto antes para evitar que los precios suban.\n\nReserva ya en escapadasgo.com o el enlace de la bio y no pierdas este chollo.\n\n#viajar #vuelosbaratos #escapadas #ultrachollo #ofertavuelos #viajesbaratos #descubre #viajerosporelmundo",
   "video_path": "media\\videos\\reel.mp4",
-  "video_hook": "Sale mucho mejor de lo normal",
-  "variant": "new|origin_pill_on",
+  "video_hook": "No es lo típico. Por eso funciona",
+  "variant": "old|origin_pill_off",
   "candidates": [
     {
       "category_code": "finde_perfecto",
@@ -107,5 +107,5 @@
       "route_typical_price": 182.8
     }
   ],
-  "current_index": 0
+  "current_index": 1
 }
