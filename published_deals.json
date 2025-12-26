@@ -1,7 +1,7 @@
 {
   "PMI-STN-2026-01-16-2026-01-19": {
-    "published_at": "2025-12-08",
-    "category": "gastronomica"
+    "published_at": "2025-12-24",
+    "category": "cultural"
   },
   "PMI-STN-2026-01-22-2026-01-26": {
     "published_at": "2025-12-08",
@@ -57,6 +57,54 @@
   },
   "PMI-CGN-2026-02-06-2026-02-09": {
     "published_at": "2025-12-20",
+    "category": "gastronomica"
+  },
+  "PMI-NUE-2026-02-06-2026-02-08": {
+    "published_at": "2025-12-21",
+    "category": "cultural"
+  },
+  "PMI-CRL-2026-01-23-2026-01-26": {
+    "published_at": "2025-12-23",
+    "category": "ultra_chollo"
+  },
+  "VLC-BRI-2026-01-08-2026-01-11": {
+    "published_at": "2025-12-24",
+    "category": "ultra_chollo"
+  },
+  "TFN-LPA-2025-12-26-2025-12-28": {
+    "published_at": "2025-12-25",
+    "category": "gastronomica"
+  },
+  "BCN-WMI-2026-01-09-2026-01-11": {
+    "published_at": "2025-12-25",
+    "category": "finde_perfecto"
+  },
+  "PMI-EIN-2026-01-16-2026-01-18": {
+    "published_at": "2025-12-25",
+    "category": "ultra_chollo"
+  },
+  "MAD-STN-2026-01-15-2026-01-18": {
+    "published_at": "2025-12-25",
+    "category": "cultural"
+  },
+  "BCN-SOF-2026-01-09-2026-01-11": {
+    "published_at": "2025-12-25",
+    "category": "finde_perfecto"
+  },
+  "PMI-WAW-2026-02-13-2026-02-16": {
+    "published_at": "2025-12-25",
+    "category": "gastronomica"
+  },
+  "BCN-LTN-2026-01-16-2026-01-19": {
+    "published_at": "2025-12-26",
+    "category": "cultural"
+  },
+  "ALC-SNN-2026-01-23-2026-01-25": {
+    "published_at": "2025-12-26",
+    "category": "finde_perfecto"
+  },
+  "BCN-VIE-2026-01-08-2026-01-12": {
+    "published_at": "2025-12-26",
     "category": "gastronomica"
   }
 }

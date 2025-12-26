@@ -265,16 +265,15 @@ def generate_weekend_date_pairs(start_date: date, end_date: date) -> List[Tuple[
     return pairs
 
 
-def get_available_flights(start_date: date, end_date: date) -> List[Flight]:
+def get_available_flights(start_date: date, end_date: date, origin_iata: str) -> List[Flight]:
     """
     Llama a todas las APIs para todos los combos de fechas
     generados en el rango [start_date, end_date].
     """
 
     apis = [
-        RyanairAPI(origin="PMI"),
-        KiwiAPI(origin="PMI"),
-        # MyCustomFlightAPI(...),
+        RyanairAPI(origin=origin_iata),
+        KiwiAPI(origin=origin_iata),
     ]
 
     all_flights: List[Flight] = []
@@ -396,14 +395,14 @@ def score_flight_basic(f: Flight) -> float:
 
 
 
-def get_best_flight_in_period(start_date: date, end_date: date) -> Optional[Flight]:
+def get_best_flight_in_period(start_date: date, end_date: date, origin_iata) -> Optional[Flight]:
     """
     Devuelve el mejor vuelo encontrado en el rango [start_date, end_date]
     usando el score que ya tienes definido (precio, price/km, etc.).
     """
     print(f"🔎 Buscando chollos entre {start_date} y {end_date}...")
 
-    flights = get_available_flights(start_date, end_date)
+    flights = get_available_flights(start_date, end_date, origin_iata)
     if not flights:
         print("⚠️ No se encontraron vuelos en ninguna API.")
         return None
@@ -423,14 +422,14 @@ def get_best_flight_in_period(start_date: date, end_date: date) -> Optional[Flig
     return best_flight
 
 
-def get_flights_in_period(start_date: date, end_date: date) -> List[Flight]:
+def get_flights_in_period(start_date: date, end_date: date, origin_iata) -> List[Flight]:
     """
     Devuelve TODOS los vuelos encontrados en el rango [start_date, end_date]
     usando get_available_flights (que ya hace las combinaciones de días relevantes).
     """
     print(f"🔎 Buscando vuelos entre {start_date} y {end_date}...")
 
-    flights = get_available_flights(start_date, end_date)
+    flights = get_available_flights(start_date, end_date, origin_iata)
     if not flights:
         print("⚠️ No se encontraron vuelos en ninguna API.")
         return []
@@ -508,7 +507,7 @@ def get_best_by_category_cheapest(
     best_per_cat: Dict[str, dict] = {}
 
     for f in flights:
-        if ph.is_recently_published(f, cooldown_days=cooldown_days, destination_cooldown_days=destination_cooldown_days):
+        if ph.is_recently_published(f, cooldown_days=cooldown_days, route_cooldown_days=route_cooldown_days):
             continue
 
         discount_pct = getattr(f, "discount_pct", None)
@@ -536,7 +535,7 @@ def get_best_by_category_cheapest(
 def get_best_by_category_scored(
     flights: List[Flight],
     cooldown_days: int = 14,
-    destination_cooldown_days: int = 5,
+    route_cooldown_days: int = 5,
     min_discount_pct: float = 40.0,  # ← aquí defines el mínimo (30–40%)
 ) -> List[dict]:
 
@@ -544,7 +543,7 @@ def get_best_by_category_scored(
 
     for f in flights:
         # 0) descartamos vuelos publicados hace poco
-        if ph.is_recently_published(f, cooldown_days=cooldown_days, destination_cooldown_days=destination_cooldown_days):
+        if ph.is_recently_published(f, cooldown_days=cooldown_days, route_cooldown_days=route_cooldown_days):
             continue
 
         # 1) descartamos vuelos sin descuento suficiente
@@ -577,7 +576,11 @@ def get_best_by_category_scored(
 
 def _parse_dt(dt_str: str):
     try:
-        return datetime.fromisoformat(dt_str)
+        s = str(dt_str)
+        if s.endswith("Z"):
+            s = s[:-1]  # quitar Z
+        # si tiene milisegundos tipo .000, fromisoformat lo soporta normalmente
+        return datetime.fromisoformat(s)
     except Exception:
         return None
 

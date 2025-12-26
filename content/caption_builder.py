@@ -4,6 +4,7 @@ from openai import OpenAI
 from typing import Union
 from datetime import datetime
 from .destinations import get_city
+import re
 
 
 FlightLike = Union[dict, object]
@@ -12,6 +13,19 @@ from config.settings import OPENAI_API_KEY  # 👈 nuevo import
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+
+def _extract_json_object(text: str) -> str:
+    """
+    Extrae el primer objeto JSON {...} de un texto (por si el modelo añade texto extra).
+    """
+    if not text:
+        raise ValueError("Respuesta vacía del modelo (no hay JSON).")
+    m = re.search(r"\{.*\}", text, flags=re.DOTALL)
+    if not m:
+        raise ValueError(f"No se encontró un objeto JSON en la respuesta: {text[:200]}")
+    return m.group(0)
+
+    
 def _weekday_es(date_str: str) -> str:
     """
     Acepta 'YYYY-MM-DD' o ISO 'YYYY-MM-DDTHH:MM:SS(.sss)Z'
@@ -60,9 +74,9 @@ def build_dates_block(flight) -> str:
     )
 
 
-def build_caption_json(flight: dict) -> dict:
+def build_caption_json(payload: dict) -> dict:
     system_prompt = """Eres un experto en Instagram especializado en crear captions largos y retenibles
-para Reels de chollos de vuelo desde Mallorca.
+para Reels de chollos de vuelos.
 
 Debes devolver ÚNICAMENTE un JSON con la siguiente estructura EXACTA:
 
@@ -82,56 +96,45 @@ Reglas IMPORTANTES:
 - El texto total (sumando todos los campos menos "hashtags") debe estar entre 90 y 140 palabras.
 - El objetivo es que la persona tarde al menos 8–12 segundos en leerlo todo.
 - "hook": 1 sola frase muy corta, clara y potente (máx. 12 palabras), sin emojis, sin fechas ni precios, pensada para detener el scroll.
-- "bridge": 1–2 frases que inviten a seguir leyendo (ej: "Te cuento fechas y el plan perfecto de 3 días").
-- Cuando "category_code" sea "finde_perfecto", menciona en "bridge" que los horarios permiten aprovechar al máximo el fin de semana (por ejemplo, salida viernes por la tarde y regreso domingo por la noche).
+- "bridge": 1–2 frases que inviten a seguir leyendo.
+- Cuando "category_code" sea "finde_perfecto", menciona en "bridge" que los horarios permiten aprovechar al máximo el fin de semana.
+
 - El bloque "dates_block" debe copiarse exactamente tal como se proporciona. No reformules, no traduzcas ni alteres su formato. No añadas ni elimines emojis ni saltos de línea.
 - Si el campo "category_code" es "finde_perfecto" y se proporcionan "start_time" y "end_time",
-  solamente en este caso debes añadir los horarios de salida y regreso en la primera línea del dates_block siguiendo este ejemplo: "📅 Viernes 28 (19:45) → Domingo 30 (21:30)".
+  solamente en este caso debes añadir los horarios de salida y regreso en la primera línea del dates_block siguiendo este ejemplo:
+  "📅 Viernes 28 (19:45) → Domingo 30 (21:30)".
+
 - "itinerary_block": estructura SIEMPRE según el número de días proporcionado en 'stay_nights':
   - Cabecera por día: "🇮🇹 Día 1, Centro histórico:"
   - 2–3 bullets por día, cada bullet ≤ 10 palabras.
-- "extra_block": 1–2 frases que destaquen lo especial del destino
-  (ambiente, gastronomía, cultura, vistas, etc.), adaptado a la categoría y al tipo de destino.
-- Al final de "extra_block" incluye dos saltos de línea y añade SIEMPRE una frase que recomiende reservar pronto
-  para evitar subidas de precios de las aerolíneas. Varía la redacción en cada generación,
-  no repitas literalmente siempre la misma frase. Inspírate en ideas como:
-  · "Si te encaja, mejor reservar pronto: cuando se llenan los vuelos los precios suelen subir."
-  · "Si lo ves claro, no lo dejes para más adelante: estos precios no suelen durar mucho."
-  · "Las aerolíneas ajustan tarifas al alza cuando baja la disponibilidad, así que compensa reservar con antelación."
-  Puedes usar sinónimos, cambiar el orden o crear frases similares, pero mantén siempre la idea de que es mejor reservar pronto.
+
+- "extra_block": 1–2 frases que destaquen lo especial del destino adaptado a la categoría.
+  Al final incluye dos saltos de línea y añade SIEMPRE una frase que recomiende reservar pronto para evitar subidas de precios.
+  Varía la redacción en cada generación (no repitas siempre lo mismo).
+
 - DESCUENTO ("discount_pct"):
   - Si existe "discount_pct" y es mayor que 40:
       · Menciona el descuento UNA sola vez.
       · Inclúyelo EXCLUSIVAMENTE en el "bridge".
       · NO vuelvas a mencionarlo en "extra_block".
-  - Inspirate en una de estas frases y hazlo lo más natural posible: "un X% más barato que el precio habitual" o "un X% por debajo del precio medio"
   - Redondea siempre al número entero más cercano.
   - Si "discount_pct" es menor a 40 o no existe, NO hables de descuento.
-- "cta_block": 1 sola frase con CTA suave. 
-  Reglas para el CTA:
-  - Debe ser diferente en cada generación.
-  - Inspírate en ejemplos como:
-    * ¿Con quién te escaparías aquí? Etiquétal@.
-    * Guárdalo si te lo quieres pensar.
-    * Sígueme para el chollo de mañana.
-  - NO repitas literalmente siempre el mismo CTA. Varía el verbo, la estructura o el foco (guardar, etiquetar, seguir, comentar).
-- El "cta_block" debe incluir SIEMPRE una referencia a que las reservas están en el enlace de la bio o en escapadasgo.com/mallorca, pero de manera suave y variada. Ejemplos:
-  · "Reserva cuando quieras, el enlace está en la bio."
-  · "Puedes ver disponibilidad y reservar desde escapadasgo.com/mallorca."
-  · "Guárdalo y revisa el link de la bio cuando te venga bien."
+
+- "cta_block": 1 sola frase con CTA suave y variada.
+  Debe incluir SIEMPRE una referencia a que las reservas están en el enlace de la bio o en el sitio indicado por "booking_hint".
+
 - "hashtags": 6–10 hashtags relacionados, separados por espacios, sin emojis.
 - No incluyas comillas dobles dentro de los valores del JSON.
 - No añadas texto fuera del JSON.
 - No inventes vuelos ni precios: usa siempre los datos proporcionados.
-- Adapta el tono según la categoría (ej. "ultra_chollo", "finde_perfecto", "romantica",
-  "cultural", "gastronomica").
-- No uses expresiones vagas tipo: ‘hoy’, ‘mañana’, ‘este finde’, ‘esta semana’, ‘ahora’, etc. Usa siempre fechas concretas o habla de   ‘escapada de X noches’.”"""
+- Adapta el tono según la categoría.
 
-    user_prompt = f"""Genera el JSON del caption para este vuelo usando las reglas indicadas:
-
-{json.dumps(flight, ensure_ascii=False)}
+- No uses expresiones vagas tipo: ‘hoy’, ‘mañana’, ‘este finde’, etc.
 """
+    user_prompt = f"""Genera el JSON del caption para este payload siguiendo las reglas:
 
+{json.dumps(payload, ensure_ascii=False)}
+"""
     resp = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
@@ -141,8 +144,10 @@ Reglas IMPORTANTES:
         temperature=0.8,
     )
 
-    raw = resp.choices[0].message.content.strip()
-    return json.loads(raw)
+    raw = (resp.choices[0].message.content or "").strip()
+    raw_json = _extract_json_object(raw)
+    return json.loads(raw_json)
+
 
 
 def build_hook(flight) -> str:
@@ -257,7 +262,8 @@ def _to_time_str(d) -> str:
 
 def build_caption_for_flight(
     flight: FlightLike,
-    brand_handle: str = "@escapadas_mallorca",
+    brand_handle: str = "@escapadasgo",
+    booking_hint: str = "el enlace de la bio",
     category_code: str | None = None,
     tone: str = "emocional",
     hashtags_base: list[str] | None = None,
@@ -270,7 +276,7 @@ def build_caption_for_flight(
     """
 
     if hashtags_base is None:
-        hashtags_base = ["#viajar", "#vuelosbaratos", "#escapadas", "#mallorca"]
+        hashtags_base = ["#viajar", "#vuelosbaratos", "#escapadas"]
 
     origin_iata = _get_field(flight, "origin") or _get_field(flight, "origin_airport")
     dest_iata   = _get_field(flight, "destination") or _get_field(flight, "destination_airport")
@@ -308,6 +314,7 @@ def build_caption_for_flight(
     
     payload = {
         "brand_handle": brand_handle,
+        "booking_hint": booking_hint,   # ✅ NUEVO
         "category_code": category_code,          # p.ej. "cultural", "romantica"
         "origin_city": origin_city,
         "origin_airport": origin_iata,

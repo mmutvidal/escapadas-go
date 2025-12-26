@@ -27,15 +27,15 @@ from content.destinations import get_country
 import content.video_hook_curiosity as vh
 import media.reel_ab as rab
 
+from config.markets import MARKETS
+
 from config.settings import BOT_TOKEN,REVIEW_CHAT_ID 
 
 S3_BUCKET_REELS = "escapadasgo-reels"
-S3_PREFIX_REELS = "pmi/"   # si algún día tienes más markets, lo paramos
+# S3_PREFIX_REELS = "pmi/"   # si algún día tienes más markets, lo paramos
+# MARKET = "PMI"  # más adelante lo podrás hacer dinámico
+# LOGO_PATH = "media/images/EscapGo_circ_logo_transparent.png"
 
-
-MARKET = "PMI"  # más adelante lo podrás hacer dinámico
-
-LOGO_PATH = "media/images/EscapGo_circ_logo_transparent.png"
 
 # Carpeta para guardar los jobs en disco (compartida entre procesos)
 JOBS_DIR = Path("review_jobs")
@@ -51,10 +51,22 @@ def _job_path(job_id: str) -> Path:
 
 def _serialize_job(job: Dict[str, Any]) -> Dict[str, Any]:
     return {
-        "flight": None,
+        "market": job.get("market"),
+        "flight": job.get("flight"),   # ✅ AÑADIR
+        "ig_handle": job.get("ig_handle"),
+        "ig_user_id": job.get("ig_user_id"),
+        "page_token": job.get("page_token"),
+        "s3_prefix_reels": job.get("s3_prefix_reels"),
+        "web_key_prefix": job.get("web_key_prefix"),
+        "web_json_path": str(job.get("web_json_path") or ""),
+        "logo_path": job.get("logo_path"),
+        "ab_ratio_new": job.get("ab_ratio_new", 0.5),
+
         "caption": job["caption"],
         "video_path": str(job["video_path"]),
-        "video_hook": job.get("video_hook"),   # ✅ NUEVO
+        "video_hook": job.get("video_hook"),
+        "variant": job.get("variant"),
+
         "candidates": job.get("candidates", []),
         "current_index": job.get("current_index", 0),
     }
@@ -62,10 +74,22 @@ def _serialize_job(job: Dict[str, Any]) -> Dict[str, Any]:
 
 def _deserialize_job(data: Dict[str, Any]) -> Dict[str, Any]:
     return {
-        "flight": None,
+        "market": data.get("market"),
+        "flight": data.get("flight"),  # ✅ AÑADIR
+        "ig_handle": data.get("ig_handle"),
+        "ig_user_id": data.get("ig_user_id"),
+        "page_token": data.get("page_token"),
+        "s3_prefix_reels": data.get("s3_prefix_reels"),
+        "web_key_prefix": data.get("web_key_prefix"),
+        "web_json_path": Path(data["web_json_path"]) if data.get("web_json_path") else None,
+        "logo_path": data.get("logo_path"),
+        "ab_ratio_new": data.get("ab_ratio_new", 0.5),
+
         "caption": data["caption"],
         "video_path": Path(data["video_path"]),
-        "video_hook": data.get("video_hook"),  # ✅ NUEVO
+        "video_hook": data.get("video_hook"),
+        "variant": data.get("variant"),
+
         "candidates": data.get("candidates", []),
         "current_index": data.get("current_index", 0),
     }
@@ -90,6 +114,40 @@ def delete_job(job_id: str) -> None:
     if path.exists():
         path.unlink()
 
+def _flight_to_dict(f: Any) -> Any:
+    """
+    Acepta Flight o dict. Devuelve dict JSON-friendly.
+    """
+    if f is None:
+        return None
+    if isinstance(f, dict):
+        return f
+    # Intentar extraer atributos típicos
+    d = {}
+    for k in [
+        "origin","destination","start_date","end_date","price","airline","link",
+        "discount_pct","route_typical_price","distance_km","price_per_km"
+    ]:
+        if hasattr(f, k):
+            v = getattr(f, k)
+            d[k] = str(v) if k in ("start_date","end_date") else v
+    return d or None
+
+def _extract_origin_from_text(text: str, default_origin: str | None = None) -> str | None:
+    """
+    Detecta un código IATA (PMI, BCN, MAD, VLC, etc.) en el texto.
+    Si no hay ninguno, devuelve default_origin.
+    """
+    if not text:
+        return default_origin
+
+    tokens = text.upper().split()
+    for t in tokens:
+        if len(t) == 3 and t.isalpha():
+            return t
+
+    return default_origin
+
 
 def to_review_candidates(best_by_cat):
     """
@@ -104,8 +162,12 @@ def to_review_candidates(best_by_cat):
 
         # opcional: solo fecha (YYYY-MM-DD)
         def only_date(dt_str):
-            # si ya es "YYYY-MM-DD HH:MM:SS"
-            return dt_str.split(" ")[0] if isinstance(dt_str, str) else str(dt_str)
+            s = str(dt_str)
+            if "T" in s:
+                s = s.split("T")[0]
+            if " " in s:
+                s = s.split(" ")[0]
+            return s[:10]
 
         candidates.append({
             "category_code": cat["code"],
@@ -129,24 +191,45 @@ def to_review_candidates(best_by_cat):
     return candidates
 
 
-def register_job(job_id: str, flight, caption: str, video_path: Path, candidates=None, video_hook: str | None = None):
-    """
-    Registrar un job de revisión. Se guarda en memoria (para este proceso)
-    y en disco (para compartir con el bot de Telegram).
-
-    'candidates' debe ser una lista de payloads de vuelo (por ejemplo los de
-    to_review_candidates(best_by_cat)), empezando por el que ya has usado
-    para generar este primer reel o incluyendo otros alternativos.
-    """
+def register_job(
+    job_id: str,
+    caption: str,
+    video_path: Path,
+    candidates=None,
+    flight: Any = None,                 # ✅ AÑADIR
+    video_hook: str | None = None,
+    market: str | None = None,
+    ig_handle: str | None = None,
+    ig_user_id: str | None = None,
+    page_token: str | None = None,
+    s3_prefix_reels: str | None = None,
+    web_key_prefix: str | None = None,
+    web_json_path: str | Path | None = None,
+    logo_path: str | None = None,
+    ab_ratio_new: float = 0.5,
+    variant: str | None = None,
+):
     job = {
-        "flight": flight,
+        "market": market,
+        "ig_handle": ig_handle,
+        "ig_user_id": ig_user_id,
+        "page_token": page_token,
+        "s3_prefix_reels": s3_prefix_reels,
+        "web_key_prefix": web_key_prefix,
+        "web_json_path": Path(web_json_path) if web_json_path else None,
+        "logo_path": logo_path,
+        "ab_ratio_new": ab_ratio_new,
+        
+        "flight": _flight_to_dict(flight),   # ✅ AÑADIR
+
         "caption": caption,
         "video_path": Path(video_path),
-        "video_hook": video_hook,   # ✅ NUEVO
+        "video_hook": video_hook,
+        "variant": variant,
+
         "candidates": candidates or [],
         "current_index": 0,
     }
-
     PENDING_JOBS[job_id] = job
     save_job(job_id, job)
 
@@ -214,12 +297,20 @@ def _get_current_candidate(job: Dict[str, Any]) -> Dict[str, Any] | None:
     return candidates[idx]
 
 
-def _build_reel_for_candidate(candidate: Dict[str, Any]) -> tuple[str, Path, str]:
+def _build_reel_for_candidate(candidate: Dict[str, Any], job: Dict[str, Any]) -> tuple[str, Path, str, str]:
     # 1) Caption
+    brand_handle = job.get("ig_handle") or "@escapadasgo"
+    # booking_hint por mercado: si guardas uno explícito en job, úsalo. Si no:
+    booking_hint = "escapadasgo.com o el enlace de la bio"
+    if brand_handle == "@escapadasgo_mallorca":
+        booking_hint = "escapadasgo.com/mallorca o el enlace de la bio"
+    
     caption = cb.build_caption_for_flight(
         candidate,
         category_code=candidate.get("category_code"),
         tone="emocional",
+        brand_handle=brand_handle,
+        booking_hint=booking_hint,
     ).replace("\n\n\n", "\n\n")
 
     # 2) Hook (curiosidad, premium)
@@ -248,21 +339,26 @@ def _build_reel_for_candidate(candidate: Dict[str, Any]) -> tuple[str, Path, str
     #     hook_mode="band",               # ✅ AQUÍ
     # )
 
-    video_path_or_url, variant_used = rab.create_reel_for_flight_ab(
+    logo_path = job.get("logo_path") or "media/images/EscapGo_circ_logo_transparent.png"
+    ratio_new = float(job.get("ab_ratio_new", 0.5))
+    
+    video_path_or_url, variant_used, origin_pill_variant = rab.create_reel_for_flight_ab(
         candidate,
         out_mp4_path=str(out_path),
-        logo_path=LOGO_PATH,
+        logo_path=logo_path,
+        brand_line=brand_handle,
         duration=6.0,
         s3_bucket=None,
-        hook_text=video_hook,     # solo se usa si sale "new"
-        hook_mode="band",         # solo se usa si sale "new"
-        variant="auto",           # auto / new / old
-        ratio_new=0.5,            # 50/50
-        key_mode="route_dates",   # estable por vuelo
+        hook_text=video_hook,
+        hook_mode="band",
+        variant="auto",
+        ratio_new=ratio_new,
+        key_mode="route_dates",
+        origin_pill_ab_ratio=1,  # ✅ pill A/B 50/50
     )
-    print("AB variant:", variant_used)
     
-    return caption, out_path, video_hook
+    combined_variant = f"{variant_used}|{origin_pill_variant}"
+    return caption, out_path, video_hook, combined_variant
 
 
 
@@ -304,13 +400,16 @@ def handle_button(update, context):
         try:
             # 1.1) Subir el vídeo local actual a S3
             video_url = vg.upload_reel_to_s3(
-                local_path=job["video_path"],   # Path o str
+                local_path=job["video_path"],
                 bucket=S3_BUCKET_REELS,
-                prefix=S3_PREFIX_REELS,
+                prefix=job.get("s3_prefix_reels") or "",
             )
 
             # 1.2) Crear contenedor de Reel en IG usando la URL de S3
-            ig = InstagramClient()
+            ig = InstagramClient(
+                ig_user_id=job.get("ig_user_id"),
+                page_token=job.get("page_token"),
+            )            
             creation_id = ig.create_reel_container(
                 video_url=video_url,
                 caption=job["caption"],
@@ -318,6 +417,22 @@ def handle_button(update, context):
 
             # 1.3) Esperar a que IG procese el vídeo y publicar
             if ig.wait_until_ready(creation_id):
+                # Logging correcto (usa job)
+                token = job.get("page_token") or ""
+                print(
+                    f"[PUBLISH] market={job.get('market')} "
+                    f"handle={job.get('ig_handle')} "
+                    f"ig_user_id={job.get('ig_user_id')} "
+                    f"token_suffix={token[-10:] if token else 'NONE'}"
+                )
+                
+                # Guardas para evitar publicar con defaults por accidente
+                if not job.get("ig_user_id") or not job.get("page_token"):
+                    raise RuntimeError(
+                        "Faltan ig_user_id/page_token en el job. "
+                        "Esto causaría publicar con defaults del .env en la cuenta incorrecta."
+                    )
+
                 reel_id = ig.publish_reel(creation_id)
                 permalink = ig.get_media_permalink(reel_id)
                 query.message.reply_text(f"✅ Reel publicado en Instagram:\n{permalink}")
@@ -357,16 +472,20 @@ def handle_button(update, context):
                                  or getattr(flight_for_affiliate, "discount_pct", None),
             }
 
+            market = job.get("market") or "UNK"
+            json_path = job.get("web_json_path") or Path("local_copy.json")
+            web_key_prefix = job.get("web_key_prefix") or f"{market.lower()}/"
+            
             data = ex.update_flights_json(
                 main_item=main_item,
-                json_path="local_copy.json",
-                market=MARKET,
-                reel_url=permalink or video_url,   # preferimos el permalink del Reel
+                json_path=json_path,
+                market=market,
+                reel_url=permalink or video_url,
                 affiliate_url=affiliate_url,
                 max_entries=5,
             )
-
-            key = f"{MARKET.lower()}/flights_of_the_day.json"
+            
+            key = f"{web_key_prefix}flights_of_the_day.json"
             up.upload_flights_json(data, key=key)
 
             query.message.reply_text(
@@ -409,7 +528,8 @@ def handle_button(update, context):
 
         print(f"Siguiente candidato: {next_cand.get('destination')} idx={job.get('current_index')}")
 
-        new_caption, new_video_path, new_hook = _build_reel_for_candidate(next_cand)
+        new_caption, new_video_path, new_hook, variant_used = _build_reel_for_candidate(next_cand, job)
+        job["variant"] = variant_used        
         job["video_hook"] = new_hook
         print(f"Nuevo video generado en: {new_video_path}")
 
@@ -465,41 +585,54 @@ def handle_text_query(update, context):
     """
     Permite escribir en el chat:
       vuelo 10 180
-    y lanza el flujo completo:
-      - busca vuelos en [hoy+10, hoy+10+180]
-      - calcula best_by_cat (con min_discount_pct=40)
+      vuelo BCN 10 180
+      vuelo MAD 7 150
+
+    Flujo:
+      - busca vuelos en [hoy+offset_start, hoy+offset_start+offset_range]
+      - calcula best_by_cat (min_discount_pct=40)
       - elige main candidate
       - genera reel + caption
       - registra job y lo envía a revisión
-    Además envía un resumen textual.
     """
-    text = (update.message.text or "").strip().lower()
+    raw_text = (update.message.text or "").strip()
+    text_up = raw_text.upper()
 
-    m = re.match(r"^vuelo\s+(\d+)\s+(\d+)$", text)
+    # Soportar:
+    #  - "VUELO 10 180"
+    #  - "VUELO BCN 10 180"
+    m = re.match(r"^VUELO(?:\s+([A-Z]{3}))?\s+(\d+)\s+(\d+)$", text_up)
     if not m:
-        # no es nuestro patrón -> ignoramos
         return
 
-    offset_start = int(m.group(1))   # ej. 10 días desde hoy
-    offset_range = int(m.group(2))   # ej. 180 días de ventana
+    origin_iata = (m.group(1) or "").strip().upper() or None
+    offset_start = int(m.group(2))
+    offset_range = int(m.group(3))
 
     start = date.today() + timedelta(days=offset_start)
     end = start + timedelta(days=offset_range)
 
-    # 1) Buscar vuelos en el rango
+    # Default origin si no se especifica
+    if not origin_iata:
+        origin_iata = "PMI"  # cambia aquí si quieres otro default
+
+    update.message.reply_text(
+        f"🔎 Buscando vuelos con salida desde {origin_iata}…\n"
+        f"Rango: {start} → {end}"
+    )
+
+    # 1) Buscar vuelos
     try:
-        flights = ag.get_flights_in_period(start, end)
+        flights = ag.get_flights_in_period(start, end, origin_iata=origin_iata)
     except Exception as e:
         update.message.reply_text(f"❌ Error obteniendo vuelos: {e}")
         return
 
     if not flights:
-        update.message.reply_text(
-            f"🔍 No se han encontrado vuelos entre {start} y {end}."
-        )
+        update.message.reply_text(f"🔍 No se han encontrado vuelos entre {start} y {end}.")
         return
 
-    # 2) Calcular mejores por categoría con descuento mínimo
+    # 2) Mejor por categoría
     try:
         best_by_cat = ag.get_best_by_category_scored(
             flights,
@@ -507,8 +640,7 @@ def handle_text_query(update, context):
         )
     except Exception as e:
         update.message.reply_text(
-            f"Se han encontrado {len(flights)} vuelos, pero ha fallado "
-            f"get_best_by_category_scored: {e}"
+            f"Se han encontrado {len(flights)} vuelos, pero ha fallado scoring: {e}"
         )
         return
 
@@ -518,7 +650,7 @@ def handle_text_query(update, context):
         )
         return
 
-    # 3) Elegir candidato principal
+    # 3) Elegir main
     try:
         main_item = ag.choose_main_candidate_prob(best_by_cat)
     except Exception as e:
@@ -529,45 +661,99 @@ def handle_text_query(update, context):
     main_cat = main_item["category"]
     main_cat_code = main_cat.get("code")
 
-    # 4) Convertir todos a candidatos "review-friendly"
+    # 4) Convertir a candidatos review-friendly
     review_candidates = to_review_candidates(best_by_cat)
 
-    # Identificar el índice del candidato principal en review_candidates
+    # Reordenar para que el principal quede primero (evitar `is`)
+    def _key_from_cand(c):
+        return (
+            (c.get("origin") or "").upper(),
+            (c.get("destination") or "").upper(),
+            str(c.get("start_date") or "")[:10],
+            str(c.get("end_date") or "")[:10],
+            float(c.get("price") or 0.0),
+        )
+
+    main_key = (
+        main_flight.origin.upper(),
+        main_flight.destination.upper(),
+        str(main_flight.start_date)[:10],
+        str(main_flight.end_date)[:10],
+        float(main_flight.price),
+    )
+
     main_idx = 0
-    for i, item in enumerate(best_by_cat):
-        if item["flight"] is main_flight and item["category"].get("code") == main_cat_code:
+    for i, c in enumerate(review_candidates):
+        if _key_from_cand(c) == main_key and c.get("category_code") == main_cat_code:
             main_idx = i
             break
 
-    # Reordenamos para que el principal quede en índice 0
     if main_idx != 0:
         review_candidates[0], review_candidates[main_idx] = review_candidates[main_idx], review_candidates[0]
 
     main_candidate = review_candidates[0]
 
-    # 5) Generar reel + caption para ese main_candidate
-    new_caption, new_video_path, new_hook = _build_reel_for_candidate(main_candidate)
+    # 5) Resolver cfg/market según origin_iata (PMI, BCN, MAD, VLC...)
+    cfg = MARKETS.get(origin_iata)
+    if not cfg:
+        update.message.reply_text(
+            f"❌ Mercado/origen '{origin_iata}' no configurado en MARKETS.\n"
+            f"Disponibles: {', '.join(MARKETS.keys())}"
+        )
+        return
 
-    # 6) Registrar job y enviarlo a revisión
+    # Construimos un job “base” con los datos del market correcto
+    tmp_job = {
+        "market": cfg.code,
+        "ig_handle": cfg.ig_handle,
+        "ig_user_id": cfg.ig_user_id,
+        "page_token": cfg.page_token,
+        "s3_prefix_reels": cfg.s3_reels_prefix,
+        "web_key_prefix": cfg.web_key_prefix,
+        "logo_path": cfg.logo_path,
+        "ab_ratio_new": float(getattr(cfg, "ab_ratio_new", 0.5)),
+    }
+
+    # Validación temprana para que no llegue un job incompleto a aprobación
+    if not tmp_job["ig_user_id"] or not tmp_job["page_token"]:
+        update.message.reply_text(
+            f"❌ El market {cfg.code} no tiene ig_user_id/page_token.\n"
+            f"Revisa tu .env y config/markets.py"
+        )
+        return
+
+    # 6) Generar reel + caption para main_candidate usando el branding del market
+    new_caption, new_video_path, new_hook, variant_used = _build_reel_for_candidate(main_candidate, tmp_job)
+
+    # 7) Registrar job completo y enviar a revisión
     job_id = str(uuid.uuid4())
     register_job(
         job_id=job_id,
-        flight=None,
         caption=new_caption,
         video_path=new_video_path,
         candidates=review_candidates,
-        video_hook=new_hook,   # ✅ NUEVO
+        flight=main_flight,                 # opcional, pero útil
+        video_hook=new_hook,
+        variant=variant_used,
+
+        market=tmp_job["market"],
+        ig_handle=tmp_job["ig_handle"],
+        ig_user_id=tmp_job["ig_user_id"],
+        page_token=tmp_job["page_token"],
+        s3_prefix_reels=tmp_job["s3_prefix_reels"],
+        web_key_prefix=tmp_job["web_key_prefix"],
+        logo_path=tmp_job["logo_path"],
+        ab_ratio_new=tmp_job["ab_ratio_new"],
     )
     send_review_candidate(job_id)
 
-    # 7) Resumen textual en el chat donde se escribió "vuelo 10 180"
+    # 7) Resumen
     dates_str = _format_date_range(main_candidate.get("start_date"), main_candidate.get("end_date"))
     price_val = main_candidate.get("price")
     price_str = f"{price_val:.2f} €" if price_val is not None else "N/D"
 
     update.message.reply_text(
         f"✅ Generado y enviado a revisión.\n"
-        f"Periodo búsqueda: {start} – {end}\n"
         f"Candidato principal:\n"
         f"  {main_cat.get('label', '')}\n"
         f"  {main_candidate.get('origin')} → {main_candidate.get('destination')}\n"
@@ -575,6 +761,7 @@ def handle_text_query(update, context):
         f"  Precio: {price_str}\n"
         f"job_id: {job_id}"
     )
+
 
 def run_bot():
     if not BOT_TOKEN:

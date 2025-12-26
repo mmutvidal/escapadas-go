@@ -148,6 +148,32 @@ COLORS = {
     "red": (213, 107, 71, 1),
 }
 
+# ORIGIN_THEME = {
+#     "PMI": {"bg": (30, 65, 120), "text": (255, 255, 255)},     # azul
+#     "BCN": {"bg": (16, 112, 84), "text": (255, 255, 255)},     # verde
+#     "MAD": {"bg": (153, 27, 27), "text": (255, 255, 255)},     # rojo
+#     "VLC": {"bg": (194, 65, 12), "text": (255, 255, 255)},     # naranja
+#     # fallback
+#     "_DEFAULT": {"bg": (30, 65, 120), "text": (255, 255, 255)},
+# }
+
+ORIGIN_THEME = {
+    # Islas
+    "PMI": {"bg": (30, 65, 120), "text": (255, 255, 255)},     # azul profundo (Mallorca)
+    "TFN": {"bg": (88, 28, 135), "text": (255, 255, 255)},    # morado volcánico (Canarias)
+
+    # Península
+    "BCN": {"bg": (16, 112, 84), "text": (255, 255, 255)},    # verde mediterráneo
+    "MAD": {"bg": (153, 27, 27), "text": (255, 255, 255)},    # rojo institucional
+    "VLC": {"bg": (194, 65, 12), "text": (255, 255, 255)},    # naranja cálido
+    "AGP": {"bg": (15, 118, 110), "text": (255, 255, 255)},   # teal andaluz
+    "ALC": {"bg": (180, 83, 9), "text": (255, 255, 255)},     # ámbar / dorado
+
+    # fallback
+    "_DEFAULT": {"bg": (30, 65, 120), "text": (255, 255, 255)},
+}
+
+
 GRADIENT_TOP_OPACITY = 0.15
 GRADIENT_BOT_OPACITY = 0.65
 
@@ -206,6 +232,11 @@ def _font(size: int, kind: str = "default") -> ImageFont.FreeTypeFont:
 
     return ImageFont.truetype(path, size)
 
+
+def get_origin_theme(origin: str):
+    origin = (origin or "").upper()
+    return ORIGIN_THEME.get(origin, ORIGIN_THEME["_DEFAULT"])
+    
 
 def _ease_in_out(x: float) -> float:
     # clamp 0..1
@@ -370,7 +401,15 @@ def _draw_multiline_centered(draw, lines, font, center_x, center_y, fill,
         y += line_h
 
 
-
+def choose_origin_pill_variant(ab_ratio_on: float = 0.5) -> tuple[bool, str]:
+    """
+    Devuelve:
+      - show_origin_pill (bool)
+      - origin_pill_variant ("origin_pill_on" | "origin_pill_off")
+    """
+    r = random.random()
+    show = r < float(ab_ratio_on)
+    return show, ("origin_pill_on" if show else "origin_pill_off")
 
 
 # ---------------------------------------------------------------------------
@@ -546,9 +585,14 @@ def _draw_pill_with_shadow(
         width=2 if border_color else 0,
     )
 
-    # 3) Texto
-    text_x = x0 + padding_x
-    text_y = y0 + padding_y
+    # 3) Texto centrado real dentro de la pill
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_w = bbox[2] - bbox[0]
+    text_h = bbox[3] - bbox[1]
+
+    text_x = x0 + (pill_w - text_w) / 2 - bbox[0]
+    text_y = y0 + (pill_h - text_h) / 2 - bbox[1]
+
     draw.text((text_x, text_y), text, font=font, fill=text_color)
 
 
@@ -730,6 +774,9 @@ def _compose_frame(
     hook_mode: str = "band",   # "band" o "pill"
     discount_pct: Optional[float] = None,
     category_label: Optional[str] = None,
+    origin_pill_text: Optional[str] = None,
+    origin_code: Optional[str] = None,
+    show_origin_pill: bool = False,
 ) -> Image.Image:
     """
     Devuelve un frame PIL ya compuesto con:
@@ -769,6 +816,8 @@ def _compose_frame(
     a_price = _alpha_window(t, *reveal["price"], fade=0.18)
     a_disc  = _alpha_window(t, *reveal["disc"],  fade=0.18)
     
+    disable_origin_branding = ((origin_code or "").upper() == "PMI")
+
     
     # --- Fondo ---
     bg = bg.convert("RGB")
@@ -781,6 +830,7 @@ def _compose_frame(
 
     center_x = WIDTH // 2
 
+    W, H = frame.size
     # ============================================================
     # LOGO ARRIBA DERECHA
     # ============================================================
@@ -804,6 +854,26 @@ def _compose_frame(
         frame.alpha_composite(logo, (logo_x, logo_y))
 
     # ============================================================
+    # ORIGIN PILL (arriba izquierda)
+    # ============================================================
+    if (not disable_origin_branding) and show_origin_pill and origin_pill_text:
+        origin_font = _font(40)
+        theme = get_origin_theme(origin_code or "")  # origin_code = "BCN"
+        _draw_pill_with_shadow(
+            base_img=frame,
+            text=origin_pill_text.upper(),
+            font=origin_font,
+            center_x=SAFE_AREA + 220,
+            center_y=SAFE_AREA + 70,
+            padding_x=26,
+            padding_y=14,
+            bg_color=theme["bg"],
+            text_color=theme["text"],
+            border_color=(255, 255, 255, 70),
+        )
+
+    
+    # ============================================================
     # BANDA CENTRAL (tarjeta)
     # ============================================================
     card_w = int(WIDTH * CARD_WIDTH_REL)
@@ -813,6 +883,7 @@ def _compose_frame(
     card_x1 = card_x0 + card_w
     card_y1 = card_y0 + card_h
 
+   
     # Sombra de la tarjeta
     shadow = Image.new("RGBA", (card_w + 40, card_h + 40), (0, 0, 0, 0))
     shadow_draw = ImageDraw.Draw(shadow, "RGBA")
@@ -836,6 +907,23 @@ def _compose_frame(
     )
 
 
+    # ============================================================
+    # ORIGIN COLOR BAR (dentro del card, izquierda)
+    # ============================================================
+    # if show_origin_pill and origin_code:
+    #     theme = get_origin_theme(origin_code)
+    #     bar_w = 10
+    #     draw.rounded_rectangle(
+    #         (card_x0 + 22, card_y0 + 26, card_x0 + 22 + bar_w, card_y1 - 26),
+    #         radius=10,
+    #         fill=theme["bg"],
+    #     )
+
+    if (not disable_origin_branding) and show_origin_pill and origin_code:
+        theme = get_origin_theme(origin_code)
+        band_w = 10
+        draw.rectangle((0, 0, band_w, H), fill=theme["bg"])
+        
     # ============================================================
     # HOOK GRANDE EN LA BANDA (visible en t=0 para preview)
     # ============================================================
@@ -1148,6 +1236,9 @@ def create_reel_v4(
     category_label: Optional[str] = None,
     hook_text: Optional[str] = None,   # 👈 PASAS EL HOOK AL GENERADOR
     hook_mode: str = "",
+    origin_pill_text: Optional[str] = None,
+    origin_code: Optional[str] = None,
+    show_origin_pill: bool = False,
 ):
     """
     Genera un reel 1080x1920 con:
@@ -1241,6 +1332,9 @@ def create_reel_v4(
             hook_mode=hook_mode,
             discount_pct=discount_pct,
             category_label=category_label,
+            origin_pill_text=origin_pill_text,
+            origin_code=origin_code,
+            show_origin_pill=show_origin_pill,
         )
 
         # MoviePy trabaja con arrays numpy
@@ -1278,18 +1372,32 @@ def create_reel_for_flight(
     s3_public: bool = True,
     hook_text: Optional[str] = None,   # 👈 PASAS EL HOOK AL GENERADOR
     hook_mode: str = "band",
+    origin_pill_ab_ratio: float = 0.5,
+    force_origin_pill: Optional[bool] = None,
+    return_origin_pill_variant: bool = False,
 ) -> str:
     """
     Genera el reel para un vuelo:
       - Si s3_bucket es None → devuelve la ruta local (out_mp4_path).
       - Si s3_bucket tiene valor → sube el vídeo a S3 y devuelve la URL pública.
     """
-    origin = _get_field(flight, "origin", "PMI")
+    origin = _get_field(flight, "origin", "PMI").upper()
     destination = _get_field(flight, "destination", "VIE")
     start_date = str(_get_field(flight, "start_date", ""))[:10]
     end_date = str(_get_field(flight, "end_date", ""))[:10]
     price_value = _get_field(flight, "price", 0)
 
+    # Texto pill (profesional y corto)
+    origin_pill_text = f"DESDE {origin}"
+
+    # A/B: on/off (puedes forzarlo con force_origin_pill)
+    if force_origin_pill is None:
+        show_origin_pill, origin_pill_variant = choose_origin_pill_variant(origin_pill_ab_ratio)
+    else:
+        show_origin_pill = bool(force_origin_pill)
+        origin_pill_variant = "origin_pill_on" if show_origin_pill else "origin_pill_off"
+
+    
     discount_pct = _get_field(flight, "discount_pct", None)
 
     raw_cat = (
@@ -1333,17 +1441,23 @@ def create_reel_for_flight(
         category_label=category_label,
         hook_text= hook_text,   # 👈 PASAS EL HOOK AL GENERADOR
         hook_mode= hook_mode,
+        origin_pill_text=origin_pill_text,
+        origin_code=origin,
+        show_origin_pill=show_origin_pill,
     )
 
     # 2) Si hay bucket de S3, subirlo y devolver la URL
+    result = out_mp4_path
     if s3_bucket:
-        return upload_reel_to_s3(
+        result = upload_reel_to_s3(
             local_path=out_mp4_path,
             bucket=s3_bucket,
             prefix=s3_prefix,
             public=s3_public,
         )
 
-    # 3) Si no, devolver la ruta local como antes
-    return out_mp4_path
+    if return_origin_pill_variant:
+        return result, origin_pill_variant
+
+    return result
 

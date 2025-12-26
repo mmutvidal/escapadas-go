@@ -44,8 +44,10 @@ DEFAULT_BRAND_HANDLE = os.getenv("DEFAULT_BRAND_HANDLE", "escapadasgo")
 DEFAULT_ORIGIN_CITY = os.getenv("DEFAULT_ORIGIN_CITY", "Palma de Mallorca")
 
 # --- Instagram ---
-IG_USER_ID = os.getenv("IG_USER_ID")
-PAGE_TOKEN = os.getenv("PAGE_TOKEN")
+ES_IG_USER_ID = os.getenv("ES_IG_USER_ID")
+ES_PAGE_TOKEN = os.getenv("ES_PAGE_TOKEN")
+PMI_IG_USER_ID = os.getenv("PMI_IG_USER_ID")
+PMI_PAGE_TOKEN = os.getenv("PMI_PAGE_TOKEN")
 GRAPH_BASE_URL = os.getenv("GRAPH_BASE_URL")  # o la versión que estés usando
 
 

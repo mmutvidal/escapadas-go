@@ -5,12 +5,12 @@ import time
 import requests
 from typing import Optional
 
-from config.settings import IG_USER_ID,PAGE_TOKEN,GRAPH_BASE_URL
+from config.settings import ES_IG_USER_ID,ES_PAGE_TOKEN,GRAPH_BASE_URL
 
 class InstagramClient:
     def __init__(self, ig_user_id: Optional[str] = None, page_token: Optional[str] = None):
-        self.ig_user_id = ig_user_id or IG_USER_ID
-        self.page_token = page_token or PAGE_TOKEN
+        self.ig_user_id = ig_user_id or ES_IG_USER_ID
+        self.page_token = page_token or ES_PAGE_TOKEN
 
         if not self.ig_user_id or not self.page_token:
             raise ValueError("Faltan IG_USER_ID o PAGE_TOKEN en variables de entorno.")

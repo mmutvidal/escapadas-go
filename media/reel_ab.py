@@ -59,14 +59,20 @@ def create_reel_for_flight_ab(
     # NUEVO (solo lo usa la variante "new")
     hook_text: Optional[str] = None,
     hook_mode: str = "band",
-    # A/B
+    # A/B vídeo (new vs old)
     variant: Variant = "auto",
     ratio_new: float = 0.5,
     key_mode: Literal["route_dates", "route_only"] = "route_dates",
     salt: str = "escapadasgo-v1",
-) -> tuple[str, str]:
+    # ✅ NUEVO: A/B pill de origen (on/off)
+    origin_pill_ab_ratio: float = 0.5,
+    force_origin_pill: Optional[bool] = None,
+) -> tuple[str, str, str]:
     """
-    Devuelve (result_path_or_url, chosen_variant)
+    Devuelve (result_path_or_url, chosen_variant, origin_pill_variant)
+
+    origin_pill_variant:
+      - "origin_pill_on" / "origin_pill_off"
     """
     if variant == "auto":
         variant = choose_variant_deterministic(
@@ -74,7 +80,7 @@ def create_reel_for_flight_ab(
         )
 
     if variant == "new":
-        res = vg_new.create_reel_for_flight(
+        res, origin_pill_variant = vg_new.create_reel_for_flight(
             flight,
             out_mp4_path=out_mp4_path,
             logo_path=logo_path,
@@ -85,8 +91,12 @@ def create_reel_for_flight_ab(
             s3_public=s3_public,
             hook_text=hook_text,
             hook_mode=hook_mode,
+            # ✅ Pill A/B
+            origin_pill_ab_ratio=origin_pill_ab_ratio,
+            force_origin_pill=force_origin_pill,
+            return_origin_pill_variant=True,
         )
-        return res, "new"
+        return res, "new", origin_pill_variant
 
     # "old"
     res = vg_old.create_reel_for_flight(
@@ -99,4 +109,4 @@ def create_reel_for_flight_ab(
         s3_prefix=s3_prefix,
         s3_public=s3_public,
     )
-    return res, "old"
+    return res, "old", "origin_pill_off"
