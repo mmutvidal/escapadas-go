@@ -1,0 +1,31 @@
+{
+  "market": "MAD",
+  "updated_at": "2025-12-26T05:56:20Z",
+  "today_id": "2025-12-26_mad_lis_2026-01-08_2026-01-12",
+  "flights": [
+    {
+      "id": "2025-12-26_mad_lis_2026-01-08_2026-01-12",
+      "date_featured": "2025-12-26",
+      "market": "MAD",
+      "category_code": "gastronomica",
+      "category_label": "🍝 Escapada Gastronómica",
+      "origin_iata": "MAD",
+      "origin_city": "Madrid",
+      "destination_iata": "LIS",
+      "destination_city": "Lisboa",
+      "start_date": "2026-01-08",
+      "end_date": "2026-01-12",
+      "price_eur": 34.98,
+      "price_per_km": 0.03465953411927362,
+      "route_typical_price": 103.12,
+      "discount_pct": 66.1,
+      "distance_km": 1009.24611045329,
+      "score": 7.746220343434035,
+      "airline": "Ryanair",
+      "booking_url": "https://www.ryanair.com/es/es/trip/flights/select?adults=1&teens=0&children=0&infants=0&dateOut=2026-01-08&dateIn=2026-01-12&isConnectedFlight=false&discount=0&promoCode=&isReturn=true&originIata=MAD&destinationIata=LIS&tpAdults=1&tpTeens=0&tpChildren=0&tpInfants=0&tpStartDate=2026-01-08&tpEndDate=2026-01-12&tpDiscount=0&tpPromoCode=&tpOriginIata=MAD&tpDestinationIata=LIS",
+      "affiliate_url": "https://c111.travelpayouts.com/click?shmarker=519984&promo_id=3791&source_type=customlink&type=click&custom_url=https%253A%252F%252Fwww.kiwi.com%252Fdeep%253Ffrom%253DMAD%2526to%253DLIS%2526departure%253D2026-01-08%2526return%253D2026-01-12",
+      "reel_url": "https://www.instagram.com/reel/DStzg14jvaM/",
+      "created_at": "2025-12-26T05:56:20Z"
+    }
+  ]
+}

@@ -473,24 +473,30 @@ def handle_button(update, context):
             }
 
             market = job.get("market") or "UNK"
-            json_path = job.get("web_json_path") or Path("local_copy.json")
             web_key_prefix = job.get("web_key_prefix") or f"{market.lower()}/"
             
-            data = ex.update_flights_json(
+            # ✅ Actualiza los JSONs en la carpeta local del market: web/<slug>/
+            results = ex.update_market_web_jsons(
                 main_item=main_item,
-                json_path=json_path,
                 market=market,
+                web_root="web",
                 reel_url=permalink or video_url,
                 affiliate_url=affiliate_url,
                 max_entries=5,
             )
             
+            # ✅ Subimos a S3 SOLO el flights_of_the_day.json (como haces hoy)
+            data_today = results["flights_of_the_day"]
             key = f"{web_key_prefix}flights_of_the_day.json"
-            up.upload_flights_json(data, key=key)
-
+            up.upload_flights_json(data_today, key=key)
+            
             query.message.reply_text(
                 f"🗂 Web actualizada y JSON subido a S3 (key={key})."
             )
+
+            data_flights = results["flights"]
+            key2 = f"{web_key_prefix}flights.json"
+            up.upload_flights_json(data_flights, key=key2)
 
         except Exception as e:
             query.message.reply_text(f"⚠️ Publicado en IG, pero error actualizando S3: {e}")

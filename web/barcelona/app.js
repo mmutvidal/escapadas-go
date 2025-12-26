@@ -9,7 +9,7 @@ async function loadFlights() {
 
   // 🔹 NUEVO: URL base de S3 + market
   const FLIGHTS_BASE_URL = "https://escapadasgo-public.s3.eu-north-1.amazonaws.com";
-  const MARKET = "pmi";  // en el futuro podrás usar "mad", "bcn", etc.
+  const MARKET = "bcn";  // en el futuro podrás usar "mad", "bcn", etc.
   const FLIGHTS_URL = `${FLIGHTS_BASE_URL}/${MARKET}/flights_of_the_day.json`;
 
   try {
